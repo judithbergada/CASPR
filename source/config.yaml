@@ -1,0 +1,28 @@
+# ------------------------------------------------------------
+# Example VISPR config
+# ------------------------------------------------------------
+
+# Provide a reasonable name for your experiment
+experiment: test_number
+# set the species (any identifier accepted by ensembl.org)
+species: homo_sapiens
+# set the assembly
+assembly: hg19
+
+# This section configures the result view in VISPR
+targets:
+    # per gene results (can be obtained from "mageck test" or "mageck mle")
+    results: outputs/results_MAGeCK_number.gene_summary.txt
+
+    # specify if targets are genes (enabling various link-outs)
+    genes: true
+
+# This section configures the sample and read count level QC view and the
+# RNA count panel in the result view of VISPR
+sgrnas:
+    # normalized read counts (can be obtained from mageck count)
+    counts: intermediate/results_MAGeCK_number.normalized.txt
+
+# ------------------------------------------------------------
+# End example VISPR config
+# ------------------------------------------------------------
