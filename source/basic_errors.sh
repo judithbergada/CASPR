@@ -121,15 +121,15 @@ if [[ $c != "" ]]; then
 fi
 
 # Check if the library file has hidden characters at the end, and remove them
-cat $l | tr -d "\r" > ${q}libnotused.txt
-mv ${q}libnotused.txt $l
+cat $l | tr -d "\r" > ${q}/libnotused.txt
+mv ${q}/libnotused.txt $l
 # Count the number of columns of the library
 ncolslib=$(head -n1 $l | awk '{print NF}')
-printf "num_cols:\t${ncolslib}\n" > "${q}intermediate/useful_information.txt"
+printf "num_cols:\t${ncolslib}\n" > "${q}/intermediate/useful_information.txt"
 
 # Check if the exper.design file has hidden characters; remove them
-cat $e | tr -d "\r" > ${q}expnotused.txt
-mv ${q}expnotused.txt $e
+cat $e | tr -d "\r" > ${q}/expnotused.txt
+mv ${q}/expnotused.txt $e
 # Count the number of columns of the experimental design
 ncolsexp=$(head -n1 $e | awk '{print NF}')
 if [[ $ncolsexp != 3 ]]; then

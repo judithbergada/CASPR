@@ -18,7 +18,7 @@ library("PBNPA")
 
 # Open pdf
 pdf(paste(
-  outputdir, "intermediate/Selected_PBNPA_", idx_sample, ".pdf", sep = ""))
+  outputdir, "/intermediate/Selected_PBNPA_", idx_sample, ".pdf", sep = ""))
 
 ############################
 ## Write useful functions ##
@@ -136,7 +136,7 @@ if (result$pos.no + result$neg.no > 0) {
   # Save useful information
   write.table(info_needed,
               file = paste(outputdir,
-                "intermediate/hits.all_PBNPA_", idx_sample, ".txt", sep = ""),
+                "/intermediate/hits.all_PBNPA_", idx_sample, ".txt", sep = ""),
               row.names = F, col.names = T, quote = F, sep = "\t")
 } else {
   # Create empty table to save
@@ -145,14 +145,14 @@ if (result$pos.no + result$neg.no > 0) {
                   pos.fdr = "", neg.pvalue = "", neg.fdr = "")
   write.table(empty_table,
               file = paste(outputdir,
-                "intermediate/hits.all_PBNPA_", idx_sample, ".txt", sep = ""),
+                "/intermediate/hits.all_PBNPA_", idx_sample, ".txt", sep = ""),
               row.names = F, col.names = T, quote = F, sep = "\t")
 }
 
 # Save all the results
 write.table(result$final.result,
             file = paste(outputdir,
-              "outputs/results_PBNPA_", idx_sample, "_summary.txt", sep = ""),
+              "/outputs/results_PBNPA_", idx_sample, "_summary.txt", sep = ""),
             row.names = F, col.names = T, quote = F, sep = "\t")
 
 # Close pdf

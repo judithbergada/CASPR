@@ -5,7 +5,7 @@ files_total = commandArgs(trailingOnly=TRUE)
 
 # Open pdf to save plots
 outputdir = files_total[2]
-name_pdf = paste(outputdir, "outputs/Trimming_statistics.pdf", sep = "")
+name_pdf = paste(outputdir, "/outputs/Trimming_statistics.pdf", sep = "")
 pdf(name_pdf)
 
 #################################

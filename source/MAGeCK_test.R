@@ -8,7 +8,7 @@ inputed_ctrls = inputargs[3]
 filenames = inputargs[4:length(inputargs)]
 
 # Open pdf
-name_pdf = paste(outputdir, "outputs/Selected_genes_MAGeCK.pdf", sep = "")
+name_pdf = paste(outputdir, "/outputs/Selected_genes_MAGeCK.pdf", sep = "")
 pdf(name_pdf)
 
 
@@ -99,8 +99,8 @@ for (i in seq(1,length(filenames), by = 2)) {
   }
 
   # Re-compute FDR
-  genes_pos_filtered$FDR = p.adjust(genes_pos_filtered$p, method = "BH")
-  genes_neg_filtered$FDR = p.adjust(genes_neg_filtered$p, method = "BH")
+  # genes_pos_filtered$FDR = p.adjust(genes_pos_filtered$p, method = "BH")
+  # genes_neg_filtered$FDR = p.adjust(genes_neg_filtered$p, method = "BH")
 
   # If any of the p-values is 0, modify it to avoid future errors
   genes_pos_filtered$p[genes_pos_filtered$p == 0] = 1E-10
@@ -184,7 +184,7 @@ for (i in seq(1,length(filenames), by = 2)) {
    # Save useful information
    write.table(total_select,
                file = paste(outputdir,
-                 "intermediate/hits.all_MAGeCK_", savename, ".txt", sep = ""),
+                 "/intermediate/hits.all_MAGeCK_", savename, ".txt", sep = ""),
                row.names = F, col.names = T, quote = F, sep = "\t")
   } else {
     # Create empty table to save
@@ -192,7 +192,7 @@ for (i in seq(1,length(filenames), by = 2)) {
                   group_id = "", p = "", FDR = "", Significant_gRNAs = "")
     write.table(empty_table,
                 file = paste(outputdir,
-                  "intermediate/hits.all_MAGeCK_", savename, ".txt", sep = ""),
+                  "/intermediate/hits.all_MAGeCK_", savename, ".txt", sep = ""),
                 row.names = F, col.names = T, quote = F, sep = "\t")
   }
 }

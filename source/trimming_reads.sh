@@ -24,39 +24,39 @@ function trimming_35 { # Only possible with forward & reverse reads
   let rmargin=(${11}-10)
   if [[ rmargin -lt 0 ]]; then rmargin=0; fi
   printf "${2}fmargin:\t${fmargin}\n" >> \
-          "${q}intermediate/useful_information.txt"
+          "${q}/intermediate/useful_information.txt"
   printf "${2}rmargin:\t${rmargin}\n" >> \
-          "${q}intermediate/useful_information.txt"
+          "${q}/intermediate/useful_information.txt"
   # Remove the first margin bases, find leftmost adapter with remaining
   # bases, trim reads and keep only as many nucleotides as length sgRNAs
   if [[ $8 == "yes" ]]; then # If trimming is needed and adapter found
     cutadapt -j $t -u ${fmargin} -g $4 -l $7 --minimum-length 5 \
-    -o "${q}intermediate/tmp.1_$2.fastq" \
-    -p "${q}intermediate/tmp.2_$2.fastq" \
-    $1 $3_reverse.fastq* > "${q}intermediate/trim_stat_$2_forward.txt"
+    -o "${q}/intermediate/tmp.1_$2.fastq" \
+    -p "${q}/intermediate/tmp.2_$2.fastq" \
+    $1 $3_reverse.fastq* > "${q}/intermediate/trim_stat_$2_forward.txt"
   else # If trimming is not needed or adapter not found
     cutadapt -j $t -l $7 \
-    -o "${q}intermediate/tmp.1_$2.fastq" \
-    -p "${q}intermediate/tmp.2_$2.fastq" \
-    $1 $3_reverse.fastq* > "${q}intermediate/trim_stat_$2_forward.txt"
+    -o "${q}/intermediate/tmp.1_$2.fastq" \
+    -p "${q}/intermediate/tmp.2_$2.fastq" \
+    $1 $3_reverse.fastq* > "${q}/intermediate/trim_stat_$2_forward.txt"
   fi
   echo "Forward reads finished"
   if [[ ${10} == "yes" ]]; then # Do exactly the same for reverse reads
     cutadapt -j $t -u ${rmargin} -g $5 -l $6 --minimum-length 5 \
-    -o "${q}intermediate/sgRNA1_$2.fastq" \
-    -p "${q}intermediate/sgRNA2_intermediate_$2.fastq" \
-    "${q}intermediate/tmp.2_$2.fastq" "${q}intermediate/tmp.1_$2.fastq" > \
-    "${q}intermediate/trim_stat_$2_reverse.txt"
+    -o "${q}/intermediate/sgRNA1_$2.fastq" \
+    -p "${q}/intermediate/sgRNA2_intermediate_$2.fastq" \
+    "${q}/intermediate/tmp.2_$2.fastq" "${q}/intermediate/tmp.1_$2.fastq" > \
+    "${q}/intermediate/trim_stat_$2_reverse.txt"
   else # If trimming is not needed or adapter not found
     cutadapt -j $t -l $6 \
-    -o "${q}intermediate/sgRNA1_$2.fastq" \
-    -p "${q}intermediate/sgRNA2_intermediate_$2.fastq" \
-    "${q}intermediate/tmp.2_$2.fastq" "${q}intermediate/tmp.1_$2.fastq" > \
-    "${q}intermediate/trim_stat_$2_reverse.txt"
+    -o "${q}/intermediate/sgRNA1_$2.fastq" \
+    -p "${q}/intermediate/sgRNA2_intermediate_$2.fastq" \
+    "${q}/intermediate/tmp.2_$2.fastq" "${q}/intermediate/tmp.1_$2.fastq" > \
+    "${q}/intermediate/trim_stat_$2_reverse.txt"
   fi
   echo "Reverse reads finished"
   # Remove temporal files
-  rm "${q}intermediate/tmp.1_$2.fastq" "${q}intermediate/tmp.2_$2.fastq"
+  rm "${q}/intermediate/tmp.1_$2.fastq" "${q}/intermediate/tmp.2_$2.fastq"
 }
 
 # Trimming of the reads for the --oreintation 53
@@ -70,53 +70,53 @@ function trimming_53 {
     let rmargin=(${11}-10)
     if [[ rmargin -lt 0 ]]; then rmargin=0; fi
     printf "${2}fmargin:\t${fmargin}\n" >> \
-            "${q}intermediate/useful_information.txt"
+            "${q}/intermediate/useful_information.txt"
     printf "${2}rmargin:\t${rmargin}\n" >> \
-            "${q}intermediate/useful_information.txt"
+            "${q}/intermediate/useful_information.txt"
     # Remove the first margin bases, find leftmost adapter with remaining
     # bases, trim reads and keep only as many nucleotides as length sgRNAs
     if [[ $8 == "yes" ]]; then # If trimming is needed and adapter found
       cutadapt -j $t -u ${fmargin} -g $4 -l $6 --minimum-length 5 \
-      -o "${q}intermediate/tmp.1_$2.fastq" \
-      -p "${q}intermediate/tmp.2_$2.fastq" \
-      $1 $3_reverse.fastq* > "${q}intermediate/trim_stat_$2_forward.txt"
+      -o "${q}/intermediate/tmp.1_$2.fastq" \
+      -p "${q}/intermediate/tmp.2_$2.fastq" \
+      $1 $3_reverse.fastq* > "${q}/intermediate/trim_stat_$2_forward.txt"
     else # If trimming is not needed or adapter not found
       cutadapt -j $t -l $6 \
-      -o "${q}intermediate/tmp.1_$2.fastq" \
-      -p "${q}intermediate/tmp.2_$2.fastq" \
-      $1 $3_reverse.fastq* > "${q}intermediate/trim_stat_$2_forward.txt"
+      -o "${q}/intermediate/tmp.1_$2.fastq" \
+      -p "${q}/intermediate/tmp.2_$2.fastq" \
+      $1 $3_reverse.fastq* > "${q}/intermediate/trim_stat_$2_forward.txt"
     fi
     echo "Forward reads finished"
     if [[ ${10} == "yes" ]]; then # Do exactly the same for reverse reads
       cutadapt -j $t -u ${rmargin} -g $5 -l $7 --minimum-length 5 \
-      -o "${q}intermediate/sgRNA2_intermediate_$2.fastq" \
-      -p "${q}intermediate/sgRNA1_$2.fastq" \
-      "${q}intermediate/tmp.2_$2.fastq" "${q}intermediate/tmp.1_$2.fastq" > \
-      "${q}intermediate/trim_stat_$2_reverse.txt"
+      -o "${q}/intermediate/sgRNA2_intermediate_$2.fastq" \
+      -p "${q}/intermediate/sgRNA1_$2.fastq" \
+      "${q}/intermediate/tmp.2_$2.fastq" "${q}/intermediate/tmp.1_$2.fastq" > \
+      "${q}/intermediate/trim_stat_$2_reverse.txt"
     else # If trimming is not needed or adapter not found
       cutadapt -j $t -l $7 \
-      -o "${q}intermediate/sgRNA2_intermediate_$2.fastq" \
-      -p "${q}intermediate/sgRNA1_$2.fastq" \
-      "${q}intermediate/tmp.2_$2.fastq" "${q}intermediate/tmp.1_$2.fastq" > \
-      "${q}intermediate/trim_stat_$2_reverse.txt"
+      -o "${q}/intermediate/sgRNA2_intermediate_$2.fastq" \
+      -p "${q}/intermediate/sgRNA1_$2.fastq" \
+      "${q}/intermediate/tmp.2_$2.fastq" "${q}/intermediate/tmp.1_$2.fastq" > \
+      "${q}/intermediate/trim_stat_$2_reverse.txt"
     fi
     echo "Reverse reads finished"
-    rm "${q}intermediate/tmp.1_$2.fastq" "${q}intermediate/tmp.2_$2.fastq"
+    rm "${q}/intermediate/tmp.1_$2.fastq" "${q}/intermediate/tmp.2_$2.fastq"
   # If there are only forward fastq files (and not reverse)
   else
     # Take information of first margin bases and save it to another file
     let fmargin=($9-10)
     if [[ fmargin -lt 0 ]]; then fmargin=0; fi
     printf "${2}fmargin:\t${fmargin}\n" >> \
-            "${q}intermediate/useful_information.txt"
+            "${q}/intermediate/useful_information.txt"
     if [[ $8 == "yes" ]]; then # If trimming is needed and adapter found
       cutadapt -j $t -u ${fmargin} -g $4 -l $6 --minimum-length 5 \
-      -o "${q}intermediate/sgRNA2_sgRNA1_$2.fastq.gz" \
-      $1 > "${q}intermediate/trim_stat_$2_forward.txt"
+      -o "${q}/intermediate/sgRNA2_sgRNA1_$2.fastq.gz" \
+      $1 > "${q}/intermediate/trim_stat_$2_forward.txt"
     else # If trimming is not needed or adapter not found
       cutadapt -j $t -l $6 \
-      -o "${q}intermediate/sgRNA2_sgRNA1_$2.fastq.gz" \
-      $1 > "${q}intermediate/trim_stat_$2_forward.txt"
+      -o "${q}/intermediate/sgRNA2_sgRNA1_$2.fastq.gz" \
+      $1 > "${q}/intermediate/trim_stat_$2_forward.txt"
     fi
     echo "Forward reads finished"
   fi
@@ -456,7 +456,7 @@ for fastqfile in $f; do
   # It is needed only for the paired guides.
   if [[ ($r != "") ]]; then
     # Determine encoding from fastqc outputs
-    namefastqc="${q}qualitycontrol/${name}_forward_fastqc.html"
+    namefastqc="${q}/qualitycontrol/${name}_forward_fastqc.html"
     encoding=$(cat ${namefastqc} | grep -oEi 'Encoding.*Total')
     if [[ $(echo $encoding | grep -oEi 'Sanger') != "" || \
           $(echo $encoding | grep -oEi 'Illumina 1.9') != "" || \
@@ -466,22 +466,22 @@ for fastqfile in $f; do
       phred=64
     fi
     # Reverse-complement in order to have all reads in the same orientation
-    cat "${q}intermediate/sgRNA2_intermediate_${name}.fastq" | \
+    cat "${q}/intermediate/sgRNA2_intermediate_${name}.fastq" | \
     fastx_reverse_complement -Q${phred} \
-    > "${q}intermediate/sgRNA2_${name}.fastq"
+    > "${q}/intermediate/sgRNA2_${name}.fastq"
   fi
 
   # Paste fastq files
   if [[ $r != "" ]]; then
     paste -d"\t" \
-    <(cat "${q}intermediate/sgRNA2_${name}.fastq") \
-    <(cat "${q}intermediate/sgRNA1_${name}.fastq") | \
+    <(cat "${q}/intermediate/sgRNA2_${name}.fastq") \
+    <(cat "${q}/intermediate/sgRNA1_${name}.fastq") | \
     awk 'BEGIN {FS="\t" }NR%2==1{print $1}NR%2==0{print $1$2}' | \
-    gzip > "${q}intermediate/sgRNA2_sgRNA1_${name}.fastq.gz"
+    gzip > "${q}/intermediate/sgRNA2_sgRNA1_${name}.fastq.gz"
     # Remove intermediate files that have been generated
-    rm "${q}intermediate/sgRNA1_${name}.fastq" \
-        "${q}intermediate/sgRNA2_${name}.fastq" \
-        "${q}intermediate/sgRNA2_intermediate_${name}.fastq"
+    rm "${q}/intermediate/sgRNA1_${name}.fastq" \
+        "${q}/intermediate/sgRNA2_${name}.fastq" \
+        "${q}/intermediate/sgRNA2_intermediate_${name}.fastq"
   fi
   echo "${name} reads complete"
 done

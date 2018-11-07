@@ -69,7 +69,7 @@ for (filename in files_total[2:length(files_total)]) {
 
 # Open pdf
 outputdir = files_total[1]
-name_pdf = paste(outputdir, "outputs/Alignment_statistics.pdf", sep = "")
+name_pdf = paste(outputdir, "/intermediate/Alignment_statistics.pdf", sep = "")
 pdf(name_pdf)
 
 # Stacked Bar Plot with Colors and Legend

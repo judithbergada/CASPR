@@ -20,6 +20,7 @@ Usage: generate_counts.sh [-h or --help]
                           [-b or --bases-aligned]
                           [-y or --fdr-threshold]
                           [-t or --threads]
+                          [-i or --info-alignment]
                           [-k or --keep-tmp]
                           [-q or --output-folder]
 """
@@ -78,6 +79,11 @@ Optional arguments:
                 It must be an integer.
                 Set it to the number of available cores.
                 Default: 8.
+    -i, --info-alignment:
+                If used, perform several alignments to see additional
+                information of mapped and unmapped reads.
+                Valid only for pgRNAs.
+                Default: not used.
     -k, --keep-tmp:
                 If used, keep the intermediate files.
                 Default: remove them.
@@ -141,6 +147,7 @@ for ARGS in "$@"; do
                 "--bases-aligned") set -- "$@" "-b" ;;
                 "--fdr-threshold") set -- "$@" "-y" ;;
                 "--threads") set -- "$@" "-t" ;;
+                "--info-alignment") set -- "$@" "-i" ;;
                 "--keep-tmp") set -- "$@" "-k" ;;
                 "--output-dir") set -- "$@" "-q" ;;
                 "--help") set -- "$@" "-h" ;;
@@ -149,10 +156,10 @@ for ARGS in "$@"; do
 done
 
 # Define defaults
-o=53; a="ACCG"; A="AAAC"; m=0; b=0; t=1; k=0; y=0.1; q="./"
+o=53; a="ACCG"; A="AAAC"; m=0; b=0; t=1; i=0; k=0; y=0.1; q="./"
 
 # Define all parameters
-while getopts 'r:f:l:e:c:o::a::A::m::b::y::t::q::kh' flag; do
+while getopts 'r:f:l:e:c:o::a::A::m::b::y::t::q::ikh' flag; do
         case "${flag}" in
                 r) r=${OPTARG} ;;
                 f) f=${OPTARG} ;;
@@ -167,6 +174,7 @@ while getopts 'r:f:l:e:c:o::a::A::m::b::y::t::q::kh' flag; do
                 y) y=${OPTARG} ;;
                 t) t=${OPTARG} ;;
                 q) q=${OPTARG} ;;
+                i) i=1 ;;
                 k) k=1 ;;
                 h) print_help
                    exit 1;;
@@ -182,6 +190,7 @@ f=$(echo $f | tr "," " ")
 # If single guides are used, set --orientation always to 53
 if [[ $r == "" ]]; then
   o=53
+  i=0
   if [[ $b == 0 ]]; then b=20; fi
 else
   if [[ $b == 0 ]]; then b=35; fi
@@ -202,9 +211,11 @@ if [[ $(echo "${q: -1}") != "/" ]]; then
   q="$q/"
 fi
 
-rm -rf "${q}intermediate" && \
-mkdir "${q}intermediate" && chmod +xwr "${q}intermediate"
-rm -rf "${q}outputs" && mkdir "${q}outputs" && chmod +xwr "${q}outputs"
+# Create all folders that will be needed
+rm -rf "${q}/intermediate" && \
+mkdir "${q}/intermediate" && chmod +xwr "${q}/intermediate"
+rm -rf "${q}/outputs" && mkdir "${q}/outputs" && chmod +xwr "${q}/outputs"
+
 
 ########################################
 # Execute the needed scripts in order ##
@@ -215,91 +226,97 @@ currentdir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 # Display any error that is initially detected
 bash $currentdir/basic_errors.sh \
-"$f" "$r" $l $e $o $a $A $m $b $y $t $q "$c" # Inputs
+  "$f" "$r" $l $e $o $a $A $m $b $y $t $q "$c" # Inputs
 if [[ $(echo $?) != 0 ]]; then exit 1; fi # Exit if there has been an error.
 
 # Create a fake genome with the guide RNAs
-bash $currentdir/fake_genome.sh $l $t $q 2> "${q}intermediate/err.txt"
-if [[ $(cat "${q}intermediate/err.txt") != "" ]]; then # Exit if error
+bash $currentdir/fake_genome.sh $l $t $q 2> "${q}/intermediate/err.txt"
+if [[ $(cat "${q}/intermediate/err.txt") != "" ]]; then # Exit if error
   echo "Error: problems with the library file. Check it again."
-  echo "See ${q}intermediate/err.txt for more information"
+  echo "See ${q}/intermediate/err.txt for more information"
   exit 1
 fi
 
 # Perform QC of the fastq files. No new errors are expected in this step
 bash $currentdir/quality_control.sh \
-      "$f" "$r" $t $q 2> "${q}intermediate/err.txt"
+      "$f" "$r" $t $q 2> "${q}/intermediate/err.txt"
 
 # Trimming and arrangement of the reads
 bash $currentdir/trimming_reads.sh \
-          "$f" "$r" $l $o $a $A $q $t 2> "${q}intermediate/err.txt"
-if [[ $(cat "${q}intermediate/err.txt") != "" ]]; then # Exit if error
+          "$f" "$r" $l $o $a $A $q $t 2> "${q}/intermediate/err.txt"
+if [[ $(cat "${q}/intermediate/err.txt") != "" ]]; then # Exit if error
   echo "Error: problems with the input parameters. Check them again."
-  echo "See ${q}intermediate/err.txt for more information"
+  echo "See ${q}/intermediate/err.txt for more information"
   exit 1
 fi
 
 # Create plots with the trimming statistics
 printf "\nGenerating plots to see trimming statistics\n"
 # Collect needed information previously created
-triminf=$(cat "${q}intermediate/useful_information.txt" | \
+triminf=$(cat "${q}/intermediate/useful_information.txt" | \
           awk 'NR>1' | sort -k1 | awk '{print $2}')
 # Run R script
 Rscript --vanilla $currentdir/trimming_statistics.R \
-          "$triminf" "$q" ${q}intermediate/trim_stat* \
+          "$triminf" "$q" ${q}/intermediate/trim_stat* \
 || (echo "Problem with R. Check if the R version is correct." && exit 1)
 if [[ $(echo $?) != 0 ]]; then exit 1; fi # Exit if there has been an error.
 echo "Plots were created successfully"
 
 # Align the reads to the fake genome and count the number of reads per guide
 bash $currentdir/alignment_counts.sh \
-      $m $b $t $q "$r" $l 2> "${q}intermediate/err.txt"
-if [[ $(cat "${q}intermediate/err.txt") != "" ]]; then # Exit if error
+      $m $b $t $q "$r" $l $i 2> "${q}/intermediate/err.txt"
+if [[ $(cat "${q}/intermediate/err.txt") != "" ]]; then # Exit if error
   echo "Error: problems with the input parameters. Check them again."
-  echo "See ${q}intermediate/err.txt for more information."
+  echo "See ${q}/intermediate/err.txt for more information."
   exit 1
 fi
 
 # Create plots with the alignment statistics
 printf "\nGenerating plots to see alignment statistics\n"
 Rscript --vanilla $currentdir/alignment_statistics.R \
-        $q ${q}intermediate/Statistics_alignment* \
+        $q ${q}/intermediate/Statistics_alignment* \
 || (echo "Problem with R. Check if the R version is correct." && exit 1)
 if [[ $(echo $?) != 0 ]]; then exit 1; fi # Exit if there has been an error.
 
-# Create plots to see what happens with unmapped reads
-Rscript --vanilla $currentdir/alignment_unmapped.R \
-        $q ${q}intermediate/Statistics_unmapped* \
-|| (echo "Problem with R. Check if the R version is correct." && exit 1)
-if [[ $(echo $?) != 0 ]]; then exit 1; fi # Exit if there has been an error.
-echo "Plots were created successfully"
+# Create plots to see what happens with unmapped reads (only if requested)
+if [[ $i == 1 ]]; then
+  bash $currentdir/alignment_info.sh $q "$f" $b 2> "${q}/intermediate/err.txt"
+  if [[ $(cat "${q}/intermediate/err.txt") != "" ]]; then # Exit if error
+    echo "Error: problems with the input parameters. Check them again."
+    echo "See ${q}/intermediate/err.txt for more information."
+    exit 1
+  fi
+else
+  mv ${q}/intermediate/Alignment_statistics.pdf ${q}/outputs
+fi
+printf "\nPlots were created successfully\n"
 
 # Compute the test to see the significant genes.
 bash \
-  $currentdir/test.sh $e $y $q $currentdir "$c" 2> "${q}intermediate/err.txt"
+  $currentdir/test.sh $e $y $q $currentdir "$c" 2> "${q}/intermediate/err.txt"
 if [[ $(echo $?) == 2 ]]; then exit 1; fi # Exit if there has been an error.
-if [[ $(cat ${q}intermediate/err.txt | grep -oEi "^ERROR") != "" ]]; then
+if [[ $(cat ${q}/intermediate/err.txt | grep -oEi "^ERROR") != "" ]]; then
   echo "Error: problems with MAGeCK."
-  echo "See ${q}intermediate/err.txt for more information"
+  echo "See ${q}/intermediate/err.txt for more information"
   exit 1
 fi
 
 # Visualize some of the results at the guides level
 printf "\nGenerating plots to visualize general results\n"
 Rscript --vanilla $currentdir/create_graphs.R \
-        $q "$c" ${q}intermediate/*sgrna_summary.txt \
+        $q "$c" ${q}/intermediate/*sgrna_summary.txt \
 || (echo "Problem with R. Check if the R version is correct." && exit 1)
 if [[ $(echo $?) != 0 ]]; then exit 1; fi # Exit if there has been an error.
 echo "Plots were created successfully"
 
 # Create files for the visualization with VISPR
-bash $currentdir/visualization.sh ${q} $currentdir
+# bash $currentdir/visualization.sh ${q} $currentdir
 
 ###############################
 ## Remove intermediate files ##
 ###############################
 
-if [[ $k == 0 ]]; then rm -r ${q}intermediate; fi # Remove intermediate files
+if [[ $k == 0 ]]; then rm -r ${q}/intermediate; fi # Remove intermediate files
 
 ##########
 ## DONE ##
