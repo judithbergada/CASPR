@@ -84,7 +84,7 @@ xvals = barplot(data.matrix(results[2:4,]),
               ylab = "Percentage (%)")
 title("Alignment information", line = 3)
 axis(side = 1, at = xvals, labels = colnames(results),
-      line = -1, tick = F, las = 2)
+      line = -1, tick = F, las = 2, cex.axis = 0.5)
 
 # Add number of reads of each sample
 y2 = results[1,] / max(results[1,]) * 100 # Rescale into the bargraph

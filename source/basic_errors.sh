@@ -7,6 +7,7 @@
 # Relationship between input parameters and the ones used here
 f=$1; r=$2; l=$3; e=$4; o=$5; a=$6; A=$7
 m=$8; b=$9; y=${10}; t=${11}; q=${12}; c=${13}
+start=${14}; pause=${15}
 
 printf "\nChecking that the format of inputs is correct\n"
 
@@ -225,6 +226,39 @@ fi
 # Check that -o is either 35 or 53.
 if [[ $o != 35 && $o != 53 ]]; then
   echo "Error: problem with the format of the orientation. Must be 35 or 53"
+  exit 1
+fi
+
+# Check that --start is one of the possible options
+if [[ $start != "" && $start != "qc" && \
+      $start != "trim" && $start != "map" ]]; then
+  echo "Error: problem with given argument to --start. Check the options"
+  exit 1
+fi
+
+# Check that --pause is one of the possible options
+if [[ $pause != "" && $pause != "indexing" && $pause != "trim" && \
+      $pause != "map" && $pause != "qc" ]]; then
+  echo "Error: problem with given argument to --pause. Check the options"
+  exit 1
+fi
+
+# Make sure that starting step is always earlier than pausing step
+if [[ $pause == "indexing" && $start != "" ]]; then
+  echo "Error: problem with start, stop. Cannot stop before starting"
+  exit 1
+fi
+if [[ $pause == "qc" && ($start != "" && $start != "qc") ]]; then
+  echo "Error: problem with start, pause. Cannot stop before starting"
+  exit 1
+fi
+if [[ $pause == "trim" && \
+      ($start != "" && $start != "qc" && $start != "trim") ]]; then
+  echo "Error: problem with start, pause. Cannot stop before starting"
+  exit 1
+fi
+if [[ $start == "map" && ($pause != "" && $pause != "map") ]]; then
+  echo "Error: problem with start, pause. Cannot stop before starting"
   exit 1
 fi
 

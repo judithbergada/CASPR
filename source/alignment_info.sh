@@ -5,7 +5,7 @@
 #################################################
 
 # Relationship between input parameters and the ones used here
-q=$1; f=$2; b=$3
+q=$1; f=$2; b=$3; l=$4; currentdir=$5
 
 # Compute length of the guide RNAs
 lguide1=$(awk 'NR==1 {print $2}' $l | wc -c)
@@ -65,15 +65,15 @@ for fastqfile in $f; do
   # ________________NEEDED FOR THIRD GRAPH________________
 
   # Get information on total number of reads that were unmapped previously
-  reads20=$(cat $q/intermediate/Statistics_unmapped_sgrna__${name}.txt | \
+  reads20=$(cat $q/intermediate/Statistics_unmapped_sgrna_${name}.txt | \
             grep "Number of input reads" | cut -f2)
 
   # Get information on number of reads mapped to only 1 sgRNA instead of both
-  mapped20=$(cat $q/intermediate/Statistics_unmapped_sgrna__${name}.txt | \
+  mapped20=$(cat $q/intermediate/Statistics_unmapped_sgrna_${name}.txt | \
             grep "Uniquely mapped reads number" | cut -f2)
 
   # Get information on number of reads mapped to only 1 sgRNA multiple times
-  nonunique20=$(cat $q/intermediate/Statistics_unmapped_sgrna__${name}.txt | \
+  nonunique20=$(cat $q/intermediate/Statistics_unmapped_sgrna_${name}.txt | \
             grep "Number of reads mapped to multiple loci" | cut -f2)
 
   # Compute number of unmapped reads
@@ -83,12 +83,14 @@ for fastqfile in $f; do
 
   # Get number of multi-mapping reads with repeated guide
   repeatedg=$(cat ${q}/${name}_sgrna_out.sam | awk 'NF>5' | awk 'NF<20' | \
+              awk '$12 != "NH:i:0"' | awk '$12 != "NH:i:1"' | \
               cut -f1,3 | uniq -c |  awk '$1>1' | \
               sed -r 's/(_[0-9]+)+//g' | awk '{print $2, $3}' | \
               uniq -c | wc -l)
 
   # Get number of multi-mapping reads mapping different genes (recombination)
   recombing=$(cat ${q}/${name}_sgrna_out.sam | awk 'NF>5' | awk 'NF<20' | \
+             awk '$12 != "NH:i:0"' | awk '$12 != "NH:i:1"' | \
              cut -f1,3 | uniq -c | awk '$1==1' | \
              sed -r 's/(_[0-9]+)+//g' | awk '{print $2, $3}' | \
              uniq -c |  awk '$1==1' | awk '{print $2}' | uniq -c | wc -l)
@@ -109,12 +111,13 @@ done
 
 # Merge all pdf files with alignment information into one pdf
 gs -q -sPAPERSIZE=letter -dNOPAUSE -dBATCH -sDEVICE=pdfwrite \
+-dAutoRotatePages=/None \
 -sOutputFile="${q}/outputs/Alignment_statistics.pdf" \
 ${q}/intermediate/Alignment_stat*
 rm ${q}/intermediate/Alignment_stat*
 
 # Remove sam files
-rm ${q}/*.sam
+#rm ${q}/*.sam
 
 ##########
 ## DONE ##

@@ -132,7 +132,7 @@ Rscript --vanilla ${currentdir}/MAGeCK_test.R $y $q "$controlsfile" \
                   ${q}/intermediate/results*.gene.* \
 || (echo "Problem with R. Check the version." && exit 2)
 if [[ $(echo $?) != 0 ]]; then exit 2; fi # Exit if there has been an error.
-printf "MAGeCK analysis completed successfully\n\n"
+printf "MAGeCK analysis completed successfully\n"
 
 printf "All of the analysis of genes completed succesfully\n"
 
