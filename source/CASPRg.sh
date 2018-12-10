@@ -7,24 +7,24 @@
 # Define usage of the script
 function print_usage {
   printf """
-Usage: generate_counts.sh [-h or --help]
-                          [-f or --fastq-forward]
-                          [-r or --fastq-reverse]
-                          [-l or --library]
-                          [-e or --exper-design]
-                          [-c or --controls]
-                          [-o or --orientation]
-                          [-a or --adapter-f]
-                          [-A or --adapter-r]
-                          [-m or --mismatches]
-                          [-b or --bases-aligned]
-                          [-y or --fdr-threshold]
-                          [-t or --threads]
-                          [-i or --info-alignment]
-                          [-k or --keep-tmp]
-                          [-q or --output-folder]
-                          [-s or --start]
-                          [-p or --pause]
+Usage: CASPR.sh   [-h or --help]
+                  [-f or --fastq-forward]
+                  [-r or --fastq-reverse]
+                  [-l or --library]
+                  [-e or --exper-design]
+                  [-c or --controls]
+                  [-o or --orientation]
+                  [-a or --adapter-f]
+                  [-A or --adapter-r]
+                  [-m or --mismatches]
+                  [-b or --bases-aligned]
+                  [-y or --fdr-threshold]
+                  [-t or --threads]
+                  [-i or --info-alignment]
+                  [-k or --keep-tmp]
+                  [-q or --output-folder]
+                  [-s or --start]
+                  [-p or --pause]
 """
 }
 function print_error {
@@ -133,7 +133,7 @@ Required arguments:
                             d1    1  treated2
                             d3    3  treated2
                 --> Analysis 1: ctr1 & ctr2 vs d1 & d2
-                --> Analysis 2: ctr1 & ctr3 vs d1 $ d3
+                --> Analysis 2: ctr1 & ctr3 vs d1 & d3
 
 Important:
     The number of input files in -f and -r must be the same (for pgRNAs).
@@ -363,7 +363,7 @@ if [[ $(echo $?) != 0 ]]; then exit 1; fi # Exit if there has been an error.
 echo "Plots were created successfully"
 
 # Create files for the visualization with VISPR
-bash $currentdir/visualization.sh ${q} $currentdir
+#bash $currentdir/visualization.sh ${q} $currentdir
 
 ###############################
 ## Remove intermediate files ##

@@ -119,6 +119,9 @@ if [[ $c != "" ]]; then
     echo "Error: the controls file doesn't have 2 columns"
     exit 1
   fi
+  # Check if the controls file has hidden characters; remove them
+  cat $c | tr -d "\r" > ${q}/ctrlsnotused.txt
+  mv ${q}/ctrlsnotused.txt $c
 fi
 
 # Check if the library file has hidden characters at the end, and remove them

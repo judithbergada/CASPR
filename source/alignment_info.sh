@@ -117,7 +117,7 @@ ${q}/intermediate/Alignment_stat*
 rm ${q}/intermediate/Alignment_stat*
 
 # Remove sam files
-#rm ${q}/*.sam
+rm ${q}/*.sam
 
 ##########
 ## DONE ##
