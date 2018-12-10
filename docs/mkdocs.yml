@@ -1,0 +1,30 @@
+site_name: CASPR
+docs_dir: pages
+
+repo_name: 'judithbergada/CASPRg'
+repo_url: 'https://github.com/judithbergada/CASPRg'
+
+# Copyright
+copyright: 'Copyright &copy; 2018 Judith Bergadà Pijuan'
+
+pages:
+  - Home: index.md
+  - Installation: installation.md
+  - Tutorial: tutorial.md
+
+theme:
+  font:
+    text: Roboto
+    code: Roboto Mono
+  logo:
+    icon: laptop
+  name: material
+  palette:
+    primary: green
+    accent: indigo
+
+# Customization
+extra:
+  social:
+    - type: github-alt
+      link: https://github.com/judithbergada/CASPRg

@@ -3,3 +3,6 @@
 
 # Remote sync
 .remote-sync.json
+
+# R files
+.Rhistory

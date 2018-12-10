@@ -7,7 +7,7 @@
 # Define usage of the script
 function print_usage {
   printf """
-Usage: CASPR.sh   [-h or --help]
+Usage: CASPR      [-h or --help]
                   [-f or --fastq-forward]
                   [-r or --fastq-reverse]
                   [-l or --library]
