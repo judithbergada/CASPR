@@ -6,3 +6,6 @@
 
 # R files
 .Rhistory
+
+# MkDocs build site
+docs/site/*

@@ -26,3 +26,13 @@ Go where the data is located.
 ```bash
 ls -al $HOME/CASPR/testdata
 ```
+
+Let's say we run the following command:
+
+```bash
+CASPR do_something_awesome
+```
+
+And the output should be this amazing plot:
+
+![output_plot](images/output_plot.png)
