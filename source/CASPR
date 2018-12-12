@@ -330,11 +330,6 @@ if [[ $start != "test" ]]; then
   if [[ $i == 1 ]]; then
     bash $currentdir/alignment_info.sh \
               $q "$f" $b $l $currentdir 2> "${q}/intermediate/err.txt"
-    if [[ $(cat "${q}/intermediate/err.txt") != "" ]]; then # Exit if error
-      echo "Error: problems with the input parameters. Check them again."
-      echo "See ${q}/intermediate/err.txt for more information."
-      exit 1
-    fi
   else
     mv ${q}/intermediate/Alignment_statistics.pdf ${q}/outputs
   fi
@@ -363,7 +358,7 @@ if [[ $(echo $?) != 0 ]]; then exit 1; fi # Exit if there has been an error.
 echo "Plots were created successfully"
 
 # Create files for the visualization with VISPR
-#bash $currentdir/visualization.sh ${q} $currentdir
+bash $currentdir/visualization.sh ${q} $currentdir
 
 ###############################
 ## Remove intermediate files ##

@@ -102,16 +102,17 @@ par(xpd=FALSE)
 slices <- c(repeatedg, recombing, others)
 lbls <- c("Repeated sgRNA", "Recombination", "Other")
 pct <- round(slices/sum(slices)*100)
-# Plot
-pie(slices,labels = paste(pct, "%", sep = ""),
-    col=rainbow(length(lbls)),
-    main="Map a guide multiple times", cex = 0.8)
-par(xpd=TRUE)
-legend(x = "bottom", bty = "n", pch = 19,
-       legend = lbls, ncol = 2, inset = -0.2,
-       col = rainbow(length(lbls)), cex = 0.7)
-par(xpd=FALSE)
-
+if(sum(slices)>0){
+  # Plot
+  pie(slices,labels = paste(pct, "%", sep = ""),
+      col=rainbow(length(lbls)),
+      main="Map a guide multiple times", cex = 0.8)
+  par(xpd=TRUE)
+  legend(x = "bottom", bty = "n", pch = 19,
+         legend = lbls, ncol = 2, inset = -0.2,
+         col = rainbow(length(lbls)), cex = 0.7)
+  par(xpd=FALSE)
+}
 # Add title to the page and close pdf
 mtext(paste("Fastq files: ", name, sep=""),
       outer=TRUE, cex=1, line=-1.5)

@@ -1,3 +1,3 @@
-# CASPRg
+# CASPR
 
-by Judith Bergada Pijuan.
+by Judith Bergadà Pijuan.

@@ -134,6 +134,7 @@ Rscript --vanilla ${currentdir}/MAGeCK_test.R $y $q "$controlsfile" \
 if [[ $(echo $?) != 0 ]]; then exit 2; fi # Exit if there has been an error.
 printf "MAGeCK analysis completed successfully\n"
 
+rm -f ${q}/intermediate/neutralctr*
 printf "All of the analysis of genes completed succesfully\n"
 
 

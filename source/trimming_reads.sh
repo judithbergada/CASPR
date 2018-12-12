@@ -149,7 +149,7 @@ for fastqfile in $f; do
   let i=($i+1)
   echo "Analysis of ${fastqfile}:"
   # Automatic check of a repeated adapter before the guides.
-  # To speed it up, consider that the first 2500 reads are representative
+  # To speed it up, consider that the first 1000 reads are representative
   # Check the most frequent position of the adapter in the reads
   echo "Checking the most frequent position of the adapter within reads"
   if file --mime-type "${fastqfile}" | grep -q gzip$; then # If compressed

@@ -21,4 +21,4 @@ for res in ${q}/outputs/*.gene_summary.txt; do
 done
 
 # Run VISPR even from a remote server or from a local pc
-vispr server ${q}/config*
+#vispr server ${q}/config*

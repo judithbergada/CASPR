@@ -193,6 +193,7 @@ if [[ $info == 1 ]]; then
     rm ${q}/${name}_sgrna_Aligned* \
         ${q}/${name}_sgrna_Log* ${q}/${name}_sgrna_SJ.out.tab
   done
+  rm ${q}/intermediate/Unmapped_*
 fi
 
 # Remove any file introduced by aligner and not needed

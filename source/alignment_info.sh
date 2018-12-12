@@ -104,9 +104,7 @@ for fastqfile in $f; do
                     $name $q $b $total_len $mapped $unmapped \
                     $mappedm0 $mappedm3 $short $mappedmore3 \
                     $mapped20 $nonunique20 $unmapped20 \
-                    $repeatedg $recombing $others \
-  || (echo "Problem with R. Check the version." && exit 2)
-  if [[ $(echo $?) != 0 ]]; then exit 2; fi # Exit if there has been an error.
+                    $repeatedg $recombing $others
 done
 
 # Merge all pdf files with alignment information into one pdf
