@@ -5,7 +5,7 @@ CASPR is being developed and tested under Linux and macOS.
 In order to use it, first you need to clone the repository:
 
 ```bash
-git clone https://github.com/judithbergada/CASPRg.git $HOME/CASPR
+git clone https://github.com/judithbergada/CASPR.git $HOME/CASPR
 ```
 
 For a proper installation, it is also recommended to run:

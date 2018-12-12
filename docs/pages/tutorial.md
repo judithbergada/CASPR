@@ -7,7 +7,7 @@ Running CASPR is extremely easy and convenient to analyze CRIPR-Cas9 screens usi
 If it is your first time with CASPR, please make sure you have downoaded the repository. This can be done a follows:
 
 ```bash
-git clone https://github.com/judithbergada/CASPRg.git $HOME/CASPR
+git clone https://github.com/judithbergada/CASPR.git $HOME/CASPR
 ```
 
 For a proper installation of the tool, it is also recommended to run:
@@ -78,6 +78,18 @@ After a few minutes, the outputs should appear in your computer. At this point, 
 ```bash
 ls $HOME/CASPR/testdata/example_pgrna/expected_outputs/
 ```
+
+Moreover, you can benefit from VISPR to get interactive results on you data. Please try the following:
+
+```bash
+vispr server ./firstexample/config*
+```
+If you are working from a cluster, you will also need to run this command locally on your computer:
+
+```bash
+ssh -f {user}@binfservms01.unibe.ch -L 5000:localhost:5000 -N
+```
+Now, copy the webpage on Internet and enjoy visualizing the data.
 
 If you are still curious about other options of CASPR, let's try to get more information on the unmapped reads. This can be done esily just by adding the tag -i to the previous command. Furthermore, if you kept the intermediate files with the -k argument, neither the previous nor the next steps will be necessary anymore.
 
