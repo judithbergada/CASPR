@@ -461,6 +461,15 @@ CASPR \
 <pre><code class="bash">ls $HOME/CASPR/testdata/example_pgrna/expected_outputs/
 </code></pre>
 
+<p>Moreover, you can benefit from VISPR to get interactive results on you data. Please try the following:</p>
+<pre><code class="bash">vispr server ./firstexample/config*
+</code></pre>
+
+<p>If you are working from a cluster, you will also need to run this command locally on your computer:</p>
+<pre><code class="bash">ssh -f {user}@binfservms01.unibe.ch -L 5000:localhost:5000 -N
+</code></pre>
+
+<p>Now, copy the webpage on Internet and enjoy visualizing the data.</p>
 <p>If you are still curious about other options of CASPR, let's try to get more information on the unmapped reads. This can be done esily just by adding the tag -i to the previous command. Furthermore, if you kept the intermediate files with the -k argument, neither the previous nor the next steps will be necessary anymore.</p>
 <p>You can find a solution to quickly finish the example here:</p>
 <pre><code class="bash">CASPR \
