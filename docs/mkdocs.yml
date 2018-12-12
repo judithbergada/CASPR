@@ -8,7 +8,7 @@ repo_url: 'https://github.com/judithbergada/CASPRg'
 # Copyright
 copyright: 'Copyright &copy; 2018 Judith Bergadà Pijuan'
 
-pages:
+nav:
   - Home: index.md
   - Installation: installation.md
   - Tutorial: tutorial.md

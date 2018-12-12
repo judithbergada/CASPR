@@ -108,6 +108,8 @@ default parameters of CASPR:
 Please, make sure you keep the intermediate files to follow the second part of
 the user case.
 
+### Results
+
 After a few minutes, the outputs should appear in your computer. At this point,
 you can open them and see if they are as expected. The expected outputs are
 found in:
@@ -119,10 +121,24 @@ ls results/outputs
 These are the outpus generated:
 
 * [Alignment Statistics](assets/pgrna/Alignment_statistics.pdf)
+
+<img src="../assets/pgrna/Alignment_statistics.png" alt="Alignment Statistics" width="40%">
+
 * [Log Counts](assets/pgrna/Log_counts.pdf)
+
+<img src="../assets/pgrna/Log_counts-0.png" alt="Log Counts" width="50%"><img src="../assets/pgrna/Log_counts-1.png" alt="Log Counts" width="50%">
+
 * [Selected Genes by MAGeCK](assets/pgrna/Selected_genes_MAGeCK.pdf)
+
+<img src="../assets/pgrna/Selected_genes_MAGeCK-0.png" alt="Selected Genes by MAGeCK" width="33.3%"><img src="../assets/pgrna/Selected_genes_MAGeCK-1.png" alt="Selected Genes by MAGeCK" width="33.3%"><img src="../assets/pgrna/Selected_genes_MAGeCK-2.png" alt="Selected Genes by MAGeCK" width="33.3%">
+
 * [Selected Genes by PBNPA](assets/pgrna/Selected_genes_PBNPA.pdf)
+
+<img src="../assets/pgrna/Selected_genes_PBNPA-0.png" alt="Selected Genes by PBNPA" width="50%"><img src="../assets/pgrna/Selected_genes_PBNPA-1.png" alt="Selected Genes by PBNPA" width="50%">
+
 * [Trimming Statistics](assets/pgrna/Trimming_statistics.pdf)
+
+<img src="../assets/pgrna/Trimming_statistics-2.png" alt="Trimming Statistics" width="33.3%"><img src="../assets/pgrna/Trimming_statistics-3.png" alt="Trimming Statistics" width="33.3%"><img src="../assets/pgrna/Trimming_statistics-4.png" alt="Trimming Statistics" width="33.3%">
 
 Moreover, you can benefit from VISPR to get interactive results on you data.
 Please try the following:
@@ -169,6 +185,8 @@ CASPR \
 Check that everything worked out. Your outputs should look similar to:
 
 * [Alignment Statistics](assets/pgrna/Alignment_statistics_2.pdf)
+
+<img src="../assets/pgrna/Alignment_statistics_2-0.png" alt="Alignment Statistics" width="40%"><img src="../assets/pgrna/Alignment_statistics_2-1.png" alt="Alignment Statistics" width="40%">
 
 
 If you arrived here, you finished the first user case successfully!
@@ -231,6 +249,8 @@ CASPR \
   --exper-design expdesign.txt
 ```
 
+### Results
+
 Quickly, the outputs should appear in your computer. You can open them and see
 if they look as expected. The expected outputs are found in:
 
@@ -241,10 +261,24 @@ ls results/outputs
 These are the outpus generated:
 
 * [Alignment Statistics](assets/sgrna/Alignment_statistics.pdf)
+
+<img src="../assets/sgrna/Alignment_statistics.png" alt="Alignment Statistics" width="40%">
+
 * [Log Counts](assets/sgrna/Log_counts.pdf)
+
+<img src="../assets/sgrna/Log_counts-0.png" alt="Log Counts" width="50%"><img src="../assets/sgrna/Log_counts-1.png" alt="Log Counts" width="50%">
+
 * [Selected Genes by MAGeCK](assets/sgrna/Selected_genes_MAGeCK.pdf)
+
+<img src="../assets/sgrna/Selected_genes_MAGeCK-0.png" alt="Selected Genes by MAGeCK" width="33.3%"><img src="../assets/sgrna/Selected_genes_MAGeCK-1.png" alt="Selected Genes by MAGeCK" width="33.3%"><img src="../assets/sgrna/Selected_genes_MAGeCK-2.png" alt="Selected Genes by MAGeCK" width="33.3%">
+
 * [Selected Genes by PBNPA](assets/sgrna/Selected_genes_PBNPA.pdf)
+
+<img src="../assets/sgrna/Selected_genes_PBNPA-0.png" alt="Selected Genes by PBNPA" width="50%"><img src="../assets/sgrna/Selected_genes_PBNPA-1.png" alt="Selected Genes by PBNPA" width="50%">
+
 * [Trimming Statistics](assets/sgrna/Trimming_statistics.pdf)
+
+<img src="../assets/sgrna/Trimming_statistics-2.png" alt="Trimming Statistics" width="33.3%"><img src="../assets/sgrna/Trimming_statistics-3.png" alt="Trimming Statistics" width="33.3%"><img src="../assets/sgrna/Trimming_statistics-4.png" alt="Trimming Statistics" width="33.3%">
 
 Finally, let's perfom the test again using an FDR threshold of 0.1. For that,
 you do not need to execute all the previous steps, only the assessment of gene
