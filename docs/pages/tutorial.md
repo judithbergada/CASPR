@@ -127,7 +127,9 @@ To compute the analysis, it is essential to have:
 
 Moreover, you may provide a text file with positive, negative and neutral controls, if interested.
 
-Before starting the test, check that the data is available in the expected formats:
+In this example, we want to analyse the two replicates separately in two different tests, and we want to perform a third test using the replicates together.
+
+Before starting the tests, check that the data is available in the expected formats. Pay special attention on the experimental design file, which allows to obtain the results as required:
 
 ```bash
 cat $HOME/CASPR/testdata/example_sgrna/expdesign.txt
