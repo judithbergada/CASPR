@@ -1,8 +1,8 @@
 # Tutorial
 
 Running CASPR is extremely easy and convenient to analyze CRIPR-Cas9 screens
-using pgRNAs. The test data folder contains two brief examples to go through
-all steps. Simply copy the scripts provided in each example to visualize the
+using pgRNAs. The test data folder contains two brief user cases to go through
+all steps. Simply copy the scripts provided in each user case to visualize the
 demos.
 
 ## Get started: Download CASPR Code and Data
@@ -46,7 +46,7 @@ module add UHTS/Quality_control/mageck-vispr/0.5.4
 
 ## User Case 1: Analysis of a CRISPR Screen Using pgRNAs
 
-This example shows how to analyse a CRISPR screen with the following features:
+This user case shows how to analyse a CRISPR screen with the following features:
 
 * Library of **pgRNAs**
 * Two time points: week zero and week four
@@ -62,7 +62,7 @@ To compute the analysis, it is essential to have:
 Additionally, you may provide a text file with positive, negative and neutral
 controls.
 
-Let's go to the example test data folder:
+Let's go to the user case test data folder:
 
 ```bash
 cd $HOME/CASPR/testdata/pgrna
@@ -106,7 +106,7 @@ default parameters of CASPR:
 2. the intermediate files will be kept.
 
 Please, make sure you keep the intermediate files to follow the second part of
-the example.
+the user case.
 
 After a few minutes, the outputs should appear in your computer. At this point,
 you can open them and see if they are as expected. The expected outputs are
@@ -153,7 +153,7 @@ information on the unmapped reads. This can be done esily just by adding the tag
 with the `-k` argument, neither the previous nor the next steps will be
 necessary anymore.
 
-You can find a solution to quickly finish the example here:
+You can find a solution to quickly finish the user case here:
 
 ```bash
 CASPR \
@@ -166,14 +166,16 @@ CASPR \
   --exper-design expdesign.txt
 ```
 
-As before, your outputs should look similar to the ones provided. Check that
-everything worked out.
+Check that everything worked out. Your outputs should look similar to:
 
-If you arrived here, you finished the first example successfully!
+* [Alignment Statistics](assets/pgrna/Alignment_statistics_2.pdf)
+
+
+If you arrived here, you finished the first user case successfully!
 
 ## User Case 2: Analysis of a CRISPR Screen Using sgRNAs
 
-This example shows how to analyse a CRISPR screen with the following features:
+This user case shows how to analyse a CRISPR screen with the following features:
 
 * Library of **sgRNAs**
 * Two time points: week zero and week four
@@ -189,11 +191,11 @@ To compute the analysis, it is essential to have:
 Moreover, you may provide a text file with positive, negative and neutral
 controls, if interested.
 
-In this example, we want to analyse the two replicates separately in two
+In this user case, we want to analyse the two replicates separately in two
 different tests, and we want to perform a third test using the replicates
 together.
 
-Let's go to the example test data folder:
+Let's go to the user case test data folder:
 
 ```bash
 cd $HOME/CASPR/testdata/sgrna
