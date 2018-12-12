@@ -359,7 +359,14 @@
                 <h1 id="installation-guide">Installation Guide</h1>
 <p>CASPR is being developed and tested under Linux and macOS.</p>
 <p>In order to use it, first you need to clone the repository:</p>
-<pre><code class="bash">git clone https://github.com/judithbergada/CASPRg.git
+<pre><code class="bash">git clone https://github.com/judithbergada/CASPRg.git $HOME/CASPR
+</code></pre>
+
+<p>For a proper installation, it is also recommended to run:</p>
+<pre><code class="bash"># Add CASPR to your PATH
+echo &quot;export PATH=$HOME/CASPR/source:$PATH&quot; &gt;&gt; $HOME/.bashrc
+source $HOME/.bashrc
+# Please, note that the previous commands do not work if you use Zsh
 </code></pre>
 
 <p>At this point, the tool should be available in your computer.</p>
@@ -393,6 +400,8 @@ conda install -n caspr r
 conda install -n caspr -c biobuilds fastx-toolkit
 conda install -n caspr -c bioconda fastqc
 </code></pre>
+
+<p>Once the installation is successful, you can start using CASPR.</p>
                 
                   
                 
