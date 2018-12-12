@@ -358,7 +358,7 @@
                 
                 <h1 id="installation-guide">Installation Guide</h1>
 <p>CASPR is being developed and tested under Linux and macOS.</p>
-<p>In order to use it, first you need to download the repository:</p>
+<p>In order to use it, first you need to clone the repository:</p>
 <pre><code class="bash">git clone https://github.com/judithbergada/CASPRg.git
 </code></pre>
 
@@ -375,27 +375,24 @@
 <li><code>vispr</code></li>
 <li><code>R</code></li>
 </ul>
-<p>The easiest way to obtain them is to use <a href="https://conda.io/miniconda.html">Miniconda</a>, which allows to create an isolated environment. To install miniconda, please follow the <a href="https://conda.io/docs/user-guide/install/index.html">instuctions</a> considering the operative system and architecture of your computer.</p>
-<p>Once Miniconda is installed, you can download all the packages from a single command like this:</p>
-<pre><code class="bash">conda env create -n casprg -f environment.yml
+<p>The easiest way to download them is to use <a href="https://conda.io/miniconda.html">Miniconda</a>, which allows to create an isolated environment. To install miniconda, please follow the <a href="https://conda.io/docs/user-guide/install/index.html">instuctions</a>.</p>
+<p>Once Miniconda is installed, you can obtain all the packages from a single command like this:</p>
+<pre><code class="bash">conda env create -n caspr -f environment.yml
 </code></pre>
 
-<p>This will install the software defined in the <code>environement.yml</code> file, ensuring that the pipeline will run smoothly.</p>
+<p>This option is recommended because it will install the software defined in the <code>environement.yml</code> file, ensuring that the pipeline works smoothly.</p>
 <p>Alternatively, you can also run:</p>
-<pre><code class="bash">conda create -n casprg python=3.5
-conda install -n casprg -c bioconda cutadapt
-conda install -n casprg -c bioconda star
-conda install -n casprg -c bioconda samtools
-conda install -n casprg -c bioconda vispr
-conda install -n casprg -c bioconda mageck
-conda install -n casprg -c bioconda mageck-vispr
-conda install -n casprg r
-conda install -n casprg -c biobuilds fastx-toolkit
-conda install -n casprg -c bioconda fastqc
+<pre><code class="bash">conda create -n caspr python=3.5
+conda install -n caspr -c bioconda cutadapt
+conda install -n caspr -c bioconda star
+conda install -n caspr -c bioconda samtools
+conda install -n caspr -c bioconda vispr
+conda install -n caspr -c bioconda mageck
+conda install -n caspr -c bioconda mageck-vispr
+conda install -n caspr r
+conda install -n caspr -c biobuilds fastx-toolkit
+conda install -n caspr -c bioconda fastqc
 </code></pre>
-
-<p>[//]: # ## R Packages</p>
-<p>[//]: # Problems with R. Tracking bug: https://github.com/conda/conda/issues/6183.</p>
                 
                   
                 
