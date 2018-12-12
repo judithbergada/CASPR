@@ -300,4 +300,4 @@ not only starting rom the raw sequencing data, but also beginning from a table
 of read counts.
 
 If you arrived here, you are totally ready to use CASPR with your CRISPR data.
-Good luck!
+Enjoy!
