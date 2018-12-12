@@ -499,7 +499,8 @@ CASPR \
 <li><code>Text file with the experimental design (control and treated samples)</code></li>
 </ul>
 <p>Moreover, you may provide a text file with positive, negative and neutral controls, if interested.</p>
-<p>Before starting the test, check that the data is available in the expected formats:</p>
+<p>In this example, we want to analyse the two replicates separately in two different tests, and we want to perform a third test using the replicates together.</p>
+<p>Before starting the tests, check that the data is available in the expected formats. Pay special attention on the experimental design file, which allows to obtain the results as required:</p>
 <pre><code class="bash">cat $HOME/CASPR/testdata/example_sgrna/expdesign.txt
 head $HOME/CASPR/testdata/example_sgrna/library.txt
 head $HOME/CASPR/testdata/example_sgrna/controlfile.txt
