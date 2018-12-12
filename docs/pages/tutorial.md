@@ -149,7 +149,7 @@ Please try the following:
 alias vispr="/home/jpijuan/software/miniconda3/bin/vispr"
 
 # Run VIPR server
-vispr server ./results/config*
+vispr server ./results/config* --port 5000
 # Ctrl-C to exit the server
 ```
 
