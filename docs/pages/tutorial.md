@@ -113,8 +113,16 @@ you can open them and see if they are as expected. The expected outputs are
 found in:
 
 ```bash
-ls expected_outputs/
+ls results/outputs
 ```
+
+These are the outpus generated:
+
+* [Alignment Statistics](assets/pgrna/Alignment_statistics.pdf)
+* [Log Counts](assets/pgrna/Log_counts.pdf)
+* [Selected Genes by MAGeCK](assets/pgrna/Selected_genes_MAGeCK.pdf)
+* [Selected Genes by PBNPA](assets/pgrna/Selected_genes_PBNPA.pdf)
+* [Trimming Statistics](assets/pgrna/Trimming_statistics.pdf)
 
 Moreover, you can benefit from VISPR to get interactive results on you data.
 Please try the following:
@@ -225,8 +233,16 @@ Quickly, the outputs should appear in your computer. You can open them and see
 if they look as expected. The expected outputs are found in:
 
 ```bash
-ls expected_outputs/
+ls results/outputs
 ```
+
+These are the outpus generated:
+
+* [Alignment Statistics](assets/sgrna/Alignment_statistics.pdf)
+* [Log Counts](assets/sgrna/Log_counts.pdf)
+* [Selected Genes by MAGeCK](assets/sgrna/Selected_genes_MAGeCK.pdf)
+* [Selected Genes by PBNPA](assets/sgrna/Selected_genes_PBNPA.pdf)
+* [Trimming Statistics](assets/sgrna/Trimming_statistics.pdf)
 
 Finally, let's perfom the test again using an FDR threshold of 0.1. For that,
 you do not need to execute all the previous steps, only the assessment of gene
