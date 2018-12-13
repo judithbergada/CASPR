@@ -144,8 +144,8 @@ Moreover, you can benefit from VISPR to get interactive results on you data.
 Please try the following:
 
 ```bash
-# Because the VISPR installation in the cluster is broken, we are going to run
-# a custom one.
+# Because the VISPR installation in the cluster is not ready yet,
+# we are going to run a custom one.
 alias vispr="/home/jpijuan/software/miniconda3/bin/vispr"
 
 # Run VIPR server
@@ -153,7 +153,7 @@ vispr server ./results/config* --port 5000
 # Ctrl-C to exit the server
 ```
 
-The command runs a web server that will serve a webpage with nice visualization of the results.
+The command runs a web server that will create a webpage with nice visualization of the results.
 If you are working from a cluster, you will also need to run this command locally on your computer:
 
 ```bash
@@ -288,7 +288,7 @@ It can be done like this:
 
 ```bash
 CASPR \
-  --start test -y 0.1 \
+  --start test -y 0.1 -k \
   --output-dir ./results \
   --controls controlfile.txt \
   --exper-design expdesign.txt
@@ -299,5 +299,25 @@ the plots. This option ensures that you can perform analyses of CRISPR screens
 not only starting rom the raw sequencing data, but also beginning from a table
 of read counts.
 
-If you arrived here, you are totally ready to use CASPR with your CRISPR data.
+If you kept the intermediate files in this last step, you can visualize again
+the results with VISPR:
+
+```bash
+# Because the VISPR installation in the cluster is not ready yet,
+# we are going to run a custom one.
+alias vispr="/home/jpijuan/software/miniconda3/bin/vispr"
+
+# Run VIPR server
+vispr server ./results/config* --port 6000
+# Ctrl-C to exit the server
+```
+And copy this command locally in your computer:
+
+```bash
+ssh -f {user}@binfservms01.unibe.ch -L 6000:localhost:6000 -N
+```
+
+The data should be already available at this [webpage](http://127.0.0.1:6000).
+
+Now that you arrived here, you are totally ready to use CASPR with your CRISPR data.
 Enjoy!
