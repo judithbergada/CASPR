@@ -2,8 +2,8 @@ site_name: CASPR
 docs_dir: pages
 site_dir: site
 
-repo_name: 'judithbergada/CASPRg'
-repo_url: 'https://github.com/judithbergada/CASPRg'
+repo_name: 'judithbergada/CASPR'
+repo_url: 'https://github.com/judithbergada/CASPR'
 
 # Copyright
 copyright: 'Copyright &copy; 2018 Judith Bergadà Pijuan'
@@ -28,4 +28,4 @@ theme:
 extra:
   social:
     - type: github-alt
-      link: https://github.com/judithbergada/CASPRg
+      link: https://github.com/judithbergada/CASPR
