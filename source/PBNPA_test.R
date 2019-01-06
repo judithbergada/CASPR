@@ -3,7 +3,7 @@
 # Relationship between input parameters and the ones used here
 inputdata = commandArgs(trailingOnly=TRUE)
 controls = inputdata[1]
-fdr_required = inputdata[2]
+fdr_required = as.numeric(inputdata[2])
 countsfile = inputdata[3]
 expdesign = inputdata[4]
 idx_sample = inputdata[5]

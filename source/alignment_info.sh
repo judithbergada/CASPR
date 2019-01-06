@@ -8,17 +8,17 @@
 q=$1; f=$2; b=$3; l=$4; currentdir=$5
 
 # Compute length of the guide RNAs
-lguide1=$(awk 'NR==1 {print $2}' $l | wc -c)
+lguide1=$(awk 'NR==1 {print $3}' $l | wc -c)
 let lguide1=(${lguide1}-1)
-lguide2=$(awk 'NR==1 {print $3}' $l | wc -c)
+lguide2=$(awk 'NR==1 {print $4}' $l | wc -c)
 let lguide2=(${lguide2}-1)
 # Compute total length
 let total_len=(${lguide1}+${lguide2}-1)
 
 
 for fastqfile in $f; do
-  # Take only the SampleName, ignoring _reverse and directory
-  name=$(echo ${fastqfile} | sed 's/_forward.fastq.*//g' | sed 's/.*\///g')
+  # Take only the name of the sample file, ignoring directory
+  name=$(echo ${fastqfile} | sed 's/.*\///g')
 
   # ________________NEEDED FOR FIRST GRAPH________________
 

@@ -2,7 +2,7 @@
 
 # Relationship between input parameters and the ones used here
 inputargs = commandArgs(trailingOnly=TRUE)
-fdr = inputargs[1]
+fdr = as.numeric(inputargs[1])
 outputdir = inputargs[2]
 inputed_ctrls = inputargs[3]
 filenames = inputargs[4:length(inputargs)]

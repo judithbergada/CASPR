@@ -61,7 +61,7 @@ fastqnames=$(head -n1 ${q}/outputs/table.counts.txt | cut -f 3-)
 fastqnames=$(echo ",$fastqnames," | tr "[:cntrl:]" ",")
 for samp in $allnames; do
   if [[ ! $fastqnames =~ ",$samp," ]]; then
-    echo "Error: SampleName's of experimental design not found in fastq files"
+    echo "Error: sample names of experimental design not found in fastq files"
     exit 2
   fi
 done

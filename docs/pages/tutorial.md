@@ -28,10 +28,10 @@ You can now check that CASPR is available:
 CASPR --help
 ```
 
-## Ubelix Cluster: Useful Information
+## IBU Cluster (Interfaculty Bioinformatics Unit, UniBe): Useful Information
 
 CASPR employs several software packages to carry out its different functions,
-but working from the Ubelix cluster has some advantages: all of the required
+but working from the IBU cluster has some advantages: all of the required
 tools are already installed. Therefore, please make sure you load everything
 in advance:
 
@@ -144,8 +144,9 @@ Moreover, you can benefit from VISPR to get interactive results on you data.
 Please try the following:
 
 ```bash
-# Because the VISPR installation in the cluster is not ready yet,
-# we are going to run a custom one.
+# Because the VISPR installation in the IBU cluster is not ready yet,
+# users of IBU cluster will need this additional command.
+# If you are not using IBU cluster, you can ignore it.
 alias vispr="/home/jpijuan/software/miniconda3/bin/vispr"
 
 # Run VIPR server
@@ -303,8 +304,9 @@ If you kept the intermediate files in this last step, you can visualize again
 the results with VISPR:
 
 ```bash
-# Because the VISPR installation in the cluster is not ready yet,
-# we are going to run a custom one.
+# Because the VISPR installation in the IBU cluster is not ready yet,
+# users of IBU cluster will need this additional command.
+# If you are not using IBU cluster, you can ignore it.
 alias vispr="/home/jpijuan/software/miniconda3/bin/vispr"
 
 # Run VIPR server

@@ -14,13 +14,9 @@ mkdir "${q}/qualitycontrol" && chmod +xwr "${q}/qualitycontrol"
 printf "\nPerforming the Quality Control of the fastq files\n"
 
 # Perform quality control using FastQC tool
-for fastqfile in $f; do
-  fastqc -t $t -o "${q}/qualitycontrol" $fastqfile
-done
+fastqc -t $t -o "${q}/qualitycontrol" $f
 if [[ $r != "" ]]; then
-  for fastqfile in $r; do
-    fastqc -t $t -o "${q}/qualitycontrol" $fastqfile
-  done
+  fastqc -t $t -o "${q}/qualitycontrol" $r
 fi
 
 ##########

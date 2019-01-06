@@ -41,12 +41,12 @@ Optional arguments:
     -r, --fastq-reverse:
                 fastq files with reverse reads (only for pgRNAs).
                 Accepted formats: fastq or fastq.gz.
-                Required name: SampleName_reverse.fastq(.gz).
                 Use commas to separate files; write them in quotes.
-                Example: \"ctrl1_reverse.fastq, d1_reverse.fastq\".
+                Example: \"ctrl1_2.fastq, d1_reverse.fq.gz\".
+                The order of the samples must be the same as in -f.
                 If not provided, only sgRNAs will be considered.
     -c, --controls:
-                txt file with 2 columns.
+                txt file with 2 columns, without header.
                 1st column: name of the control genes.
                 2nd column: type of control.
                 Use: Positive, Negative or Neutral.
@@ -107,21 +107,21 @@ Required arguments:
     -f, --fastq-forward:
                 fastq files with forward reads.
                 Accepted formats: fastq or fastq.gz.
-                Required name: SampleName_forward.fastq(.gz).
                 Use commas to separate files; write them in quotes.
-                Example: \"ctrl1_forward.fastq, d1_forward.fastq\".
+                Example: \"ctrl1_1.fastq, d1_forward.fq.gz\".
     -l, --library:
-                txt file with 2 or 3 columns, without header.
-                1st column: IDs of the guide RNAs. Required format:
-                NameOfGene_gRNAtag. Example: BRCA1_guide1.
-                2nd column: Sequence of the 1st guide RNA.
-                3nd column: Sequence of the 2nd guide RNA, if pgRNAs.
+                txt file with 3 or 4 columns, without header.
+                1st column: IDs of the guide RNAs.
+                2nd column: Gene names.
+                3rd column: Sequence of the 1st guide RNA.
+                4th column: Sequence of the 2nd guide RNA, if pgRNAs.
     -e, --exper-design:
                 txt file with 3 columns, without header.
-                1st column: Eeach row contains a SampleName.
-                SampleName's must correspond to the fastq files names.
+                1st column: Eeach row contains a sample.
+                Samples must correspond to the forward fastq files names.
                 2nd column: Index (integer) showing which samples
-                (replicates) are the same in different periods of time.
+                are the same in different periods of time (same index)
+                and which samples are replicates (different index).
                 3rd column: Condition of each sample. Required:
                 \"control\" or \"treated\" followed by a number.
                 Example:    ctr1  1  control1
@@ -137,13 +137,12 @@ Required arguments:
 
 Important:
     The number of input files in -f and -r must be the same (for pgRNAs).
-    The SampleName's of -f and -r files must be identical.
     Forward and reverse fastq files must be provided in the same order.
 
     If --start test, only --exper-design is mandatory, with --output-dir,
     --fdr-threshold and --controls --output-dir being optional.
-    In this case, file named output-dir/outputs/table.counts.txt MUST exist.
-    The names of its columns must correspond to SampleNames in --exper-design.
+    In this case, a file named output-dir/outputs/table.counts.txt MUST exist.
+    The names of its columns must correspond to names used in --exper-design.
 """
 }
 
@@ -208,40 +207,14 @@ r=$(echo $r | tr "," " ")
 f=$(echo $f | tr "," " ")
 
 # If single guides are used, set --orientation always to 53
+# Set also --info-alignment to 0, and set --bases-aligned to 20
 if [[ $r == "" ]]; then
   o=53
   i=0
   if [[ $b == 0 ]]; then b=20; fi
-else
+else # If pgRNAs are used, set --bases-aligned to 30
   if [[ $b == 0 ]]; then b=30; fi
 fi
-
-########################################
-## Create folders to save final files ##
-########################################
-
-# Check that output directory exists
-ls $q >/dev/null 2>&1
-if [[ $(echo $?) != 0 ]]; then # Exit if there has been an error
-  echo "Error: output directory doesn't exist"
-  exit 1
-fi
-# Make sure that last character of output directory is "/"
-if [[ $(echo "${q: -1}") != "/" ]]; then
-  q="$q/"
-fi
-
-# Create all folders that will be needed inside output directory
-if [[ $start == "" || $start == "qc" ]]; then
-  rm -rf "${q}/intermediate" && \
-  mkdir "${q}/intermediate" && chmod +xwr "${q}/intermediate"
-  rm -rf "${q}/outputs" && \
-  mkdir "${q}/outputs" && chmod +xwr "${q}/outputs"
-else
-  mkdir -p "${q}/intermediate" && chmod +xwr "${q}/intermediate"
-  mkdir -p "${q}/outputs" && chmod +xwr "${q}/outputs"
-fi
-
 
 ########################################
 # Execute the needed scripts in order ##
@@ -257,7 +230,7 @@ if [[ $start != "test" ]]; then
   if [[ $(echo $?) != 0 ]]; then exit 1; fi # Exit if there has been an error.
 else
   bash $currentdir/basic_errors_test.sh \
-    $e $y $q "$c" # Inputs
+    $e $y $q "$c" "$pause" # Inputs
   if [[ $(echo $?) != 0 ]]; then exit 1; fi # Exit if there has been an error.
 fi
 
@@ -349,10 +322,17 @@ if [[ $(cat ${q}/intermediate/err.txt | grep -oEi "^ERROR") != "" ]]; then
   exit 1
 fi
 
-# Visualize some of the results at the guides level
 printf "\nGenerating plots to visualize general results\n"
+# Combine results of MAGeCK and PBNPA
+Rscript --vanilla $currentdir/combine_res.R \
+        $y $q ${q}/outputs/results*summary.txt \
+|| (echo "Problem with R. Check if the R version is correct." && exit 1)
+if [[ $(echo $?) != 0 ]]; then exit 1; fi # Exit if there has been an error.
+echo "Results of MAGeCK and PBNPA were combined successfully"
+
+# Visualize some of the results at the guides level
 Rscript --vanilla $currentdir/create_graphs.R \
-        $q "$c" ${q}/intermediate/*sgrna_summary.txt \
+        $q $y ${q}/intermediate/*sgrna_summary.txt \
 || (echo "Problem with R. Check if the R version is correct." && exit 1)
 if [[ $(echo $?) != 0 ]]; then exit 1; fi # Exit if there has been an error.
 echo "Plots were created successfully"

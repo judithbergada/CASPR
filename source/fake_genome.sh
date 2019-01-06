@@ -16,13 +16,15 @@ printf "\nCreating fake genome with the guide RNAs\n"
 # Check if sgRNAs or pgRNAs
 ncolslib=$(head -n1 "${q}/intermediate/useful_information.txt" | \
             awk '{print $2}')
-if [[ $ncolslib == 3 ]]; then
-  cat $l | awk '{print $1, $3 $2}' > "${q}/intermediate/sgRNA2.sgRNA1_map.txt"
+if [[ $ncolslib == 4 ]]; then
+  cat $l | awk -v OFS='\t' '{print $1, $2, $4 $3}' \
+            > "${q}/intermediate/sgRNA2.sgRNA1_map.txt"
 else
-  cp $l "${q}/intermediate/sgRNA2.sgRNA1_map.txt"
+  cat $l | awk -v OFS='\t' '{print $1, $2, $3}' \
+            > "${q}/intermediate/sgRNA2.sgRNA1_map.txt"
 fi
 # Transform the genome to a fasta format
-sort -u -k2 "${q}/intermediate/sgRNA2.sgRNA1_map.txt" | \
+sort -u -k3 "${q}/intermediate/sgRNA2.sgRNA1_map.txt" | \
 sed 's/^[\t]*/>/g;s/\s/\n/g' > "${q}/genome/genome.fasta"
 
 # Index genome

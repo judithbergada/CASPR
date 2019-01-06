@@ -3,7 +3,7 @@
 # Relationship between input parameters and the ones used here
 inputargs = commandArgs(trailingOnly=TRUE)
 outputdir = inputargs[1]
-inputed_ctrls = inputargs[2]
+fdr = as.numeric(inputargs[2])
 grnainfofiles = inputargs[3:length(inputargs)]
 
 # Open pdf
@@ -163,6 +163,10 @@ for (gfile in grnainfofiles[1:(length(grnainfofiles))]) {
     lines(seq(1,length(cumul_dist), by = 1), cumul_dist,
           col = used_colors_3[jcol-2])
     used_legend[jcol-2] = colnames(counts_second)[jcol]
+    if (nchar(used_legend[jcol-2]) > 10) {
+      used_legend[jcol-2] = paste(
+        substr(used_legend[jcol-2], 1, 7), "...", sep="")
+    }
   }
   legend(x = "topleft", bty = "n", pch = 19,
          legend = used_legend,
@@ -179,108 +183,119 @@ for (gfile in grnainfofiles[1:(length(grnainfofiles))]) {
   layout(m)
 
    # Volcano 1
-   plot(ginfo$LFC[ginfo$high_in_treatment == "False"],
-       -log10(ginfo$p.low)[ginfo$high_in_treatment == "False"],
-       main = paste(
-            "Volcano plot of gRNAs with MAGeCK, test", savename, sep = ""),
-       pch = 19, col = "gray",
-       xlim = c(min(ginfo$LFC), max(ginfo$LFC)),
-       ylim = c(0, 10),
-       xlab = "Log2 fold-change",
-       ylab = "-Log10(p-value)")
-  points(ginfo$LFC[ginfo$high_in_treatment == "True"],
-       -log10(ginfo$p.high)[ginfo$high_in_treatment == "True"],
-       main = paste("Volcano plot, test", savename, sep = ""),
-       pch = 19, col = "gray")
-  abline(v=0, col = "dimgray", lty = 5)
-
-  # Add controls to the graph
-  for (j in 1:nrow(hits)){
-    points(ginfo$LFC[ginfo$Gene %in% hits$group_id[j] &
-                  ginfo$high_in_treatment == "False"],
-           -log10(ginfo$p.low)[ginfo$Gene %in% hits$group_id[j] &
-                  ginfo$high_in_treatment == "False"],
-           pch = 19, col = used_colors[j], cex = 0.7)
-  }
-  for (j in 1:nrow(hits)){
-    points(ginfo$LFC[ginfo$Gene %in% hits$group_id[j] &
-                  ginfo$high_in_treatment == "True"],
-           -log10(ginfo$p.high)[ginfo$Gene %in% hits$group_id[j] &
-                  ginfo$high_in_treatment == "True"],
-           pch = 19, col = used_colors[j], cex = 0.7)
-  }
-  for (k in 1:nrow(hitstwo)){
-    points(ginfo$LFC[ginfo$Gene %in% hitstwo$Gene[k] &
-                  ginfo$high_in_treatment == "False"],
-           -log10(ginfo$p.low)[ginfo$Gene %in% hitstwo$Gene[k] &
-                  ginfo$high_in_treatment == "False"],
-           pch = 19, col = used_colors[k+j], cex = 0.7)
-  }
-  for (k in 1:nrow(hitstwo)){
-    points(ginfo$LFC[ginfo$Gene %in% hitstwo$Gene[k] &
-                  ginfo$high_in_treatment == "True"],
-           -log10(ginfo$p.high)[ginfo$Gene %in% hitstwo$Gene[k] &
-                  ginfo$high_in_treatment == "True"],
-           pch = 19, col = used_colors[k+j], cex = 0.7)
-  }
-  # Add legend
-  legend(x = "bottomleft", bty = "n", pch = 19,
-         legend = c("gRNAs of selected genes"),
-         col = c("red"), x.intersp= 0.7, cex = 0.5)
-
-   # Volcano 2
    # Import information of genes
    genespath = gsub("intermediate/results_MAGeCK_.*", "", gfile)
    genesinfo = read.table(
-     paste(genespath, "/outputs/results_MAGeCK_",
-           savename, ".gene_summary.txt", sep = ""),
-     header = T, stringsAsFactors = F)
-   genesinfo$neg.p.value[genesinfo$neg.p.value < 1E-10] = 1E-10
-   genesinfo$pos.p.value[genesinfo$pos.p.value < 1E-10] = 1E-10
+     paste(genespath, "/outputs/comb_result_",
+           savename, ".txt", sep = ""),
+     header = T, stringsAsFactors = F, dec = ".")
+   genesinfo$neg.pval[genesinfo$neg.pval < 1E-10] = 1E-10
+   genesinfo$pos.pval[genesinfo$pos.pval < 1E-10] = 1E-10
 
    # Create Volcano plot
-   plot(genesinfo$neg.lfc[genesinfo$neg.p.value < genesinfo$pos.p.value],
-        -log10(genesinfo$neg.p.value)[
-                genesinfo$neg.p.value < genesinfo$pos.p.value],
+   plot(genesinfo$lfc[genesinfo$neg.pval < genesinfo$pos.pval],
+        -log10(genesinfo$neg.pval)[
+                genesinfo$neg.pval < genesinfo$pos.pval],
         main = paste(
-              "Volcano plot of genes with MAGeCK, test", savename, sep = ""),
+              "Volcano plot of genes, test", savename, sep = ""),
         pch = 19, col = "gray",
-        xlim = c(min(genesinfo$neg.lfc), max(genesinfo$pos.lfc)),
+        xlim = c(min(genesinfo$lfc), max(genesinfo$lfc)),
         ylim = c(0, min(10,
-                -log10(min(genesinfo$neg.p.value, genesinfo$pos.p.value)))),
+                -log10(min(genesinfo$neg.pval, genesinfo$pos.pval)))),
         xlab = "Log2 fold-change",
         ylab = "-Log10(p-value)")
-   points(genesinfo$pos.lfc[genesinfo$pos.p.value < genesinfo$neg.p.value],
-          -log10(genesinfo$pos.p.value)[
-                  genesinfo$pos.p.value < genesinfo$neg.p.value],
+   points(genesinfo$lfc[genesinfo$pos.pval < genesinfo$neg.pval],
+          -log10(genesinfo$pos.pval)[
+                  genesinfo$pos.pval < genesinfo$neg.pval],
           pch = 19, col = "gray")
    abline(v=0, col = "dimgray", lty = 5)
 
-   # Add controls to the graph
-   points(genesinfo$neg.lfc[genesinfo$id %in% hits$group_id &
-                  genesinfo$neg.p.value < genesinfo$pos.p.value],
-          -log10(genesinfo$neg.p.value)[genesinfo$id %in% hits$group_id &
-                  genesinfo$neg.p.value < genesinfo$pos.p.value],
+   # Add hits to the graph
+   # Add MAGeCK hits for negative selection
+   points(genesinfo$lfc[genesinfo$Gene %in% hits$group_id &
+                  genesinfo$neg.pval < genesinfo$pos.pval],
+          -log10(genesinfo$neg.pval)[genesinfo$Gene %in% hits$group_id &
+                  genesinfo$neg.pval < genesinfo$pos.pval],
           pch = 19, col = "red", cex = 0.7)
-   points(genesinfo$pos.lfc[genesinfo$id %in% hits$group_id &
-                  genesinfo$pos.p.value < genesinfo$neg.p.value],
-          -log10(genesinfo$pos.p.value)[genesinfo$id %in% hits$group_id &
-                  genesinfo$pos.p.value < genesinfo$neg.p.value],
+   # Add MAGeCK hits for positive selection
+   points(genesinfo$lfc[genesinfo$Gene %in% hits$group_id &
+                  genesinfo$pos.pval < genesinfo$neg.pval],
+          -log10(genesinfo$pos.pval)[genesinfo$Gene %in% hits$group_id &
+                  genesinfo$pos.pval < genesinfo$neg.pval],
           pch = 19, col = "red", cex = 0.7)
-   points(genesinfo$neg.lfc[genesinfo$id %in% hitstwo$Gene &
-                  genesinfo$neg.p.value < genesinfo$pos.p.value],
-          -log10(genesinfo$neg.p.value)[genesinfo$id %in% hitstwo$Gene &
-                  genesinfo$neg.p.value < genesinfo$pos.p.value],
+   # Add PBNPA hits for negative selection
+   points(genesinfo$lfc[genesinfo$Gene %in% hitstwo$Gene &
+                  genesinfo$neg.pval < genesinfo$pos.pval],
+          -log10(genesinfo$neg.pval)[genesinfo$Gene %in% hitstwo$Gene &
+                  genesinfo$neg.pval < genesinfo$pos.pval],
           pch = 19, col = "blue", cex = 0.7)
-   points(genesinfo$pos.lfc[genesinfo$id %in% hitstwo$Gene &
-                  genesinfo$pos.p.value < genesinfo$neg.p.value],
-          -log10(genesinfo$pos.p.value)[genesinfo$id %in% hitstwo$Gene &
-                  genesinfo$pos.p.value < genesinfo$neg.p.value],
+   # Add PBNPA hits for positive selection
+   points(genesinfo$lfc[genesinfo$Gene %in% hitstwo$Gene &
+                  genesinfo$pos.pval < genesinfo$neg.pval],
+          -log10(genesinfo$pos.pval)[genesinfo$Gene %in% hitstwo$Gene &
+                  genesinfo$pos.pval < genesinfo$neg.pval],
           pch = 19, col = "blue", cex = 0.7)
+   # Add hits common in both for negative selection
+   points(genesinfo$lfc[genesinfo$Gene %in% intersect(hits$group_id,
+          hitstwo$Gene) & genesinfo$neg.pval < genesinfo$pos.pval],
+          -log10(genesinfo$neg.pval)[genesinfo$Gene %in% intersect(
+            hits$group_id, hitstwo$Gene) &
+            genesinfo$neg.pval < genesinfo$pos.pval],
+          pch = 19, col = "green", cex = 0.7)
+   # Add hits common in both for positive selection
+   points(genesinfo$lfc[genesinfo$Gene %in% intersect(hits$group_id,
+            hitstwo$Gene) & genesinfo$pos.pval < genesinfo$neg.pval],
+           -log10(genesinfo$pos.pval)[genesinfo$Gene %in% intersect(
+             hits$group_id, hitstwo$Gene) &
+             genesinfo$pos.pval < genesinfo$neg.pval],
+           pch = 19, col = "green", cex = 0.7)
    # Add legend
    legend(x = "bottomleft", bty = "n", pch = 19,
-          legend = c("Selected genes MAGeCK", "Selected genes PBNPA"),
-          col = c("red", "blue"), x.intersp= 0.7, cex = 0.5)
+          legend = c(
+            "Selected genes MAGeCK",
+            "Selected genes PBNPA",
+            "Selected genes M + P"),
+          col = c("red", "blue", "green"), x.intersp= 0.7, cex = 0.5)
+
+   # Volcano 2
+   # Determine hits from combined outputs
+   hits_comb = genesinfo[genesinfo$neg.fdr < fdr | genesinfo$pos.fdr < fdr, 1]
+
+   # Create Volcano plot
+   plot(genesinfo$lfc[genesinfo$neg.pval < genesinfo$pos.pval],
+        -log10(genesinfo$neg.pval)[
+                genesinfo$neg.pval < genesinfo$pos.pval],
+        main = paste(
+              "Volcano plot of genes, test", savename, sep = ""),
+        pch = 19, col = "gray",
+        xlim = c(min(genesinfo$lfc), max(genesinfo$lfc)),
+        ylim = c(0, min(10,
+                -log10(min(genesinfo$neg.pval, genesinfo$pos.pval)))),
+        xlab = "Log2 fold-change",
+        ylab = "-Log10(p-value)")
+   points(genesinfo$lfc[genesinfo$pos.pval < genesinfo$neg.pval],
+          -log10(genesinfo$pos.pval)[
+                  genesinfo$pos.pval < genesinfo$neg.pval],
+          pch = 19, col = "gray")
+   abline(v=0, col = "dimgray", lty = 5)
+
+   # Add hits to the graph for negative selection
+   points(genesinfo$lfc[genesinfo$Gene %in% hits_comb &
+                  genesinfo$neg.pval < genesinfo$pos.pval],
+          -log10(genesinfo$neg.pval)[genesinfo$Gene %in% hits_comb &
+                  genesinfo$neg.pval < genesinfo$pos.pval],
+          pch = 19, col = "purple", cex = 0.7)
+   # Add hits to the graph for positive selection
+   points(genesinfo$lfc[genesinfo$Gene %in% hits_comb &
+                  genesinfo$pos.pval < genesinfo$neg.pval],
+          -log10(genesinfo$pos.pval)[genesinfo$Gene %in% hits_comb &
+                  genesinfo$pos.pval < genesinfo$neg.pval],
+          pch = 19, col = "purple", cex = 0.7)
+
+   # Add legend
+   legend(x = "bottomleft", bty = "n", pch = 19,
+          legend = c("Selected genes with combined FDRs"),
+          col = c("purple"), x.intersp= 0.7, cex = 0.5)
 }
 
 message = dev.off()

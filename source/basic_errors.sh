@@ -79,8 +79,36 @@ if [[ $(echo $?) == 127 ]]; then
 fi
 echo "All of the required programs are properly installed"
 
+########################################
+## Create folders to save final files ##
+########################################
 
-# Check if the inputs are given in the expected formats:
+# Check that output directory exists
+ls $q >/dev/null 2>&1
+if [[ $(echo $?) != 0 ]]; then # Exit if there has been an error
+  echo "Error: output directory doesn't exist"
+  exit 1
+fi
+# Make sure that last character of output directory is "/"
+if [[ $(echo "${q: -1}") != "/" ]]; then
+  q="$q/"
+fi
+
+# Create all folders that will be needed inside output directory
+if [[ $start == "" || $start == "qc" ]]; then
+  rm -rf "${q}/intermediate" && \
+  mkdir "${q}/intermediate" && chmod +xwr "${q}/intermediate"
+  rm -rf "${q}/outputs" && \
+  mkdir "${q}/outputs" && chmod +xwr "${q}/outputs"
+else
+  mkdir -p "${q}/intermediate" && chmod +xwr "${q}/intermediate"
+  mkdir -p "${q}/outputs" && chmod +xwr "${q}/outputs"
+fi
+
+###########################################################
+## Check if the inputs are given in the expected formats ##
+###########################################################
+
 # Check that the forward files are indeed provided
 if [[ $f == "" ]]; then
   echo "Error: forward fastq files are required"
@@ -89,21 +117,42 @@ fi
 
 # Check if the library file is given as input and if it exists
 if [ -z $l ]; then
-  echo "Error: cannot access the library. Check the format of inputs"
+  echo "Error: library is missing. Check the format of inputs"
   exit 1
 fi
 if [ ! -f $l ]; then
   echo "Error: the library file doesn't exist"
   exit 1
 fi
+# Check if the library file has hidden characters at the end, and remove them
+cat $l | tr -d "\r" > ${q}/libnotused.txt
+mv ${q}/libnotused.txt $l
+# Replace any white space between columns by a tab
+cat $l | tr "[:blank:]" "\t" > ${q}/libnotused.txt
+mv ${q}/libnotused.txt $l
+# Count the number of columns of the library
+ncolslib=$(head -n1 $l | awk '{print NF}')
+printf "num_cols:\t${ncolslib}\n" > "${q}/intermediate/useful_information.txt"
 
 # Check if the experimental design file is given as input and if it exists
 if [ -z $e ]; then
-  echo "Error: cannot access experimental design. Check the format of inputs"
+  echo "Error: experimental design is missing. Check the format of inputs"
   exit 1
 fi
 if [ ! -f $e ]; then
   echo "Error: the experimental design file doesn't exist"
+  exit 1
+fi
+# Check if the exper.design file has hidden characters; remove them
+cat $e | tr -d "\r" > ${q}/expnotused.txt
+mv ${q}/expnotused.txt $e
+# Replace any white space between columns by a tab
+cat $e | tr "[:blank:]" "\t" > ${q}/expnotused.txt
+mv ${q}/expnotused.txt $e
+# Count the number of columns of the experimental design
+ncolsexp=$(head -n1 $e | awk '{print NF}')
+if [[ $ncolsexp != 3 ]]; then
+  echo "Error: the experimental design file doesn't have 3 columns"
   exit 1
 fi
 
@@ -113,97 +162,58 @@ if [[ $c != "" ]]; then
     echo "Error: the controls file doesn't exist"
     exit 1
   fi
+  # Check if the controls file has hidden characters; remove them
+  cat $c | tr -d "\r" > ${q}/ctrlsnotused.txt
+  mv ${q}/ctrlsnotused.txt $c
+  # Replace any white space between columns by a tab
+  cat $c | tr "[:blank:]" "\t" > ${q}/ctrlsnotused.txt
+  mv ${q}/ctrlsnotused.txt $c
   # Count the number of columns of the controls file
   ncolscontrol=$(head -n1 $c | awk '{print NF}')
   if [[ $ncolscontrol != 2 ]]; then
     echo "Error: the controls file doesn't have 2 columns"
     exit 1
   fi
-  # Check if the controls file has hidden characters; remove them
-  cat $c | tr -d "\r" > ${q}/ctrlsnotused.txt
-  mv ${q}/ctrlsnotused.txt $c
 fi
 
-# Check if the library file has hidden characters at the end, and remove them
-cat $l | tr -d "\r" > ${q}/libnotused.txt
-mv ${q}/libnotused.txt $l
-# Count the number of columns of the library
-ncolslib=$(head -n1 $l | awk '{print NF}')
-printf "num_cols:\t${ncolslib}\n" > "${q}/intermediate/useful_information.txt"
-
-# Check if the exper.design file has hidden characters; remove them
-cat $e | tr -d "\r" > ${q}/expnotused.txt
-mv ${q}/expnotused.txt $e
-# Count the number of columns of the experimental design
-ncolsexp=$(head -n1 $e | awk '{print NF}')
-if [[ $ncolsexp != 3 ]]; then
-  echo "Error: the experimental design file doesn't have 3 columns"
-  exit 1
-fi
-
-# Check that -r fastq files contain SampleName_reverse.fastq(.gz)
+# Check that -r fastq files and the number of columns in library are correct
 if [[ $r != "" ]]; then
-  rev="_reverse.fastq.*"
-  namerev=" "
   for fastqfile in $r; do
-    if [[ ! $fastqfile =~ $rev ]]; then
-      echo "Error: problem with the names of files: _reverse.fastq not found"
-      exit 1
-    fi
-    # Take the SampleName's of all the fastq files
-    name=$(echo ${fastqfile} | sed 's/_reverse.fastq.*//g' | sed 's/.*\///g')
-    namerev="${namerev}${name} "
     # Check that the fastq files do exist
     if [ ! -f ${fastqfile} ]; then
       echo "Error: some of the reverse fastq files don't exist"
       exit 1
     fi
-    # Check that the library has three columns
-    if [[ $ncolslib != 3 ]]; then
-      echo "Error: the library doesn't have 3 columns, as needed for pgRNAs"
+    # Check that the library has 4 columns
+    if [[ $ncolslib != 4 ]]; then
+      echo "Error: the library doesn't have 4 columns, as needed for pgRNAs"
       exit 1
     fi
   done
-  echo "The reverse fastq files are found"
-  echo "The names of the reverse fastq files are in the correct format"
+  echo "The reverse fastq files are correct"
 else
-  if [[ $ncolslib != 2 ]]; then
-    echo "Error: the library doesn't have 2 columns, as needed for sgRNAs"
+  if [[ $ncolslib != 3 ]]; then
+    echo "Error: the library doesn't have 3 columns, as needed for sgRNAs"
     exit 1
   fi
 fi
 
-# Check that -f fastq files contain SampleName_forward.fastq(.gz)
-fwd="_forward.fastq.*"
-namefwd=" "
+# Check that -f fastq files are correct
 for fastqfile in $f; do
-  if [[ ! $fastqfile =~ $fwd ]]; then
-    echo "Error: problem with the names of files: _forward.fastq not found"
-    exit 1
-  fi
-  # Take the SampleName's of all the fastq files
-  name=$(echo ${fastqfile} | sed 's/_forward.fastq.*//g' | sed 's/.*\///g')
-  namefwd="${namefwd}$name "
   # Check that the fastq files do exist
   if [ ! -f ${fastqfile} ]; then
     echo "Error: some of the forward fastq files don't exist"
     exit 1
   fi
 done
-echo "The forward fastq files are found"
-echo "The names of the forward fastq files are in the correct format"
+echo "The forward fastq files are correct"
 
+# Check that the number of forward and reverse fastq files is the same
 if [[ $r != "" ]]; then
-  # Check that the number of forward and reverse fastq files is the same
   rev=$(echo $r | wc -w)
   fwd=$(echo $f | wc -w)
   if [[ ! $rev -eq $fwd ]]; then
     echo "Error: the number of forward and reverse fastq files is different"
-    exit 1
-  fi
-  # Check that the SampleName's of the forward and reverse reads are the same
-  if [[ ! $namerev == $namefwd ]]; then
-    echo "Error: the forward and reverse fastq files have different SampleName"
     exit 1
   fi
   echo "The number of forward and reverse fastq files is the same"
