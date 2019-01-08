@@ -522,8 +522,8 @@ mkdir results
 
 # Run the tool
 CASPR \
-  -f &quot;week0.1_forward.fastq.gz, week4.1_forward.fastq.gz&quot; \
-  -r &quot;week0.1_reverse.fastq.gz, week4.1_reverse.fastq.gz&quot; \
+  -f &quot;week0.1_1.fastq.gz, week4.1_1.fastq.gz&quot; \
+  -r &quot;week0.1_2.fastq.gz, week4.1_2.fastq.gz&quot; \
   --library library.txt \
   -y 0.25 -k \
   --output-dir ./results \
@@ -593,8 +593,8 @@ with the <code>-k</code> argument, neither the previous nor the next steps will 
 necessary anymore.</p>
 <p>You can find a solution to quickly finish the user case here:</p>
 <pre><code class="bash">CASPR \
-  -f &quot;week0.1_forward.fastq.gz, week4.1_forward.fastq.gz&quot; \
-  -r &quot;week0.1_reverse.fastq.gz, week4.1_reverse.fastq.gz&quot; \
+  -f &quot;week0.1_1.fastq.gz, week4.1_1.fastq.gz&quot; \
+  -r &quot;week0.1_2.fastq.gz, week4.1_2.fastq.gz&quot; \
   --library library.txt \
   -i --start map --pause map -y 0.25 -k \
   --output-dir ./results \
