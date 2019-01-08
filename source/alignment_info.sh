@@ -18,7 +18,8 @@ let total_len=(${lguide1}+${lguide2}-1)
 
 for fastqfile in $f; do
   # Take only the name of the sample file, ignoring directory
-  name=$(echo ${fastqfile} | sed 's/.*\///g')
+  name=$(echo ${fastqfile} | sed 's/.*\///g' | \
+        sed 's/\.gz//g' | sed 's/\.fastq//g' | sed 's/\.fq//g')
 
   # ________________NEEDED FOR FIRST GRAPH________________
 

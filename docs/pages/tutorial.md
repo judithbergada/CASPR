@@ -78,7 +78,7 @@ ls -al .
 cat expdesign.txt
 head library.txt
 head controlfile.txt
-zcat < week0.1_forward.fastq.gz | head
+zcat < week0.1_1.fastq.gz | head
 ```
 
 Now you are ready to run the example. If you are not sure about the commands,
