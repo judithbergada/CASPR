@@ -216,13 +216,16 @@ if [[ $info == 1 ]]; then
 fi
 
 # Remove any file introduced by aligner and not needed
-rm -f ${q}/temporal*
-rm -rf ${q}/temporal*
 STAR --runThreadN $t \
   --runMode alignReads \
   --genomeDir "${q}/genome" \
   --genomeLoad Remove \
+  --outTmpDir "${q}/temporal" \
+  --outFileNamePrefix "${q}/removalprocess" \
   --limitBAMsortRAM 10000000000
+rm -rf ${q}/temporal*
+rm -f ${q}/temporal*
+rm ${q}/removalprocess*
 
 ##########
 ## DONE ##
