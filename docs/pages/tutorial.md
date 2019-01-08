@@ -124,7 +124,7 @@ These are the outpus generated:
 
 <img src="../assets/pgrna/Alignment_statistics.png" alt="Alignment Statistics" width="40%">
 
-* [Comparison of MAGeCK and PBNPA](assets/sgrna/Comp_MAGeCK_PBNPA.pdf)
+* [Comparison of MAGeCK and PBNPA](assets/pgrna/Comp_MAGeCK_PBNPA.pdf)
 
 <img src="../assets/sgrna/Comp_MAGeCK_PBNPA.png" alt="Comparison MAGeCK-PBNPA" width="40%">
 
