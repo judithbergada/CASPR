@@ -126,7 +126,7 @@ These are the outpus generated:
 
 * [Comparison of MAGeCK and PBNPA](assets/pgrna/Comp_MAGeCK_PBNPA.pdf)
 
-<img src="../assets/sgrna/Comp_MAGeCK_PBNPA.png" alt="Comparison MAGeCK-PBNPA" width="40%">
+<img src="../assets/pgrna/Comp_MAGeCK_PBNPA.png" alt="Comparison MAGeCK-PBNPA" width="40%">
 
 * [Log Counts](assets/pgrna/Log_counts.pdf)
 
