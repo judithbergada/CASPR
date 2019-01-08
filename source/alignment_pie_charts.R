@@ -114,7 +114,7 @@ if(sum(slices)>0){
   par(xpd=FALSE)
 }
 # Add title to the page and close pdf
-mtext(paste("Fastq files: ", name, sep=""),
+mtext(paste("Files: ", name, sep=""),
       outer=TRUE, cex=1, line=-1.5)
 message = dev.off()
 

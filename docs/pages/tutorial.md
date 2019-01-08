@@ -228,7 +228,7 @@ obtain the results as required:
 cat expdesign.txt
 head library.txt
 head controlfile.txt
-zcat < week0.1_forward.fastq.gz | head
+zcat < week0.1.fastq.gz | head
 ```
 
 At this point, you are probably ready to try the analysis yourself. To get nicer
@@ -242,7 +242,7 @@ mkdir results
 
 # Run the tool
 CASPR \
-  -f "week0.1_forward.fastq.gz, week0.2_forward.fastq.gz, week4.1_forward.fastq.gz, week4.2_forward.fastq.gz" \
+  -f "week0.1.fastq.gz, week0.2.fastq.gz, week4.1.fastq.gz, week4.2.fastq.gz" \
   --library library.txt \
   -y 0.25 \
   --output-dir ./results \
@@ -265,21 +265,25 @@ These are the outpus generated:
 
 <img src="../assets/sgrna/Alignment_statistics.png" alt="Alignment Statistics" width="40%">
 
+* [Comparison of MAGeCK and PBNPA](assets/sgrna/Comp_MAGeCK_PBNPA.pdf)
+
+<img src="../assets/sgrna/Comp_MAGeCK_PBNPA-2.png" alt="Comparison MAGeCK-PBNPA" width="40%">
+
 * [Log Counts](assets/sgrna/Log_counts.pdf)
 
-<img src="../assets/sgrna/Log_counts-0.png" alt="Log Counts" width="50%"><img src="../assets/sgrna/Log_counts-1.png" alt="Log Counts" width="50%">
+<img src="../assets/sgrna/Log_counts-4.png" alt="Log Counts" width="50%"><img src="../assets/sgrna/Log_counts-5.png" alt="Log Counts" width="50%">
 
 * [Selected Genes by MAGeCK](assets/sgrna/Selected_genes_MAGeCK.pdf)
 
-<img src="../assets/sgrna/Selected_genes_MAGeCK-0.png" alt="Selected Genes by MAGeCK" width="33.3%"><img src="../assets/sgrna/Selected_genes_MAGeCK-1.png" alt="Selected Genes by MAGeCK" width="33.3%"><img src="../assets/sgrna/Selected_genes_MAGeCK-2.png" alt="Selected Genes by MAGeCK" width="33.3%">
+<img src="../assets/sgrna/Selected_genes_MAGeCK-6.png" alt="Selected Genes by MAGeCK" width="33.3%"><img src="../assets/sgrna/Selected_genes_MAGeCK-7.png" alt="Selected Genes by MAGeCK" width="33.3%"><img src="../assets/sgrna/Selected_genes_MAGeCK-8.png" alt="Selected Genes by MAGeCK" width="33.3%">
 
 * [Selected Genes by PBNPA](assets/sgrna/Selected_genes_PBNPA.pdf)
 
-<img src="../assets/sgrna/Selected_genes_PBNPA-0.png" alt="Selected Genes by PBNPA" width="50%"><img src="../assets/sgrna/Selected_genes_PBNPA-1.png" alt="Selected Genes by PBNPA" width="50%">
+<img src="../assets/sgrna/Selected_genes_PBNPA-4.png" alt="Selected Genes by PBNPA" width="50%"><img src="../assets/sgrna/Selected_genes_PBNPA-5.png" alt="Selected Genes by PBNPA" width="50%">
 
 * [Trimming Statistics](assets/sgrna/Trimming_statistics.pdf)
 
-<img src="../assets/sgrna/Trimming_statistics-2.png" alt="Trimming Statistics" width="33.3%"><img src="../assets/sgrna/Trimming_statistics-3.png" alt="Trimming Statistics" width="33.3%"><img src="../assets/sgrna/Trimming_statistics-4.png" alt="Trimming Statistics" width="33.3%">
+<img src="../assets/sgrna/Trimming_statistics-1.png" alt="Trimming Statistics" width="33.3%"><img src="../assets/sgrna/Trimming_statistics-3.png" alt="Trimming Statistics" width="33.3%"><img src="../assets/sgrna/Trimming_statistics-4.png" alt="Trimming Statistics" width="33.3%">
 
 Finally, let's perfom the test again using an FDR threshold of 0.1. For that,
 you do not need to execute all the previous steps, only the assessment of gene

@@ -1,8 +1,8 @@
-week0.1	1	control1
-week4.1	1	treated1
-week0.2	2	control2
-week4.2	2	treated2
-week0.1	1	control3
-week0.2	2	control3
-week4.1	1	treated3
-week4.2	2	treated3
+week0.1.fastq.gz	1	control1
+week4.1.fastq.gz	1	treated1
+week0.2.fastq.gz	2	control2
+week4.2.fastq.gz	2	treated2
+week0.1.fastq.gz	1	control3
+week0.2.fastq.gz	2	control3
+week4.1.fastq.gz	1	treated3
+week4.2.fastq.gz	2	treated3
