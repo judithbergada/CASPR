@@ -177,7 +177,7 @@ if [[ $info == 1 ]]; then
   # Check if at least one of the guide RNAs (the shortest) is aligned
   for i in ${q}/intermediate/Unmapped_*; do
     # Take name ignoring directory and format
-    nametwo=$(echo $i | sed sed 's/.*intermediate\/Unmapped_//g' | \
+    nametwo=$(echo $i | sed 's/.*intermediate\/Unmapped_//g' | \
           sed 's/\.gz//g' | sed 's/\.fastq//g' | sed 's/\.fq//g')
 
     # Perform alignment

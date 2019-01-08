@@ -90,8 +90,8 @@ mkdir results
 
 # Run the tool
 CASPR \
-  -f "week0.1_forward.fastq.gz, week4.1_forward.fastq.gz" \
-  -r "week0.1_reverse.fastq.gz, week4.1_reverse.fastq.gz" \
+  -f "week0.1_1.fastq.gz, week4.1_1.fastq.gz" \
+  -r "week0.1_2.fastq.gz, week4.1_2.fastq.gz" \
   --library library.txt \
   -y 0.25 -k \
   --output-dir ./results \
@@ -174,8 +174,8 @@ You can find a solution to quickly finish the user case here:
 
 ```bash
 CASPR \
-  -f "week0.1_forward.fastq.gz, week4.1_forward.fastq.gz" \
-  -r "week0.1_reverse.fastq.gz, week4.1_reverse.fastq.gz" \
+  -f "week0.1_1.fastq.gz, week4.1_1.fastq.gz" \
+  -r "week0.1_2.fastq.gz, week4.1_2.fastq.gz" \
   --library library.txt \
   -i --start map --pause map -y 0.25 -k \
   --output-dir ./results \

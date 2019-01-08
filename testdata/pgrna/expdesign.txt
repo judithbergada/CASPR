@@ -1,2 +1,2 @@
-week0.1	1	control1
-week4.1	1	treated1
+week0.1_1.fastq.gz	1	control1
+week4.1_1.fastq.gz	1	treated1
