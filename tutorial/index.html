@@ -637,7 +637,7 @@ obtain the results as required:</p>
 <pre><code class="bash">cat expdesign.txt
 head library.txt
 head controlfile.txt
-zcat &lt; week0.1_forward.fastq.gz | head
+zcat &lt; week0.1.fastq.gz | head
 </code></pre>
 
 <p>At this point, you are probably ready to try the analysis yourself. To get nicer
@@ -648,7 +648,7 @@ mkdir results
 
 # Run the tool
 CASPR \
-  -f &quot;week0.1_forward.fastq.gz, week0.2_forward.fastq.gz, week4.1_forward.fastq.gz, week4.2_forward.fastq.gz&quot; \
+  -f &quot;week0.1.fastq.gz, week0.2.fastq.gz, week4.1.fastq.gz, week4.2.fastq.gz&quot; \
   --library library.txt \
   -y 0.25 \
   --output-dir ./results \
