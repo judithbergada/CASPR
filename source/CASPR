@@ -22,7 +22,7 @@ Usage: CASPR      [-h or --help]
                   [-t or --threads]
                   [-i or --info-alignment]
                   [-k or --keep-tmp]
-                  [-q or --output-folder]
+                  [-q or --output-dir]
                   [-s or --start]
                   [-p or --pause]
 """
@@ -65,11 +65,11 @@ Optional arguments:
                 It must contain a sequence of nucleotides.
                 Default: AAAC.
     -m, --mismatches:
-                Maximum number of mismatches tolerated for counts.
+                Maximum number of mismatches tolerated during mapping.
                 It must be an integer.
                 Default: 0.
     -b, --bases-aligned:
-                Minimum number of bases that must be aligned for counts.
+                Minimum number of bases that must be aligned during mapping.
                 It must be an integer.
                 Default: 20 for sgRNAs and 30 for pgRNAs.
     -y, --fdr-threshold:
@@ -79,7 +79,6 @@ Optional arguments:
     -t, --threads:
                 Number of threads that will be used.
                 It must be an integer.
-                Set it to the number of available cores.
                 Default: 8.
     -i, --info-alignment:
                 If used, perform several alignments to see additional
