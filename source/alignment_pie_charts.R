@@ -42,7 +42,7 @@ pct <- round(slices/sum(slices)*100)
 # Plot
 pie(slices, labels = paste(pct, "%", sep = ""),
     col=rainbow(length(lbls)),
-    main = paste("Mapping at least ", b, "bp", sep = ""),
+    main = paste("Percentage of reads\nthat map at least ", b, "bp", sep = ""),
     cex = 0.8)
 par(xpd=TRUE)
 legend(x = "bottom", bty = "n", pch = 19,
@@ -64,7 +64,7 @@ pct <- round(slices/sum(slices)*100)
 # Plot
 pie(slices, labels = paste(pct, "%", sep = ""),
     col=rainbow(length(lbls)),
-    main = paste("Map at least ", b, "bp", sep = ""),
+    main = paste("Statistics of reads that\nmapped to ", b, "bp", sep = ""),
     cex = 0.8)
 par(xpd=TRUE)
 legend(x = "bottom", bty = "n", pch = 19,
@@ -85,8 +85,8 @@ pct <- round(slices/sum(slices)*100)
 # Plot
 pie(slices, labels = paste(pct, "%", sep = ""),
     col=rainbow(length(lbls)),
-    main = paste("Mapping unmapped reads to ",
-                 round(tot_len/2), "bp", sep = ""),
+    main = paste("Statistics of reads that\ndid not map to ",
+                 b, "bp", sep = ""),
     cex = 0.8)
 par(xpd=TRUE)
 legend(x = "bottom", bty = "n", pch = 19,
@@ -106,7 +106,7 @@ if(sum(slices)>0){
   # Plot
   pie(slices,labels = paste(pct, "%", sep = ""),
       col=rainbow(length(lbls)),
-      main="Map a guide multiple times", cex = 0.8)
+      main="Statistics of reads that\nmapped a guide multiple times", cex = 0.8)
   par(xpd=TRUE)
   legend(x = "bottom", bty = "n", pch = 19,
          legend = lbls, ncol = 2, inset = -0.2,

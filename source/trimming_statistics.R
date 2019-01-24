@@ -75,7 +75,7 @@ for (filename in files_total[3:length(files_total)]) {
          col = rgb(1,0,0,0.5),
          border = rgb(1,0,0,1),
          xlim = c(min(dat2), max(dat2)),
-         xlab = "Number of nucleotides trimmed, including adapter (bp)",
+         xlab = "Position of the sgRNAs within the reads (bp)",
          ylab = "Percentage of reads",
          main = paste("Trimming statistics,", name, sep = " "))
   }
