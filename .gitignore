@@ -9,3 +9,5 @@
 
 # MkDocs build site
 docs/site/*
+
+testdata/*/results
