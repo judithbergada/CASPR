@@ -359,15 +359,15 @@
                 <h1 id="installation-guide">Installation Guide</h1>
 <p>CASPR is being developed and tested under Linux and macOS.</p>
 <p>In order to use it, first you need to clone the repository:</p>
-<pre><code class="bash">git clone https://github.com/judithbergada/CASPR.git $HOME/CASPR
-</code></pre>
+<div class="highlight"><pre><span></span>git clone https://github.com/judithbergada/CASPR.git <span class="nv">$HOME</span>/CASPR
+</pre></div>
 
 <p>For a proper installation, it is also recommended to run:</p>
-<pre><code class="bash"># Add CASPR to your PATH
-echo &quot;export PATH=$HOME/CASPR/source:$PATH&quot; &gt;&gt; $HOME/.bashrc
-source $HOME/.bashrc
-# Please, note that the previous commands do not work if you use Zsh
-</code></pre>
+<div class="highlight"><pre><span></span><span class="c1"># Add CASPR to your PATH</span>
+<span class="nb">echo</span> <span class="s2">&quot;export PATH=</span><span class="nv">$HOME</span><span class="s2">/CASPR/source:</span><span class="nv">$PATH</span><span class="s2">&quot;</span> &gt;&gt; <span class="nv">$HOME</span>/.bashrc
+<span class="nb">source</span> <span class="nv">$HOME</span>/.bashrc
+<span class="c1"># Please, note that the previous commands do not work if you use Zsh</span>
+</pre></div>
 
 <p>At this point, the tool should be available in your computer.</p>
 <h2 id="conda-environment-installation">Conda Environment Installation</h2>
@@ -382,26 +382,50 @@ source $HOME/.bashrc
 <li><code>vispr</code></li>
 <li><code>R</code></li>
 </ul>
-<p>The easiest way to download them is to use <a href="https://conda.io/miniconda.html">Miniconda</a>, which allows to create an isolated environment. To install miniconda, please follow the <a href="https://conda.io/docs/user-guide/install/index.html">instuctions</a>.</p>
-<p>Once Miniconda is installed, you can obtain all the packages from a single command like this:</p>
-<pre><code class="bash">conda env create -n caspr -f environment.yml
-</code></pre>
+<p>The easiest way to download them is to use
+<a href="https://conda.io/miniconda.html">Miniconda</a>, which allows to create an
+isolated environment. To install miniconda, please follow the
+<a href="https://conda.io/docs/user-guide/install/index.html">instuctions</a>.</p>
+<p>Once Miniconda is installed, you can obtain all the packages from a single
+command like this:</p>
+<div class="highlight"><pre><span></span>conda env create -n caspr -f environment.yml
+</pre></div>
 
-<p>This option is recommended because it will install the software defined in the <code>environement.yml</code> file, ensuring that the pipeline works smoothly.</p>
+<p>This option is recommended because it will install the software defined in the
+<code>environement.yml</code> file, ensuring that the pipeline works smoothly.</p>
 <p>Alternatively, you can also run:</p>
-<pre><code class="bash">conda create -n caspr python=3.5
-conda install -n caspr -c bioconda cutadapt
-conda install -n caspr -c bioconda star
-conda install -n caspr -c bioconda samtools
-conda install -n caspr -c bioconda vispr
-conda install -n caspr -c bioconda mageck
-conda install -n caspr -c bioconda mageck-vispr
-conda install -n caspr r
-conda install -n caspr -c biobuilds fastx-toolkit
-conda install -n caspr -c bioconda fastqc
-</code></pre>
+<div class="highlight"><pre><span></span><span class="c1"># Create environment</span>
+conda create -n caspr <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.5
+<span class="c1"># Install required software</span>
+conda install -n caspr --yes r
+conda install -n caspr_new -c bioconda --yes <span class="se">\</span>
+  cutadapt star samtools vispr mageck mageck-vispr fastqc
+conda install -n caspr_new -c biobuilds --yes fastx-toolkit
+</pre></div>
 
-<p>Once the installation is successful, you can start using CASPR.</p>
+<div class="admonition info">
+<p class="admonition-title">Activate environment</p>
+<p>Once you have installed all the required software don't forget to
+activate the environment to start using CASPR:</p>
+<div class="highlight"><pre><span></span>conda activate caspr
+</pre></div>
+
+</div>
+<p>Now, you can start using CASPR.</p>
+<div class="admonition warning">
+<p class="admonition-title">Installation on macOS</p>
+<p>Because macOS uses custom versions of <code>sed</code> and <code>grep</code> it is necessary to
+install the latest GNU version to run CASPR. To install it, you need to have
+<a href="https://brew.sh/">HomeBrew</a>:</p>
+<div class="highlight"><pre><span></span><span class="c1"># Install sed and grep</span>
+brew install gnu-sed grep
+<span class="c1"># Make sure the installed versions are the first ones available in your PATH</span>
+<span class="nb">echo</span> <span class="s2">&quot;export PATH=\&quot;/usr/local/opt/gnu-sed/libexec/gnubin:\$PATH\&quot;&quot;</span> &gt;&gt; ~/.bashrc
+<span class="nb">echo</span> <span class="s2">&quot;export PATH=\&quot;/usr/local/opt/grep/libexec/gnubin:\$PATH\&quot;&quot;</span> &gt;&gt; ~/.bashrc
+<span class="nb">source</span> ~/.bashrc
+</pre></div>
+
+</div>
                 
                   
                 
