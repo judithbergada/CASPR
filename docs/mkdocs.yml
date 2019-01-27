@@ -14,15 +14,19 @@ nav:
   - Tutorial: tutorial.md
 
 theme:
+  name: material
   font:
     text: Roboto
     code: Roboto Mono
   logo:
     icon: all_inclusive
-  name: material
   palette:
     primary: green
     accent: indigo
+
+markdown_extensions:
+  - admonition
+  - pymdownx.superfences
 
 # Customization
 extra:

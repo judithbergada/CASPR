@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 #############################################################
 ## Prepare merged fastq files for each of the paired reads ##
 #############################################################
@@ -19,9 +21,9 @@ function trimming_35 { # Only possible with forward & reverse reads
 # $1=fastqfile, $2=nametwo, $3=reversefile, $4=adapter-f, $5=adapter-r
 # $6=lguide1, $7=lguide2, $8=ftrim, $9=fpos, $10=rtrim, $11=rpos
 # Take information of first margin bases and save it to another file
-  let fmargin=($9-10)
+  let fmargin=${9}-10
   if [[ fmargin -lt 0 ]]; then fmargin=0; fi
-  let rmargin=(${11}-10)
+  let rmargin=${11}-10
   if [[ rmargin -lt 0 ]]; then rmargin=0; fi
   printf "${2}fmargin:\t${fmargin}\n" >> \
           "${q}/intermediate/useful_information.txt"
@@ -65,9 +67,9 @@ function trimming_53 {
 # $6=lguide1, $7=lguide2, $8=ftrim, $9=fpos, $10=rtrim, $11=rpos, $12=name
   if [[ $r != "" ]]; then # If there are forward reads
     # Take information of first margin bases and save it to another file
-    let fmargin=($9-10)
+    let fmargin=${9}-10
     if [[ fmargin -lt 0 ]]; then fmargin=0; fi
-    let rmargin=(${11}-10)
+    let rmargin=${11}-10
     if [[ rmargin -lt 0 ]]; then rmargin=0; fi
     printf "${2}fmargin:\t${fmargin}\n" >> \
             "${q}/intermediate/useful_information.txt"
@@ -105,7 +107,7 @@ function trimming_53 {
   # If there are only forward fastq files (and not reverse)
   else
     # Take information of first margin bases and save it to another file
-    let fmargin=($9-10)
+    let fmargin=${9}-10
     if [[ fmargin -lt 0 ]]; then fmargin=0; fi
     printf "${2}fmargin:\t${fmargin}\n" >> \
             "${q}/intermediate/useful_information.txt"
@@ -130,25 +132,25 @@ function trimming_53 {
 
 # Automatic calculation of the gRNA lengths
 lguide1=$(awk 'NR==1 {print $3}' $l | wc -c)
-let lguide1=(${lguide1}-1)
+lguide1=$(echo "$lguide1 - 1" | bc -l)
 if [[ $r != "" ]]; then
   lguide2=$(awk 'NR==1 {print $4}' $l | wc -c)
-  let lguide2=(${lguide2}-1)
+  lguide2=$(echo "$lguide2 - 1" | bc -l)
 else
   lguide2=0
 fi
 
 # Automatic calculation of the adapter lengths
 adaptlen=$(echo $a | wc -c)
-let adaptlen=(${adaptlen}-1)
+adaptlen=$(echo "$adaptlen - 1" | bc -l)
 if [[ $r != "" ]]; then
   adaptlenrev=$(echo $A | wc -c)
-  let adaptlenrev=(${adaptlenrev}-1)
+  adaptlenrev=$(echo "$adaptlenrev - 1" | bc -l)
 fi
 
 i=0
 for fastqfile in $f; do
-  let i=($i+1)
+  let i=${i}+1
   echo "Analysis of ${fastqfile}:"
   # Automatic check of a repeated adapter before the guides.
   # To speed it up, consider that the first 1000 reads are representative
@@ -160,8 +162,8 @@ for fastqfile in $f; do
             echo $line | grep -aob $a | grep -oE -m1 '[0-9]+'
           done | sort -n | uniq -c | sort -rn | head -n1)
     limitval=$(echo $post | awk '{print $2}')
-    let limitval=($limitval-4)
-    let upperval=($adaptlen+10)
+    let limitval=${limitval}-4
+    let upperval=${adaptlen}+10
     freq=$(zcat <  ${fastqfile} | awk 'NR%4==2' | \
     head -n10000 | awk 'NR%10==0' | \
     awk -v x="${limitval}" -v y="${upperval}" '{print substr($0, x, y)}' | \
@@ -172,8 +174,8 @@ for fastqfile in $f; do
             echo $line | grep -aob $a | grep -oE -m1 '[0-9]+'
           done | sort -n | uniq -c | sort -rn | head -n1)
     limitval=$(echo $post | awk '{print $2}')
-    let limitval=($limitval-4)
-    let upperval=($adaptlen+10)
+    let limitval=${limitval}-4
+    let upperval=${adaptlen}+10
     freq=$(cat ${fastqfile} | awk 'NR%4==2' | \
     head -n10000 | awk 'NR%10==0'| \
     awk -v x="${limitval}" -v y="${upperval}" '{print substr($0, x, y)}' | \
@@ -189,9 +191,9 @@ for fastqfile in $f; do
   else # Check that a non-constant region (the guide) follows the adapter
     echo "Checking that adapter is followed by a non-constant region (gRNA)"
     positionf=$(echo $post | awk '{print $2}')
-    let positionf=($positionf + 1)
+    let positionf=${positionf}+1
     # Check how frequent 5 nucleotides downstream the adapter are constant
-    let needlen=($adaptlen + 5)
+    let needlen=${adaptlen}+5
     if file --mime-type "${fastqfile}" | grep -q gzip$; then # If compressed
       cte=$(zcat <  ${fastqfile} | awk 'NR%4==2' | \
       head -n10000 | awk 'NR%10==0' | \
@@ -212,7 +214,7 @@ for fastqfile in $f; do
       echo "Adapter is followed by a gRNA. It will be trimmed"
     else
       # Take the second occurence of the adapter
-      let positionf=($positionf - 1)
+      let positionf=${positionf}-1
       if file --mime-type "${fastqfile}" | grep -q gzip$; then # If compressed
         post=$(for line in \
               $(zcat <  ${fastqfile} | awk 'NR%4==2' | \
@@ -222,8 +224,8 @@ for fastqfile in $f; do
               sed "s/${positionf}//g" | sed '/^\s*$/d' | \
               sort -n | uniq -c | sort -rn | head -n1)
         limitval=$(echo $post | awk '{print $2}')
-        let limitval=($limitval-4)
-        let upperval=($adaptlen+10)
+        let limitval=${limitval}-4
+        let upperval=${adaptlen}+10
         freq=$(zcat <  ${fastqfile} | awk 'NR%4==2' | \
         head -n10000 | awk 'NR%10==0' | \
         awk -v x="${limitval}" -v y="${upperval}" '{print substr($0,x,y)}' | \
@@ -237,8 +239,8 @@ for fastqfile in $f; do
               sed "s/${positionf}//g" | sed '/^\s*$/d' | \
               sort -n | uniq -c | sort -rn | head -n1)
         limitval=$(echo $post | awk '{print $2}')
-        let limitval=($limitval-4)
-        let upperval=($adaptlen+10)
+        let limitval=${limitval}-4
+        let upperval=${adaptlen}+10
         freq=$(cat ${fastqfile} | awk 'NR%4==2' | \
         head -n10000 | awk 'NR%10==0' | \
         awk -v x="${limitval}" -v y="${upperval}" '{print substr($0,x,y)}' | \
@@ -253,7 +255,7 @@ for fastqfile in $f; do
         echo "Adapter will not be trimmed. It is not followed by a gRNA"
       else # Check that a non-constant region follows the adapter
         positionf=$(echo $post | awk '{print $2}')
-        let positionf=($positionf + 1)
+        let positionf=${positionf}+1
         # Check again if nucleotides downstream the adapter are constant
         if file --mime-type "${fastqfile}" | grep -q gzip$; then # Compressed
           cte=$(zcat <  ${fastqfile} | awk 'NR%4==2' | \
@@ -289,7 +291,7 @@ done
 if [[ ($r != "") ]]; then
   i=0
   for fastqfile in $r; do
-    let i=($i+1)
+    let i=${i}+1
     echo "Analysis of ${fastqfile}:"
     # Automatic check of a repeated adapter before the guides.
     # To speed it up, consider that the first 2500 reads are representative
@@ -301,8 +303,8 @@ if [[ ($r != "") ]]; then
               echo $line | grep -aob $A | grep -oE -m1 '[0-9]+'
             done | sort -n | uniq -c | sort -rn | head -n1)
       limitval=$(echo $post | awk '{print $2}')
-      let limitval=($limitval-4)
-      let upperval=($adaptlenrev+10)
+      let limitval=${limitval}-4
+      let upperval=${adaptlenrev}+10
       freq=$(zcat <  ${fastqfile} | awk 'NR%4==2' | \
       head -n10000 | awk 'NR%10==0' | \
       awk -v x="${limitval}" -v y="${upperval}" '{print substr($0,x,y)}' | \
@@ -313,8 +315,8 @@ if [[ ($r != "") ]]; then
               echo $line | grep -aob $A | grep -oE -m1 '[0-9]+'
             done | sort -n | uniq -c | sort -rn | head -n1)
       limitval=$(echo $post | awk '{print $2}')
-      let limitval=($limitval-4)
-      let upperval=($adaptlenrev+10)
+      let limitval=${limitval}-4
+      let upperval=${adaptlenrev}+10
       freq=$(cat ${fastqfile} | awk 'NR%4==2' | \
       head -n10000 | awk 'NR%10==0' | \
       awk -v x="${limitval}" -v y="${upperval}" '{print substr($0,x,y)}' | \
@@ -330,9 +332,9 @@ if [[ ($r != "") ]]; then
     else # Check that a non-constant region (the guide) follows the adapter
       echo "Checking that adapter is followed by a non-constant region (gRNA)"
       positionr=$(echo $post | awk '{print $2}')
-      let positionr=($positionr + 1)
+      let positionr=${positionr}+1
       # Check how frequent 5 nucleotides downstream the adapter are constant
-      let needlen=($adaptlenrev + 5)
+      let needlen=${adaptlenrev}+5
       if file --mime-type "${fastqfile}" | grep -q gzip$; then # If compressed
         cte=$(zcat <  ${fastqfile} | awk 'NR%4==2' | \
         head -n10000 | awk 'NR%10==0' | \
@@ -355,7 +357,7 @@ if [[ ($r != "") ]]; then
         echo "Adapter is followed by a gRNA. It will be trimmed"
       else
         # Take the second occurence of the adapter
-        let positionr=($positionr - 1)
+        let positionr=${positionr}-1
         if file --mime-type "${fastqfile}" | grep -q gzip$; then # Compressed
           post=$(for line in \
                 $(zcat <  ${fastqfile} | awk 'NR%4==2' | \
@@ -365,8 +367,8 @@ if [[ ($r != "") ]]; then
                 sed "s/${positionr}//g" | sed '/^\s*$/d' | \
                 sort -n | uniq -c | sort -rn | head -n1)
           limitval=$(echo $post | awk '{print $2}')
-          let limitval=($limitval-4)
-          let upperval=($adaptlenrev+10)
+          let limitval=${limitval}-4
+          let upperval=${adaptlenrev}+10
           freq=$(zcat <  ${fastqfile} | awk 'NR%4==2' | \
           head -n10000 | awk 'NR%10==0' | \
           awk -v x="${limitval}" -v y="${upperval}" '{print substr($0,x,y)}' | \
@@ -380,8 +382,8 @@ if [[ ($r != "") ]]; then
                 sed "s/${positionr}//g" | sed '/^\s*$/d' | \
                 sort -n | uniq -c | sort -rn | head -n1)
           limitval=$(echo $post | awk '{print $2}')
-          let limitval=($limitval-4)
-          let upperval=($adaptlenrev+10)
+          let limitval=${limitval}-4
+          let upperval=${adaptlenrev}+10
           freq=$(cat ${fastqfile} | awk 'NR%4==2' | \
           head -n10000 | awk 'NR%10==0' | \
           awk -v x="${limitval}" -v y="${upperval}" '{print substr($0,x,y)}' | \
@@ -396,7 +398,7 @@ if [[ ($r != "") ]]; then
           echo "Adapter will not be trimmed. It is not followed by a gRNA"
         else # Check that a non-constant region follows the adapter
           positionr=$(echo $post | awk '{print $2}')
-          let positionr=($positionr + 1)
+          let positionr=${positionr}+1
           # Check again if nucleotides downstream the adapter are constant
           if file --mime-type "${fastqfile}" | grep -q gzip$; then # Compressed
             cte=$(zcat <  ${fastqfile} | awk 'NR%4==2' | \
@@ -440,7 +442,7 @@ fi
 
 i=0
 for fastqfile in $f; do
-  let i=($i+1)
+  let i=${i}+1
 
   # Take name of fastqfile ignoring directory
   name=$(echo ${fastqfile} | sed 's/.*\///g')

@@ -301,7 +301,7 @@ if [[ $start != "test" ]]; then
   # Create plots to see what happens with unmapped reads (only if requested)
   if [[ $i == 1 ]]; then
     bash $currentdir/alignment_info.sh \
-              $q "$f" $b $l $currentdir 2> "${q}/intermediate/err.txt"
+      "$q" "$f" "$b" "$l" "$currentdir" 2> "${q}/intermediate/err.txt"
   else
     mv ${q}/intermediate/Alignment_statistics.pdf ${q}/outputs
   fi

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 #################################
 ## Perform useful calculations ##
 #################################
@@ -9,14 +11,24 @@ m=$1; b=$2; t=$3; q=$4; r=$5; l=$6; info=$7
 
 # Compute length of the guide RNAs
 lguide1=$(awk 'NR==1 {print $3}' $l | wc -c)
-let lguide1=(${lguide1}-1)
+let lguide1="${lguide1}-1"
 lguide2=0
 # Guide 2 will be considered only if reverse fastq are provided
 if [[ $r != "" ]]; then
   lguide2=$(awk 'NR==1 {print $4}' $l | wc -c)
-  let lguide2=(${lguide2}-1)
+  let lguide2="${lguide2}-1"
 fi
-let total_len=(${lguide1}+${lguide2}-1)
+let total_len="${lguide1}+${lguide2}-1"
+
+# Check the Shared Memory available
+available_shm=$(sysctl -A 2>/dev/null | grep shmmax | grep -Eo "[0-9]+")
+req_shm=10000000000 # 10GB
+if [ "$available_shm" -lt "$req_shm" ]; then
+  shm_flags=""
+else
+  shm_flags="--genomeLoad LoadAndKeep --limitBAMsortRAM $req_shm"
+  echo "Using shared memory to load the genome."
+fi
 
 ##############################################
 ## Run mapping for each of the paired reads ##
@@ -37,10 +49,9 @@ for i in ${q}/intermediate/sgRNA2_sgRNA1*; do
   STAR --runThreadN $t \
     --runMode alignReads \
     --genomeDir "${q}/genome" \
-    --readFilesCommand zcat \
+    --readFilesCommand "gunzip -c" \
     --readFilesIn $i \
-    --genomeLoad LoadAndKeep \
-    --limitBAMsortRAM 10000000000 \
+    $shm_flags \
     --alignIntronMax 1 \
     --outSAMtype BAM SortedByCoordinate \
     --outFilterMultimapNmax 1 \
@@ -59,10 +70,9 @@ for i in ${q}/intermediate/sgRNA2_sgRNA1*; do
     STAR --runThreadN $t \
       --runMode alignReads \
       --genomeDir "${q}/genome" \
-      --readFilesCommand zcat \
+      --readFilesCommand "gunzip -c" \
       --readFilesIn $i \
-      --genomeLoad LoadAndKeep \
-      --limitBAMsortRAM 10000000000 \
+      $shm_flags \
       --alignIntronMax 1 \
       --outSAMtype BAM Unsorted \
       --outFilterMultimapNmax 1 \
@@ -79,10 +89,9 @@ for i in ${q}/intermediate/sgRNA2_sgRNA1*; do
       STAR --runThreadN $t \
         --runMode alignReads \
         --genomeDir "${q}/genome" \
-        --readFilesCommand zcat \
+        --readFilesCommand "gunzip -c" \
         --readFilesIn $i \
-        --genomeLoad LoadAndKeep \
-        --limitBAMsortRAM 10000000000 \
+        $shm_flags \
         --alignIntronMax 1 \
         --outSAMtype BAM Unsorted \
         --outFilterMultimapNmax 1 \
@@ -185,8 +194,7 @@ if [[ $info == 1 ]]; then
       --runMode alignReads \
       --genomeDir "${q}/genome" \
       --readFilesIn $i \
-      --genomeLoad LoadAndKeep \
-      --limitBAMsortRAM 10000000000 \
+      $shm_flags \
       --alignIntronMax 1 \
       --outSAMunmapped Within \
       --outSAMtype BAM Unsorted \
@@ -216,16 +224,18 @@ if [[ $info == 1 ]]; then
 fi
 
 # Remove any file introduced by aligner and not needed
-STAR --runThreadN $t \
-  --runMode alignReads \
-  --genomeDir "${q}/genome" \
-  --genomeLoad Remove \
-  --outTmpDir "${q}/temporal" \
-  --outFileNamePrefix "${q}/removalprocess" \
-  --limitBAMsortRAM 10000000000
+if [[ $shm_flags != "" ]]; then
+  STAR --runThreadN $t \
+    --runMode alignReads \
+    --genomeDir "${q}/genome" \
+    --genomeLoad Remove \
+    --outTmpDir "${q}/temporal" \
+    --outFileNamePrefix "${q}/removalprocess" \
+    --limitBAMsortRAM $req_shm
+    rm ${q}/removalprocess*
+fi
 rm -rf ${q}/temporal*
 rm -f ${q}/temporal*
-rm ${q}/removalprocess*
 
 ##########
 ## DONE ##

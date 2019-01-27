@@ -32,7 +32,7 @@ sed 's/^[\t]*/>/g;s/\s/\n/g' > "${q}/genome/genome.fasta"
 # Formula: genomeSaindexNbases = log2(numbases)/2 - 1
 num_bases_grna=$(cat ${q}/genome/genome.fasta | awk 'NR==4' | wc -c)
 num_grnas=$(wc -l ${q}/genome/genome.fasta | awk '{print $1/2}')
-let totalbp=(${num_bases_grna}*${num_grnas})
+totalbp=$(echo "$num_bases_grna * $num_grnas" | bc -l)
 log2res=$(echo "l($totalbp)/l(2)" | bc -l)
 genomeSaind=$(echo ${log2res} | awk '{printf "%.0f\n", $1/2 - 2}')
 
