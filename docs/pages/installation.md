@@ -57,11 +57,10 @@ conda install -n caspr --yes r
 conda install -n caspr -c bioconda --yes cutadapt
 conda install -n caspr -c bioconda --yes star
 conda install -n caspr -c bioconda --yes samtools
-conda install -n caspr -c bioconda --yes vispr
-conda install -n caspr -c bioconda --yes mageck
-# conda install -n caspr -c bioconda --yes mageck-vispr
-conda install -n caspr -c bioconda --yes fastqc
 conda install -n caspr -c biobuilds --yes fastx-toolkit
+conda install -n caspr -c bioconda --yes mageck
+conda install -n caspr -c bioconda --yes vispr
+conda install -n caspr -c bioconda --yes fastqc
 ```
 
 

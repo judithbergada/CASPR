@@ -155,7 +155,7 @@ vispr server ./results/config* --port 5000
 
     ```bash
     # Take VISPR from jpijuan Conda Environment
-    alias vispr="/home/jpijuan/software/miniconda3/bin/vispr"
+    alias vispr="/home/jpijuan/miniconda3/envs/vispr/bin/vispr"
 
     # Run VIPR server
     vispr server ./results/config* --port 5000
@@ -329,7 +329,7 @@ vispr server ./results/config* --port 6000
 
     ```bash
     # Take VISPR from jpijuan Conda Environment
-    alias vispr="/home/jpijuan/software/miniconda3/bin/vispr"
+    alias vispr="/home/jpijuan/miniconda3/envs/vispr/bin/vispr"
 
     # Run VIPR server
     vispr server ./results/config* --port 6000
