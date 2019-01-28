@@ -388,11 +388,11 @@
 <h2 id="get-started-download-caspr-code-and-data">Get started: Download CASPR Code and Data</h2>
 <p>CASPR is being developed and tested under Linux and macOS.</p>
 <p>In order to use it, first you need to clone the repository:</p>
-<div class="highlight"><pre><span></span>git clone https://github.com/judithbergada/CASPR.git <span class="nv">$HOME</span>/CASPR
+<div class="codehilite"><pre><span></span>git clone https://github.com/judithbergada/CASPR.git <span class="nv">$HOME</span>/CASPR
 </pre></div>
 
 <p>For a proper installation, it is also recommended to run:</p>
-<div class="highlight"><pre><span></span><span class="c1"># Add CASPR to your PATH</span>
+<div class="codehilite"><pre><span></span><span class="c1"># Add CASPR to your PATH</span>
 <span class="nb">echo</span> <span class="s2">&quot;export PATH=</span><span class="nv">$HOME</span><span class="s2">/CASPR/source:</span><span class="nv">$PATH</span><span class="s2">&quot;</span> &gt;&gt; <span class="nv">$HOME</span>/.bashrc
 <span class="nb">source</span> <span class="nv">$HOME</span>/.bashrc
 <span class="c1"># Please, note that the previous commands do not work if you use Zsh</span>
@@ -400,7 +400,7 @@
 
 <p>At this point, the tool should be available in your computer.
 You can check it:</p>
-<div class="highlight"><pre><span></span>CASPR --help
+<div class="codehilite"><pre><span></span>CASPR --help
 </pre></div>
 
 <h2 id="conda-environment-installation">Conda Environment Installation</h2>
@@ -419,24 +419,20 @@ You can check it:</p>
 <a href="https://conda.io/miniconda.html">Miniconda</a>, which allows to create an
 isolated environment. To install miniconda, please follow the
 <a href="https://conda.io/projects/conda/en/latest/user-guide/install/index.html">instuctions</a>.</p>
-<p>Once Miniconda is installed, you can obtain the required packages with a single
-command like this:</p>
-<div class="highlight"><pre><span></span><span class="c1"># Go inside CASPR directory</span>
-<span class="nb">cd</span> <span class="nv">$HOME</span>/CASPR/
-<span class="c1"># Install packages</span>
-conda env create -n caspr -f environment.yml
-</pre></div>
-
-<p>This option is recommended because it will install all the tools defined in the
-<code>environement.yml</code> file, ensuring that CASPR works smoothly.</p>
-<p>Alternatively, you can also run:</p>
-<div class="highlight"><pre><span></span><span class="c1"># Create environment</span>
+<p>Once Miniconda is installed, you can obtain the required packages by executing
+the following commands on your terminal:</p>
+<div class="codehilite"><pre><span></span><span class="c1"># Create environment</span>
 conda create -n caspr <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.5
 <span class="c1"># Install required software</span>
 conda install -n caspr --yes r
-conda install -n caspr_new -c bioconda --yes <span class="se">\</span>
-  cutadapt star samtools vispr mageck mageck-vispr fastqc
-conda install -n caspr_new -c biobuilds --yes fastx-toolkit
+conda install -n caspr -c bioconda --yes cutadapt
+conda install -n caspr -c bioconda --yes star
+conda install -n caspr -c bioconda --yes samtools
+conda install -n caspr -c bioconda --yes vispr
+conda install -n caspr -c bioconda --yes mageck
+<span class="c1"># conda install -n caspr -c bioconda --yes mageck-vispr</span>
+conda install -n caspr -c bioconda --yes fastqc
+conda install -n caspr -c biobuilds --yes fastx-toolkit
 </pre></div>
 
 <div class="admonition warning">
@@ -446,7 +442,7 @@ install the latest GNU version to run CASPR. For that, first you need to
 have <a href="https://brew.sh/">HomeBrew</a>.</p>
 <p>Once HomeBrew works at your device, you only need to copy the following commands
 on your terminal:</p>
-<div class="highlight"><pre><span></span><span class="c1"># Install sed and grep</span>
+<div class="codehilite"><pre><span></span><span class="c1"># Install sed and grep</span>
 brew install gnu-sed grep
 <span class="c1"># Make sure the installed versions are the first ones available in your PATH</span>
 <span class="nb">echo</span> <span class="s2">&quot;export PATH=\&quot;/usr/local/opt/gnu-sed/libexec/gnubin:\$PATH\&quot;&quot;</span> &gt;&gt; ~/.bashrc
@@ -459,7 +455,7 @@ brew install gnu-sed grep
 <div class="admonition info">
 <p class="admonition-title">Important</p>
 <p>To use the tool, please do not forget to activate the Conda Environment!</p>
-<div class="highlight"><pre><span></span>conda activate caspr
+<div class="codehilite"><pre><span></span><span class="nb">source</span> activate caspr
 </pre></div>
 
 </div>
@@ -468,7 +464,7 @@ brew install gnu-sed grep
 do not need to follow the guide to install a Conda Environment.</p>
 <p>Instead, you can load the required software packages,
 which are all installed in the cluster. This can be done as follows:</p>
-<p><div class="highlight"><pre><span></span><span class="c1"># Import software: only for users of IBY cluster</span>
+<p><div class="codehilite"><pre><span></span><span class="c1"># Import software: only for users of IBY cluster</span>
 module add UHTS/Analysis/fastx_toolkit/0.0.13.2
 module add UHTS/Aligner/STAR/2.6.0c
 module add UHTS/Analysis/samtools/1.4

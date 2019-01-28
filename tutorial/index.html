@@ -446,7 +446,7 @@ demos.</p>
 <a href="https://judithbergada.github.io/CASPR/installation/">Installation-Guide</a>.</p>
 <p>After finishing with the installation, you should activate the Conda
 Environment. Please, make sure you do it every time you work with CASPR:</p>
-<div class="highlight"><pre><span></span>conda activate caspr
+<div class="codehilite"><pre><span></span><span class="nb">source</span> activate caspr
 </pre></div>
 
 <div class="admonition info">
@@ -458,7 +458,7 @@ will also download CASPR following the
 Environment. Instead, you can load the required software packages,
 which are all installed in the cluster.</p>
 <p>Please, make sure you load them every time you work with CASPR:</p>
-<div class="highlight"><pre><span></span><span class="c1"># Import software: only for users of IBY cluster</span>
+<div class="codehilite"><pre><span></span><span class="c1"># Import software: only for users of IBY cluster</span>
 module add UHTS/Analysis/fastx_toolkit/0.0.13.2
 module add UHTS/Aligner/STAR/2.6.0c
 module add UHTS/Analysis/samtools/1.4
@@ -484,11 +484,11 @@ module add UHTS/Quality_control/mageck-vispr/0.5.4
 <p>Additionally, you may provide a text file with positive, negative and neutral
 controls.</p>
 <p>Let's go to the user case test data folder:</p>
-<div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="nv">$HOME</span>/CASPR/testdata/pgrna
+<div class="codehilite"><pre><span></span><span class="nb">cd</span> <span class="nv">$HOME</span>/CASPR/testdata/pgrna
 </pre></div>
 
 <p>Let's check that the data is available in the expected formats:</p>
-<div class="highlight"><pre><span></span><span class="c1"># Check that the data has been sucessfully downoaded</span>
+<div class="codehilite"><pre><span></span><span class="c1"># Check that the data has been sucessfully downoaded</span>
 ls -al .
 
 <span class="c1"># Display the content of the files to see the format</span>
@@ -500,7 +500,7 @@ zcat &lt; week0.1_1.fastq.gz <span class="p">|</span> head
 
 <p>Now you are ready to run the example. If you are not sure about the commands,
 you can copy them immediately from here:</p>
-<div class="highlight"><pre><span></span><span class="c1"># Create output directory</span>
+<div class="codehilite"><pre><span></span><span class="c1"># Create output directory</span>
 mkdir results
 
 <span class="c1"># Run the tool</span>
@@ -526,7 +526,7 @@ the user case.</p>
 <p>After a few minutes, the outputs should appear in your computer. At this point,
 you can open them and see if they are as expected. The expected outputs are
 found in:</p>
-<div class="highlight"><pre><span></span>ls results/outputs
+<div class="codehilite"><pre><span></span>ls results/outputs
 </pre></div>
 
 <p>These are the outpus generated:</p>
@@ -556,7 +556,7 @@ found in:</p>
 <p><img src="../assets/pgrna/Trimming_statistics-2.png" alt="Trimming Statistics" width="33.3%"><img src="../assets/pgrna/Trimming_statistics-3.png" alt="Trimming Statistics" width="33.3%"><img src="../assets/pgrna/Trimming_statistics-4.png" alt="Trimming Statistics" width="33.3%"></p>
 <p>Moreover, you can benefit from VISPR to get interactive results on you data.
 Please try the following:</p>
-<div class="highlight"><pre><span></span><span class="c1"># Run VIPR server</span>
+<div class="codehilite"><pre><span></span><span class="c1"># Run VIPR server</span>
 vispr server ./results/config* --port <span class="m">5000</span>
 <span class="c1"># Ctrl-C to exit the server</span>
 </pre></div>
@@ -566,7 +566,7 @@ vispr server ./results/config* --port <span class="m">5000</span>
 <p>VISPR installation in the IBU cluster might not be updated. Therefore,
 users of this cluster will need to run an additional command to see
 the outputs:</p>
-<div class="highlight"><pre><span></span><span class="c1"># Take VISPR from jpijuan Conda Environment</span>
+<div class="codehilite"><pre><span></span><span class="c1"># Take VISPR from jpijuan Conda Environment</span>
 <span class="nb">alias</span> <span class="nv">vispr</span><span class="o">=</span><span class="s2">&quot;/home/jpijuan/software/miniconda3/bin/vispr&quot;</span>
 
 <span class="c1"># Run VIPR server</span>
@@ -577,7 +577,7 @@ vispr server ./results/config* --port <span class="m">5000</span>
 </div>
 <p>VISPR is a web-based interactive server that creates a webpage with a nice visualization of the results.
 If you are working from a cluster, you will also need to run this command locally on your computer:</p>
-<div class="highlight"><pre><span></span>ssh -f <span class="o">{</span>user<span class="o">}</span>@binfservms01.unibe.ch -L <span class="m">5000</span>:localhost:5000 -N
+<div class="codehilite"><pre><span></span>ssh -f <span class="o">{</span>user<span class="o">}</span>@binfservms01.unibe.ch -L <span class="m">5000</span>:localhost:5000 -N
 </pre></div>
 
 <p>Now, check the <a href="http://127.0.0.1:5000">webpage</a> on a browser and enjoy visualizing
@@ -588,7 +588,7 @@ information on the unmapped reads. This can be done esily just by adding the tag
 with the <code>-k</code> argument, neither the previous nor the next steps will be
 necessary anymore (only mapping).</p>
 <p>You can find a solution to quickly finish the user case here:</p>
-<div class="highlight"><pre><span></span>CASPR <span class="se">\</span>
+<div class="codehilite"><pre><span></span>CASPR <span class="se">\</span>
   -f <span class="s2">&quot;week0.1_1.fastq.gz, week4.1_1.fastq.gz&quot;</span> <span class="se">\</span>
   -r <span class="s2">&quot;week0.1_2.fastq.gz, week4.1_2.fastq.gz&quot;</span> <span class="se">\</span>
   --library library.txt <span class="se">\</span>
@@ -624,13 +624,13 @@ controls, if interested.</p>
 different tests, and we want to perform a third test using the replicates
 together.</p>
 <p>Let's go to the user case test data folder:</p>
-<div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="nv">$HOME</span>/CASPR/testdata/sgrna
+<div class="codehilite"><pre><span></span><span class="nb">cd</span> <span class="nv">$HOME</span>/CASPR/testdata/sgrna
 </pre></div>
 
 <p>Before starting the tests, check that the data is available in the expected
 formats. Pay special attention on the experimental design file, which allows to
 obtain the results as required:</p>
-<div class="highlight"><pre><span></span>cat expdesign.txt
+<div class="codehilite"><pre><span></span>cat expdesign.txt
 head library.txt
 head controlfile.txt
 zcat &lt; week0.1.fastq.gz <span class="p">|</span> head
@@ -639,7 +639,7 @@ zcat &lt; week0.1.fastq.gz <span class="p">|</span> head
 <p>At this point, you are probably ready to try the analysis yourself. To get nicer
 visualization of the outputs, it is recommended to use an FDR threshold of 0.25.</p>
 <p>If you need further help, you can also use these commands:</p>
-<div class="highlight"><pre><span></span><span class="c1"># Create output directory</span>
+<div class="codehilite"><pre><span></span><span class="c1"># Create output directory</span>
 mkdir results
 
 <span class="c1"># Run the tool</span>
@@ -655,7 +655,7 @@ CASPR <span class="se">\</span>
 <h3 id="results_1">Results</h3>
 <p>Quickly, the outputs should appear in your computer. You can open them and see
 if they look as expected. The expected outputs are found in:</p>
-<div class="highlight"><pre><span></span>ls results/outputs
+<div class="codehilite"><pre><span></span>ls results/outputs
 </pre></div>
 
 <p>These are the outpus generated:</p>
@@ -687,7 +687,7 @@ if they look as expected. The expected outputs are found in:</p>
 you do not need to execute all the previous steps, only the assessment of gene
 significance.</p>
 <p>It can be done like this:</p>
-<div class="highlight"><pre><span></span>CASPR <span class="se">\</span>
+<div class="codehilite"><pre><span></span>CASPR <span class="se">\</span>
   --start <span class="nb">test</span> -y <span class="m">0</span>.1 -k <span class="se">\</span>
   --output-dir ./results <span class="se">\</span>
   --controls controlfile.txt <span class="se">\</span>
@@ -700,7 +700,7 @@ not only starting rom the raw sequencing data, but also beginning from a table
 of read counts.</p>
 <p>If you kept the intermediate files in this last step, you can visualize again
 the results with VISPR:</p>
-<div class="highlight"><pre><span></span><span class="c1"># Run VIPR server</span>
+<div class="codehilite"><pre><span></span><span class="c1"># Run VIPR server</span>
 vispr server ./results/config* --port <span class="m">6000</span>
 <span class="c1"># Ctrl-C to exit the server</span>
 </pre></div>
@@ -710,7 +710,7 @@ vispr server ./results/config* --port <span class="m">6000</span>
 <p>VISPR installation in the IBU cluster might not be updated. Therefore,
 users of this cluster will need to run an additional command to see
 the outputs:</p>
-<div class="highlight"><pre><span></span><span class="c1"># Take VISPR from jpijuan Conda Environment</span>
+<div class="codehilite"><pre><span></span><span class="c1"># Take VISPR from jpijuan Conda Environment</span>
 <span class="nb">alias</span> <span class="nv">vispr</span><span class="o">=</span><span class="s2">&quot;/home/jpijuan/software/miniconda3/bin/vispr&quot;</span>
 
 <span class="c1"># Run VIPR server</span>
@@ -721,7 +721,7 @@ vispr server ./results/config* --port <span class="m">6000</span>
 </div>
 <p>Also keep in mind that, if you work from a cluster, you will need to copy the following
 line locally on your computer in order to see the results:</p>
-<div class="highlight"><pre><span></span>ssh -f <span class="o">{</span>user<span class="o">}</span>@binfservms01.unibe.ch -L <span class="m">6000</span>:localhost:6000 -N
+<div class="codehilite"><pre><span></span>ssh -f <span class="o">{</span>user<span class="o">}</span>@binfservms01.unibe.ch -L <span class="m">6000</span>:localhost:6000 -N
 </pre></div>
 
 <p>The data should be already available at this <a href="http://127.0.0.1:6000">webpage</a>.</p>
