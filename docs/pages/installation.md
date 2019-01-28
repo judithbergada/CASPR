@@ -50,6 +50,9 @@ Once Miniconda is installed, you can obtain the required packages with a single
 command like this:
 
 ```bash
+# Go inside CASPR directory
+cd $HOME/CASPR/
+# Install packages
 conda env create -n caspr -f environment.yml
 ```
 
@@ -63,9 +66,9 @@ Alternatively, you can also run:
 conda create -n caspr python=3.5
 # Install required software
 conda install -n caspr --yes r
-conda install -n caspr_new -c bioconda --yes \
+conda install -n caspr -c bioconda --yes \
   cutadapt star samtools vispr mageck mageck-vispr fastqc
-conda install -n caspr_new -c biobuilds --yes fastx-toolkit
+conda install -n caspr -c biobuilds --yes fastx-toolkit
 ```
 
 
