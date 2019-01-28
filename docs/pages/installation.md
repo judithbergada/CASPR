@@ -44,7 +44,7 @@ CASPR employs several software packages to carry out its different functions:
 The easiest way to download them is to use
 [Miniconda](https://conda.io/miniconda.html), which allows to create an
 isolated environment. To install miniconda, please follow the
-[instuctions](https://conda.io/docs/user-guide/install/index.html).
+[instuctions](https://conda.io/projects/conda/en/latest/user-guide/install/index.html).
 
 Once Miniconda is installed, you can obtain the required packages with a single
 command like this:
