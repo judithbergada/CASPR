@@ -705,20 +705,20 @@ vispr server ./results/config* --port <span class="m">6000</span>
 <span class="c1"># Ctrl-C to exit the server</span>
 </pre></div>
 
-<p>!! info "Users of IBU Cluster"</p>
-<pre><code>VISPR installation in the IBU cluster might not be updated. Therefore,
+<div class="admonition info">
+<p class="admonition-title">Users of IBU Cluster</p>
+<p>VISPR installation in the IBU cluster might not be updated. Therefore,
 users of this cluster will need to run an additional command to see
-the outputs:
+the outputs:</p>
+<div class="highlight"><pre><span></span><span class="c1"># Take VISPR from jpijuan Conda Environment</span>
+<span class="nb">alias</span> <span class="nv">vispr</span><span class="o">=</span><span class="s2">&quot;/home/jpijuan/software/miniconda3/bin/vispr&quot;</span>
 
-```bash
-# Take VISPR from jpijuan Conda Environment
-alias vispr="/home/jpijuan/software/miniconda3/bin/vispr"
+<span class="c1"># Run VIPR server</span>
+vispr server ./results/config* --port <span class="m">5000</span>
+<span class="c1"># Ctrl-C to exit the server</span>
+</pre></div>
 
-# Run VIPR server
-vispr server ./results/config* --port 5000
-# Ctrl-C to exit the server
-```
-</code></pre>
+</div>
 <p>Also keep in mind that, if you work from a cluster, you will need to copy the following
 line locally on your computer in order to see the results:</p>
 <div class="highlight"><pre><span></span>ssh -f <span class="o">{</span>user<span class="o">}</span>@binfservms01.unibe.ch -L <span class="m">6000</span>:localhost:6000 -N
