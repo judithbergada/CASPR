@@ -4,6 +4,7 @@ site_dir: site
 
 repo_name: 'judithbergada/CASPR'
 repo_url: 'https://github.com/judithbergada/CASPR'
+edit_uri: 'tree/master/docs/pages/'
 
 # Copyright
 copyright: 'Copyright &copy; 2018 Judith Bergadà Pijuan'
