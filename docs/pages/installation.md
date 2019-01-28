@@ -46,28 +46,21 @@ The easiest way to download them is to use
 isolated environment. To install miniconda, please follow the
 [instuctions](https://conda.io/projects/conda/en/latest/user-guide/install/index.html).
 
-Once Miniconda is installed, you can obtain the required packages with a single
-command like this:
-
-```bash
-# Go inside CASPR directory
-cd $HOME/CASPR/
-# Install packages
-conda env create -n caspr -f environment.yml
-```
-
-This option is recommended because it will install all the tools defined in the
-`environement.yml` file, ensuring that CASPR works smoothly.
-
-Alternatively, you can also run:
+Once Miniconda is installed, you can obtain the required packages by executing
+the following commands on your terminal:
 
 ```bash
 # Create environment
 conda create -n caspr python=3.5
 # Install required software
 conda install -n caspr --yes r
-conda install -n caspr -c bioconda --yes \
-  cutadapt star samtools vispr mageck mageck-vispr fastqc
+conda install -n caspr -c bioconda --yes cutadapt
+conda install -n caspr -c bioconda --yes star
+conda install -n caspr -c bioconda --yes samtools
+conda install -n caspr -c bioconda --yes vispr
+conda install -n caspr -c bioconda --yes mageck
+# conda install -n caspr -c bioconda --yes mageck-vispr
+conda install -n caspr -c bioconda --yes fastqc
 conda install -n caspr -c biobuilds --yes fastx-toolkit
 ```
 
@@ -97,7 +90,7 @@ Now, you can start using CASPR on Linux or macOS!
     To use the tool, please do not forget to activate the Conda Environment!
 
     ```bash
-    conda activate caspr
+    source activate caspr
     ```
 
 
