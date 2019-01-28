@@ -421,7 +421,10 @@ isolated environment. To install miniconda, please follow the
 <a href="https://conda.io/projects/conda/en/latest/user-guide/install/index.html">instuctions</a>.</p>
 <p>Once Miniconda is installed, you can obtain the required packages with a single
 command like this:</p>
-<div class="highlight"><pre><span></span>conda env create -n caspr -f environment.yml
+<div class="highlight"><pre><span></span><span class="c1"># Go inside CASPR directory</span>
+<span class="nb">cd</span> <span class="nv">$HOME</span>/CASPR/
+<span class="c1"># Install packages</span>
+conda env create -n caspr -f environment.yml
 </pre></div>
 
 <p>This option is recommended because it will install all the tools defined in the
