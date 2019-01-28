@@ -5,44 +5,38 @@ using pgRNAs. The test data folder contains two brief user cases to go through
 all steps. Simply copy the scripts provided in each user case to visualize the
 demos.
 
-## Get started: Download CASPR Code and Data
+## Get started: Activate Conda Environment
 
-If it is your first time with CASPR, please make sure you have downoaded the
-repository. This can be done a follows:
+If it is your first time with CASPR, please follow the
+[Installation-Guide](https://judithbergada.github.io/CASPR/installation/).
 
-```bash
-git clone https://github.com/judithbergada/CASPR.git $HOME/CASPR
-```
-
-For a proper installation of the tool, it is also recommended to run:
+After finishing with the installation, you should activate the Conda
+Environment. Please, make sure you do it every time you work with CASPR:
 
 ```bash
-# Add CASPR to PATH
-echo "export PATH=\$HOME/CASPR/source:\$PATH" >> $HOME/.bashrc
-source $HOME/.bashrc
+conda activate caspr
 ```
 
-You can now check that CASPR is available:
+!!! info "Users of IBU Cluster"
 
-```bash
-CASPR --help
-```
+    Users of IBU cluster (Interfaculty Bioinformatics Unit, University of Bern)
+    will also download CASPR following the
+    [Installation-Guide](https://judithbergada.github.io/CASPR/installation/).
 
-## IBU Cluster (Interfaculty Bioinformatics Unit, UniBe): Useful Information
+    However, you do not need to poceed with the installation of a Conda
+    Environment. Instead, you can load the required software packages,
+    which are all installed in the cluster.
 
-CASPR employs several software packages to carry out its different functions,
-but working from the IBU cluster has some advantages: all of the required
-tools are already installed. Therefore, please make sure you load everything
-in advance:
+    Please, make sure you load them every time you work with CASPR:
 
-```bash
-# Import software: it only works for users of Ubelix cluster
-module add UHTS/Analysis/fastx_toolkit/0.0.13.2
-module add UHTS/Aligner/STAR/2.6.0c
-module add UHTS/Analysis/samtools/1.4
-module add R/3.5.1
-module add UHTS/Quality_control/mageck-vispr/0.5.4
-```
+    ```bash
+    # Import software: only for users of IBY cluster
+    module add UHTS/Analysis/fastx_toolkit/0.0.13.2
+    module add UHTS/Aligner/STAR/2.6.0c
+    module add UHTS/Analysis/samtools/1.4
+    module add R/3.5.1
+    module add UHTS/Quality_control/mageck-vispr/0.5.4
+    ```
 
 ## User Case 1: Analysis of a CRISPR Screen Using pgRNAs
 
@@ -148,17 +142,27 @@ Moreover, you can benefit from VISPR to get interactive results on you data.
 Please try the following:
 
 ```bash
-# Because the VISPR installation in the IBU cluster is not ready yet,
-# users of IBU cluster will need this additional command.
-# If you are not using IBU cluster, you can ignore it.
-alias vispr="/home/jpijuan/software/miniconda3/bin/vispr"
-
 # Run VIPR server
 vispr server ./results/config* --port 5000
 # Ctrl-C to exit the server
 ```
 
-The command runs a web server that will create a webpage with nice visualization of the results.
+!!! info "Users of IBU Cluster"
+
+    VISPR installation in the IBU cluster might not be updated. Therefore,
+    users of this cluster will need to run an additional command to see
+    the outputs:
+
+    ```bash
+    # Take VISPR from jpijuan Conda Environment
+    alias vispr="/home/jpijuan/software/miniconda3/bin/vispr"
+
+    # Run VIPR server
+    vispr server ./results/config* --port 5000
+    # Ctrl-C to exit the server
+    ```
+
+VISPR is a web-based interactive server that creates a webpage with a nice visualization of the results.
 If you are working from a cluster, you will also need to run this command locally on your computer:
 
 ```bash
@@ -172,7 +176,7 @@ If you are still curious about other options of CASPR, let's try to get more
 information on the unmapped reads. This can be done esily just by adding the tag
 `-i` to the previous command. Furthermore, if you kept the intermediate files
 with the `-k` argument, neither the previous nor the next steps will be
-necessary anymore.
+necessary anymore (only mapping).
 
 You can find a solution to quickly finish the user case here:
 
@@ -312,16 +316,28 @@ If you kept the intermediate files in this last step, you can visualize again
 the results with VISPR:
 
 ```bash
-# Because the VISPR installation in the IBU cluster is not ready yet,
-# users of IBU cluster will need this additional command.
-# If you are not using IBU cluster, you can ignore it.
-alias vispr="/home/jpijuan/software/miniconda3/bin/vispr"
-
 # Run VIPR server
 vispr server ./results/config* --port 6000
 # Ctrl-C to exit the server
 ```
-And copy this command locally in your computer:
+
+!!! info "Users of IBU Cluster"
+
+    VISPR installation in the IBU cluster might not be updated. Therefore,
+    users of this cluster will need to run an additional command to see
+    the outputs:
+
+    ```bash
+    # Take VISPR from jpijuan Conda Environment
+    alias vispr="/home/jpijuan/software/miniconda3/bin/vispr"
+
+    # Run VIPR server
+    vispr server ./results/config* --port 6000
+    # Ctrl-C to exit the server
+    ```
+
+Also keep in mind that, if you work from a cluster, you will need to copy the following
+line locally on your computer in order to see the results:
 
 ```bash
 ssh -f {user}@binfservms01.unibe.ch -L 6000:localhost:6000 -N
