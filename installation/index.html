@@ -281,8 +281,22 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#get-started-download-caspr-code-and-data" title="Get started: Download CASPR Code and Data" class="md-nav__link">
+    Get started: Download CASPR Code and Data
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#conda-environment-installation" title="Conda Environment Installation" class="md-nav__link">
     Conda Environment Installation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#users-of-ibu-cluster" title="Users of IBU cluster" class="md-nav__link">
+    Users of IBU cluster
   </a>
   
 </li>
@@ -331,8 +345,22 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#get-started-download-caspr-code-and-data" title="Get started: Download CASPR Code and Data" class="md-nav__link">
+    Get started: Download CASPR Code and Data
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#conda-environment-installation" title="Conda Environment Installation" class="md-nav__link">
     Conda Environment Installation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#users-of-ibu-cluster" title="Users of IBU cluster" class="md-nav__link">
+    Users of IBU cluster
   </a>
   
 </li>
@@ -357,6 +385,7 @@
                 
                 
                 <h1 id="installation-guide">Installation Guide</h1>
+<h2 id="get-started-download-caspr-code-and-data">Get started: Download CASPR Code and Data</h2>
 <p>CASPR is being developed and tested under Linux and macOS.</p>
 <p>In order to use it, first you need to clone the repository:</p>
 <div class="highlight"><pre><span></span>git clone https://github.com/judithbergada/CASPR.git <span class="nv">$HOME</span>/CASPR
@@ -369,7 +398,11 @@
 <span class="c1"># Please, note that the previous commands do not work if you use Zsh</span>
 </pre></div>
 
-<p>At this point, the tool should be available in your computer.</p>
+<p>At this point, the tool should be available in your computer.
+You can check it:</p>
+<div class="highlight"><pre><span></span>CASPR --help
+</pre></div>
+
 <h2 id="conda-environment-installation">Conda Environment Installation</h2>
 <p>CASPR employs several software packages to carry out its different functions:</p>
 <ul>
@@ -386,13 +419,13 @@
 <a href="https://conda.io/miniconda.html">Miniconda</a>, which allows to create an
 isolated environment. To install miniconda, please follow the
 <a href="https://conda.io/docs/user-guide/install/index.html">instuctions</a>.</p>
-<p>Once Miniconda is installed, you can obtain all the packages from a single
+<p>Once Miniconda is installed, you can obtain the required packages with a single
 command like this:</p>
 <div class="highlight"><pre><span></span>conda env create -n caspr -f environment.yml
 </pre></div>
 
-<p>This option is recommended because it will install the software defined in the
-<code>environement.yml</code> file, ensuring that the pipeline works smoothly.</p>
+<p>This option is recommended because it will install all the tools defined in the
+<code>environement.yml</code> file, ensuring that CASPR works smoothly.</p>
 <p>Alternatively, you can also run:</p>
 <div class="highlight"><pre><span></span><span class="c1"># Create environment</span>
 conda create -n caspr <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.5
@@ -403,20 +436,14 @@ conda install -n caspr_new -c bioconda --yes <span class="se">\</span>
 conda install -n caspr_new -c biobuilds --yes fastx-toolkit
 </pre></div>
 
-<div class="admonition info">
-<p class="admonition-title">Activate environment</p>
-<p>Once you have installed all the required software don't forget to
-activate the environment to start using CASPR:</p>
-<div class="highlight"><pre><span></span>conda activate caspr
-</pre></div>
-
-</div>
-<p>Now, you can start using CASPR.</p>
 <div class="admonition warning">
 <p class="admonition-title">Installation on macOS</p>
-<p>Because macOS uses custom versions of <code>sed</code> and <code>grep</code> it is necessary to
-install the latest GNU version to run CASPR. To install it, you need to have
-<a href="https://brew.sh/">HomeBrew</a>:</p>
+<p>Since macOS uses custom versions of <code>sed</code> and <code>grep</code>, it is also necessary to
+install the latest GNU version to run CASPR.</p>
+<p>To do it, first you need to have HomeBrew. If it is not available in your
+computer yet, you can find information on the installation at this <a href="https://brew.sh/">webpage</a>.</p>
+<p>Once HomeBrew works at your device, you only need to copy the following commands
+on your terminal:</p>
 <div class="highlight"><pre><span></span><span class="c1"># Install sed and grep</span>
 brew install gnu-sed grep
 <span class="c1"># Make sure the installed versions are the first ones available in your PATH</span>
@@ -426,6 +453,27 @@ brew install gnu-sed grep
 </pre></div>
 
 </div>
+<p>Now, you can start using CASPR, but please do not forget to activate the Conda
+Environment!</p>
+<pre><code>```bash
+conda activate caspr
+```
+</code></pre>
+<h2 id="users-of-ibu-cluster">Users of IBU cluster</h2>
+<p>Users of IBU cluster (Interfaculty Bioinformatics Unit, University of Bern)
+do not need to follow the guide to install a Conda Environment.</p>
+<p>Instead, you can load the required software packages,
+which are all installed in the cluster. This can be done as follows:</p>
+<p><div class="highlight"><pre><span></span><span class="c1"># Import software: only for users of IBY cluster</span>
+module add UHTS/Analysis/fastx_toolkit/0.0.13.2
+module add UHTS/Aligner/STAR/2.6.0c
+module add UHTS/Analysis/samtools/1.4
+module add R/3.5.1
+module add UHTS/Quality_control/mageck-vispr/0.5.4
+</pre></div>
+Neverthless, installing the Conda Environment would have an advantage:
+VISPR would display the results without the need of additional commands
+(see the user cases of the tutorial for more information).</p>
                 
                   
                 
