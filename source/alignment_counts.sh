@@ -22,10 +22,12 @@ total_len=$(echo "${lguide1} + ${lguide2} - 1" | bc -l)
 
 # Check the Shared Memory available
 available_shm=$(sysctl -A 2>/dev/null | grep shmmax | grep -Eo "[0-9]+")
-req_shm=10000000000 # 10GB
+available_shm=$(echo "$available_shm / 1000000000" | bc) # Divide by 1GB
+req_shm=10 # 10GB
 if [ "$available_shm" -lt "$req_shm" ]; then
   shm_flags=""
 else
+  req_shm=10000000000 #10GB
   shm_flags="--genomeLoad LoadAndKeep --limitBAMsortRAM $req_shm"
   echo "Using shared memory to load the genome."
 fi
