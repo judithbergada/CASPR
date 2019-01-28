@@ -11,12 +11,12 @@ q=$1; f=$2; b=$3; l=$4; currentdir=$5
 
 # Compute length of the guide RNAs
 lguide1=$(awk 'NR==1 {print $3}' $l | wc -c)
-let "lguide1-=1"
+lguide1=$(echo "${lguide1} - 1" | bc -l)
 lguide2=$(awk 'NR==1 {print $4}' $l | wc -c)
-let "lguide2-=1"
-# Compute total length
-let total_len=${lguide1}+${lguide2}-1
+lguide2=$(echo "${lguide2} - 1" | bc -l)
 
+# Compute total length
+total_len=$(echo "${lguide1} + ${lguide2} - 1" | bc -l)
 
 for fastqfile in $f; do
   # Take only the name of the sample file, ignoring directory
@@ -34,7 +34,7 @@ for fastqfile in $f; do
             grep "Number of input reads" | cut -f2)
 
   # Compute number of unmapped reads
-  let unmapped=$total_reads-$mapped
+  unmapped=$(echo "${total_reads} - ${mapped}" | bc -l)
 
   # ________________NEEDED FOR SECOND GRAPH________________
 
@@ -47,23 +47,23 @@ for fastqfile in $f; do
             grep "Uniquely mapped reads number" | cut -f2)
 
   # Compute the number of reads that map ALL bp with more than 3 mismatches
-  let "mappedmore3 = mapped - mappedm3"
+  mappedmore3=$(echo "${mapped} - ${mappedm3}" | bc -l)
 
   # Compute the number of reads that map ALL bp with >1 and <=3 mismatches
-  let "mappedm3 = mappedm3 - mappedm0"
+  mappedm3=$(echo "${mappedm3} - ${mappedm0}" | bc -l)
 
   # Compute number of reads that are shorter than ALL bp - 3 mismatches
-  let "a1 = total_len + 1"
-  let "a3 = total_len - 1"
-  let "a4 = total_len - 2"
-  let "a5 = total_len - 3"
+  a1=$(echo "${total_len} + 1" | bc -l)
+  a3=$(echo "${total_len} - 1" | bc -l)
+  a4=$(echo "${total_len} - 2" | bc -l)
+  a5=$(echo "${total_len} - 3" | bc -l)
 
   short=$(cat ${q}/${name}out.sam | awk '$5 == 255' | \
           awk '{print length($10)}' | \
         grep -ve "$a1" -ve "$total_len" -ve "$a3" -ve "$a4" -ve "$a5"| wc -l)
 
   # Substract the number of short reads from the ones that map with > 3m
-  let "mappedmore3 = mappedmore3 - short"
+  mappedmore3=$(echo "${mappedmore3} - ${short}" | bc -l)
 
   # ________________NEEDED FOR THIRD GRAPH________________
 
@@ -80,7 +80,7 @@ for fastqfile in $f; do
             grep "Number of reads mapped to multiple loci" | cut -f2)
 
   # Compute number of unmapped reads
-  unmapped20=$(echo "reads20 - mapped20 - nonunique20" | bc -l)
+  unmapped20=$(echo "${reads20} - ${mapped20} - ${nonunique20}" | bc -l)
 
   # ________________NEEDED FOR FOURTH GRAPH________________
   # Get number of multi-mapping reads with repeated guide
@@ -98,7 +98,7 @@ for fastqfile in $f; do
              uniq -c |  awk '$1==1' | awk '{print $2}' | uniq -c | wc -l)
 
   # Get the rest of the reads that are multi-mapped
-  others=$(echo "nonunique20 - repeatedg - recombing" | bc -l)
+  others=$(echo "${nonunique20} - ${repeatedg} - ${recombing}" | bc -l)
 
   # ________________Plot the pie charts________________
   Rscript --vanilla "${currentdir}/alignment_pie_charts.R" \

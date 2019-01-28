@@ -11,14 +11,14 @@ m=$1; b=$2; t=$3; q=$4; r=$5; l=$6; info=$7
 
 # Compute length of the guide RNAs
 lguide1=$(awk 'NR==1 {print $3}' $l | wc -c)
-let lguide1="${lguide1}-1"
+lguide1=$(echo "${lguide1} - 1" | bc -l)
 lguide2=0
 # Guide 2 will be considered only if reverse fastq are provided
 if [[ $r != "" ]]; then
   lguide2=$(awk 'NR==1 {print $4}' $l | wc -c)
-  let lguide2="${lguide2}-1"
+  lguide2=$(echo "${lguide2} - 1" | bc -l)
 fi
-let total_len="${lguide1}+${lguide2}-1"
+total_len=$(echo "${lguide1} + ${lguide2} - 1" | bc -l)
 
 # Check the Shared Memory available
 available_shm=$(sysctl -A 2>/dev/null | grep shmmax | grep -Eo "[0-9]+")

@@ -17,7 +17,7 @@ sed 's/control//g' | cut -f3 | sort -u)
 # Separate different control samples according their number
 i=0
 for ctr in $ctrls; do
-  let i=($i+1)
+  i=$(echo "${i} + 1" | bc -l)
   c[ctr]=$(cat $e | grep "control${ctr}" | cut -f1)
 done
 
