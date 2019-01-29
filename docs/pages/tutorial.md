@@ -14,7 +14,10 @@ After finishing with the installation, you should activate the Conda
 Environment. Please, make sure you do it every time you work with CASPR:
 
 ```bash
+# Activate for Linux
 source activate caspr
+# Activate for macOS
+conda activate caspr
 ```
 
 !!! info "Users of IBU Cluster"

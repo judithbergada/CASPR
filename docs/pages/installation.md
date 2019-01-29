@@ -89,7 +89,10 @@ Now, you can start using CASPR on Linux or macOS!
     To use the tool, please do not forget to activate the Conda Environment!
 
     ```bash
+    # Activate for Linux
     source activate caspr
+    # Activate for macOS
+    conda activate caspr
     ```
 
 
