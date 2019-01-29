@@ -53,7 +53,7 @@ the following commands on your terminal:
 # Create environment
 conda create -n caspr --yes python=3.5
 # Install required software
-conda install -n caspr --yes r
+conda install -n caspr --yes r=3.5.0
 conda install -n caspr -c bioconda --yes cutadapt
 conda install -n caspr -c bioconda --yes star
 conda install -n caspr -c bioconda --yes samtools
