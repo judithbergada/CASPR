@@ -37,7 +37,7 @@ CASPR employs several software packages to carry out its different functions:
 *   `fastx-toolkit`
 *   `STAR`
 *   `samtools`
-*   `mageck` and `mageck-vispr`
+*   `mageck`
 *   `vispr`
 *   `R`
 
@@ -51,7 +51,7 @@ the following commands on your terminal:
 
 ```bash
 # Create environment
-conda create -n caspr python=3.5
+conda create -n caspr --yes python=3.5
 # Install required software
 conda install -n caspr --yes r
 conda install -n caspr -c bioconda --yes cutadapt
