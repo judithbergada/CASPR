@@ -411,7 +411,7 @@ You can check it:</p>
 <li><code>fastx-toolkit</code></li>
 <li><code>STAR</code></li>
 <li><code>samtools</code></li>
-<li><code>mageck</code> and <code>mageck-vispr</code></li>
+<li><code>mageck</code></li>
 <li><code>vispr</code></li>
 <li><code>R</code></li>
 </ul>
@@ -422,7 +422,7 @@ isolated environment. To install miniconda, please follow the
 <p>Once Miniconda is installed, you can obtain the required packages by executing
 the following commands on your terminal:</p>
 <div class="codehilite"><pre><span></span><span class="c1"># Create environment</span>
-conda create -n caspr <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.5
+conda create -n caspr --yes <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.5
 <span class="c1"># Install required software</span>
 conda install -n caspr --yes r
 conda install -n caspr -c bioconda --yes cutadapt
