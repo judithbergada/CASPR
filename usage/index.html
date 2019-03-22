@@ -391,9 +391,9 @@ These are as follows:</p>
 <li><code>-f</code> or <code>--fastq-forward</code>: sequencing files that contain the forward reads,
 for which fastq and fastq.gz formats are accepted. Files must be separated by
 commas and written in quotes.</li>
-</ul>
+<li>
 <p>Example: "ctrl1_1.fastq, d1_forward.fq.gz".</p>
-<ul>
+</li>
 <li>
 <p><code>-r</code> or <code>--fastq-reverse</code>: sequencing files that contain the reverse reads,
 only needed to handle pgRNA libraries. If not provided, sgRNAs will be
@@ -415,14 +415,14 @@ different samples in the analysis, named according to their forward fastq files.
 Column2 shows the replicates, and each replicate is represented as an integer.
 Column3 contains the condition of each sample, "control" or "treated", followed
 by the number of test.
-                Example:    ctr1.fastq      1  control1
-                            ctr2.fastq      2  control1
-                            day30_1.fastq   1  treated1
-                            day30_2.fastq   2  treated1
-                            ctr3.fastq      3  control2
-                            ctr4.fastq      4  control2
-                            day30_3.fastq   3  treated2
-                            day30_4.fastq   4  treated2
+              + Example:    ctr1.fastq\ \ \ \ \ \ 1\ \ control1
+                          + ctr2.fastq\ \ \ \ \ \ 2\ \ control1
+                          + day30_1.fastq\ \ \ \ \ 1\ \ treated1
+                          + day30_2.fastq   2  treated1
+                          + ctr3.fastq      3  control2
+                          + ctr4.fastq      4  control2
+                          + day30_3.fastq   3  treated2
+                          + day30_4.fastq   4  treated2
                 --&gt; Test 1: ctr1 &amp; ctr2 vs day30_1 &amp; day30_2
                 --&gt; Test 2: ctr3 &amp; ctr4 vs day30_3 &amp; day30_4</p>
 </li>
