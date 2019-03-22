@@ -410,33 +410,30 @@ Column1 shows the IDs of the guide-RNAs. Column2 shows the
 targeted genes. Column3 contains the sequence of the 1st sgRNA. Column4 contains
 the sequence of the 2nd sgRNA, only if pgRNAs are used. Example:
 <div class="codehilite"><pre><span></span>-l pgrna_library.txt
-</pre></div></p>
-</li>
-</ul>
+</pre></div>
 <div class="codehilite"><pre><span></span>The file pgrna_library.txt should have this format:
 
-E2F2_1         E2F2      GCCGCGGGCCGTGTGAAAGGG    ATAAAGACTGACAGTCTGAA
-E2F2_2         E2F2      GCAGACGGCGCCTCCCGCAGG    ATAAAGACTGACAGTCTGAA
-E2F2_3         E2F2      GTTGTGCGATGCCTGCCGGCG    ATAAAGACTGACAGTCTGAA
-E2F2_4         E2F2      GCCGCGGGCCGTGTGAAAGGG    ACGCTTGTAAGGATCTAGCA
-E2F2_5         E2F2      GCCGCGGGCCGTGTGAAAGGG    TTAGATGGTTGAGGCCAAGG
-ADAM17_1   ADAM17    GCTCCCGCCCCCCCATTCCGG    AGAGACTCGGTAAAGACCCA
-ADAM17_2   ADAM17    GCTCCCGCCCCCCCATTCCGG    GCTCGTTTGAGGGAAGAGCA
-ADAM17_3   ADAM17    GCTCCCGCCCCCCCATTCCGG    TATGCAGTAATCTCGTTGGG
-ADAM17_4   ADAM17    GTTTTCGTGACGACAGACGGA    AGAGACTCGGTAAAGACCCA
-ADAM17_5   ADAM17    GCTCGTTTGAGGGAAGAGCAG    TTTTCGTGACGACAGACGGA
-</pre></div>
-
-<ul>
-<li><code>-e</code> or <code>--exper-design</code>: text file showing the experimental design of the
+E2F2_1       E2F2      GCCGCGGGCCGTGTGAAAGGG    ATAAAGACTGACAGTCTGAA
+E2F2_2       E2F2      GCAGACGGCGCCTCCCGCAGG    ATAAAGACTGACAGTCTGAA
+E2F2_3       E2F2      GTTGTGCGATGCCTGCCGGCG    ATAAAGACTGACAGTCTGAA
+E2F2_4       E2F2      GCCGCGGGCCGTGTGAAAGGG    ACGCTTGTAAGGATCTAGCA
+E2F2_5       E2F2      GCCGCGGGCCGTGTGAAAGGG    TTAGATGGTTGAGGCCAAGG
+ADAM17_1     ADAM17    GCTCCCGCCCCCCCATTCCGG    AGAGACTCGGTAAAGACCCA
+ADAM17_2     ADAM17    GCTCCCGCCCCCCCATTCCGG    GCTCGTTTGAGGGAAGAGCA
+ADAM17_3     ADAM17    GCTCCCGCCCCCCCATTCCGG    TATGCAGTAATCTCGTTGGG
+ADAM17_4     ADAM17    GTTTTCGTGACGACAGACGGA    AGAGACTCGGTAAAGACCCA
+ADAM17_5     ADAM17    GCTCGTTTGAGGGAAGAGCAG    TTTTCGTGACGACAGACGGA
+</pre></div></p>
+</li>
+<li>
+<p><code>-e</code> or <code>--exper-design</code>: text file showing the experimental design of the
 CRISPR screen. It has three columns, without header. Column1 contains the
 different samples in the analysis, named according to their forward fastq files.
 Column2 shows the replicates, and each replicate is represented as an integer.
 Column3 contains the condition of each sample, "control" or "treated", followed
 by the number of test. Example:
 <div class="codehilite"><pre><span></span>-e expdesign.txt
-</pre></div></li>
-</ul>
+</pre></div>
 <div class="codehilite"><pre><span></span>The file expdesign.txt should have this format:
 
                     ctr1.fastq      1  control1
@@ -450,105 +447,87 @@ by the number of test. Example:
 
 -&gt; Test 1: ctr1 &amp; ctr2 vs day30_1 &amp; day30_2
 -&gt; Test 2: ctr3 &amp; ctr4 vs day30_3 &amp; day30_4
-</pre></div>
+  ```
 
-<p>Additionally, CASPR offers a versatile control of the analysis through several
+Additionally, CASPR offers a versatile control of the analysis through several
 optional parameters. Some of them are set by default if not modified by the
 users; others are ignored if they are not provided. The whole set of optional
-arguments is the following:</p>
-<ul>
-<li>
-<p><code>-c</code> or <code>--controls</code>: text file with 2 columns, without header. Column1 shows
+arguments is the following:
+
+* `-c` or `--controls`: text file with 2 columns, without header. Column1 shows
 the name of the control genes. Column2 shows the type of control, which must be
-"Positive", "Negative" or "Neutral". Positive and negative controls are only
+&quot;Positive&quot;, &quot;Negative&quot; or &quot;Neutral&quot;. Positive and negative controls are only
 used in the plots in order to show these genes with different colors. Neutral
 controls are also used during the step of the analysis, and MAGeCK takes them to
 predict the null distribution. If controls are not specified, they are not used.
 Example:
-<div class="codehilite"><pre><span></span>-c controlfile.txt
 </pre></div>
-<div class="codehilite"><pre><span></span>The file controlfile.txt should have this format:
-
-E2F2        Negative
+-c controlfile.txt
+<div class="codehilite"><pre><span></span>
+</pre></div>
+The file controlfile.txt should have this format:</p>
+</li>
+</ul>
+<p>E2F2        Negative
 ADAM17      Negative
 BRCA2         Positive
 FAM188A     Positive
 AAVS1       Neutral
 NonTarget   Neutral
-</pre></div></p>
-</li>
-<li>
-<p><code>-a</code> or <code>--adapter-f</code>: sequence of the adapter that must be considered to trim
+<div class="codehilite"><pre><span></span>* `-a` or `--adapter-f`: sequence of the adapter that must be considered to trim
 the forward reads. Characters must be A, T, G or C, as needed to represent
 nucleotides. Default: ACCG. Example:
-<div class="codehilite"><pre><span></span>-a AGCG
-</pre></div></p>
-</li>
-<li>
-<p><code>-A</code> or <code>--adapter-r</code>: sequence of the adapter that must be considered to trim
+</pre></div>
+-a AGCG
+<div class="codehilite"><pre><span></span>* `-A` or `--adapter-r`: sequence of the adapter that must be considered to trim
 the reverse reads. Characters must be A, T, G or C, as needed to represent
 nucleotides. Default: AAAC. Example:
-<div class="codehilite"><pre><span></span>-A ATAC
-</pre></div></p>
-</li>
-<li>
-<p><code>-m</code> or <code>--mismatches</code>: maximum number of mismatches to tolerate during the
+</pre></div>
+-A ATAC
+<div class="codehilite"><pre><span></span>* `-m` or `--mismatches`: maximum number of mismatches to tolerate during the
 mapping process. Default: 0. Example:
-<div class="codehilite"><pre><span></span>-m 2
-</pre></div></p>
-</li>
-<li>
-<p><code>-b</code> or <code>--bases-aligned</code>: minimum number of bases that must be aligned during
+</pre></div>
+-m 2
+<div class="codehilite"><pre><span></span>* `-b` or `--bases-aligned`: minimum number of bases that must be aligned during
 the mapping process. Default: 20 bp for sgRNA libraries and 30 bp for pgRNA
 libraries. Example:
-<div class="codehilite"><pre><span></span>-b 35
-</pre></div></p>
-</li>
-<li>
-<p><code>-y</code> or <code>--fdr-threshold</code>: FDR threshold for the identification of hits. It
-is used to display the hits in the plots, but it doesn't affect the analysis.
+</pre></div>
+-b 35
+<div class="codehilite"><pre><span></span>* `-y` or `--fdr-threshold`: FDR threshold for the identification of hits. It
+is used to display the hits in the plots, but it doesn&#39;t affect the analysis.
 Default: 0.1. Example:
-<div class="codehilite"><pre><span></span>-y 0.25
-</pre></div></p>
-</li>
-<li>
-<p><code>-o</code> or <code>--orientation</code>: orientation of the paired guides in the plasmid
+</pre></div>
+-y 0.25
+<div class="codehilite"><pre><span></span>* `-o` or `--orientation`: orientation of the paired guides in the plasmid
 vector, only needed for pgRNA libraries. If guides are provided such that their
 sequence is found in the plasmid vector as 5’-pgRNA-3’, this argument should
 be 53. If users have 3’-pgRNA-5’, it should be 35. Other values are not
 accepted. Default: 53.  Example:
-<div class="codehilite"><pre><span></span>-o 53
-</pre></div></p>
-</li>
-<li>
-<p><code>-t</code> or <code>--threads</code>: number of threads that will be used. Default: 1. Example:
-<div class="codehilite"><pre><span></span>-t 10
-</pre></div></p>
-</li>
-<li>
-<p><code>-q</code> or <code>--output-dir</code>: path to the directory where outputs will be saved. It
+</pre></div>
+-o 53
+<div class="codehilite"><pre><span></span>* `-t` or `--threads`: number of threads that will be used. Default: 1. Example:
+</pre></div>
+-t 10
+<div class="codehilite"><pre><span></span>* `-q` or `--output-dir`: path to the directory where outputs will be saved. It
 must exist and will not be created by CASPR. Default: current directory. Example:
-<div class="codehilite"><pre><span></span>-q ./Analysis/survival_screen
-</pre></div></p>
-</li>
-<li>
-<p><code>-s</code> or <code>--start</code>: step from which to start the analysis. This argument is
+</pre></div>
+-q ./Analysis/survival_screen
+<div class="codehilite"><pre><span></span>* `-s` or `--start`: step from which to start the analysis. This argument is
 helpful if users want to modify any of the parameters of CASPR and recompute
 only part of the analysis, because the previous steps will not be executed again.
-Available options are: "qc", "trim", "map" or "test".
+Available options are: &quot;qc&quot;, &quot;trim&quot;, &quot;map&quot; or &quot;test&quot;.
 Default: start by indexing the genome. Example:
-<div class="codehilite"><pre><span></span>-s map
-</pre></div></p>
-</li>
-<li>
-<p><code>-p</code> or <code>--pause</code>: step at which to stop the analysis. This step will be
+</pre></div>
+-s map
+<div class="codehilite"><pre><span></span>* `-p` or `--pause`: step at which to stop the analysis. This step will be
 included in the execution. The argument is helpful if users are only interested
 in performing a specific part of the analysis, avoiding CASPR to arrive at the
-last step. Available options are: "indexing", "qc", "trim", "map".
+last step. Available options are: &quot;indexing&quot;, &quot;qc&quot;, &quot;trim&quot;, &quot;map&quot;.
 Default: stop when test is finished. Example:
-<div class="codehilite"><pre><span></span>-p map
-</pre></div></p>
-</li>
+</pre></div>
+-p map
+```</p>
+<ul>
 <li>
 <p><code>-k</code> or <code>--keep-tmp</code>: flag that, when used, forces CASPR to keep the intermediate
 files after completing the analysis. This option is very helpful if users want to
@@ -563,10 +542,10 @@ multiple alignments. It is only implemented for the analysis of pgRNA libraries,
 with the aim to provide additional information on the mapping process. It
 consists on the following steps: first, it maps the reads to the pgRNAs using
 parameters specified by the user; second, it tries to align the unmapped reads
-from the previous step to only one sgRNA —usually 20 bp—, without tolerating
+from the previous step to only one sgRNA, without tolerating
 any mismatches; third, it maps the reads to the pgRNAs considering parameters
-<code>-m</code> and <code>-b</code> to be, respectively, 0 and the length of the pgRNA sequences
-—usually 40 bp—; fourth, it maps the reads to the pgRNAs using the same
+<code>-m</code> and <code>-b</code> to be, respectively, 0 and the length of the pgRNA sequences;
+fourth, it maps the reads to the pgRNAs using the same
 conditions as in the third step, but changing <code>-m</code> to 3. <br />
 CASPR provides, by default, some basic statistics and graphs about the trimming and mapping processes. Nonetheless, using this specific flag, <code>-i</code>, CASPR generates new plots in which the users can see whether unmapped reads have more mismatches than expected, whether they are too short, whether pgRNAs are composed of repeated sgRNAs, or whether pgRNAs are composed of sgRNAs targeting different genes. <br />
 The main drawback of this option, however, is the long computational time required to perform four different alignments. Thus, it is recommended to use <code>-i</code> only in cases where mapping outputs are atypical or unclear.</p>
