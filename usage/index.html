@@ -388,17 +388,19 @@
 four parameters, depending on whether the library is composed of sgRNAs or pgRNAs.
 These are as follows:</p>
 <ul>
-<li><code>-f</code> or <code>--fastq-forward</code>: sequencing files that contain the forward reads,
+<li>
+<p><code>-f</code> or <code>--fastq-forward</code>: sequencing files that contain the forward reads,
 for which fastq and fastq.gz formats are accepted. Files must be separated by
-commas and written in quotes.</li>
-</ul>
-<p>Example: "ctrl1_1.fastq, d1_forward.fq.gz".</p>
-<ul>
-<li><code>-r</code> or <code>--fastq-reverse</code>: sequencing files that contain the reverse reads,
+commas and written in quotes. <br />
+Example: "ctrl1_1.fastq, d1_forward.fq.gz".</p>
+</li>
+<li>
+<p><code>-r</code> or <code>--fastq-reverse</code>: sequencing files that contain the reverse reads,
 only needed to handle pgRNA libraries. If not provided, sgRNAs will be
 considered. The accepted formats are fastq and fastq.gz. All files
 must be separated by commas and written in quotes, and the order of
-the samples must be the same as used in <code>-f</code>.</li>
+the samples must be the same as used in <code>-f</code>.</p>
+</li>
 </ul>
 <p>Example: "ctrl1_2.fastq, d1_reverse.fq.gz".</p>
 <ul>
