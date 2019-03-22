@@ -123,6 +123,17 @@ fi
 
 printf "All imputs are good\n"
 
+# Save input parameters that will be used in the output folder
+echo "" >> ${q}/outputs/inputs.txt
+echo "Input parameters used by CASPR" >> ${q}/outputs/inputs.txt
+echo ""
+echo "-q or --output-dir    = $q" >> ${q}/outputs/inputs.txt
+echo "-e or --exper-design  = $e" >> ${q}/outputs/inputs.txt
+echo "-c or --controls      = $c" >> ${q}/outputs/inputs.txt
+echo "-y or --fdr-threshold = $y" >> ${q}/outputs/inputs.txt
+echo "-s or --start         = test" >> ${q}/outputs/inputs.txt
+echo "-p or --pause         = $pause" >> ${q}/outputs/inputs.txt
+
 ##########
 ## DONE ##
 ##########

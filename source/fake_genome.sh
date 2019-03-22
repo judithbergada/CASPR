@@ -46,6 +46,8 @@ STAR --runThreadN $t \
 --outTmpDir "${q}/temporal" \
 --genomeDir "${q}/genome" \
 --genomeFastaFiles "${q}/genome/genome.fasta"
+# Remove temporal directory if exists
+rm -rf "${q}/temporal"
 
 ##########
 ## DONE ##

@@ -66,6 +66,8 @@ for i in ${q}/intermediate/sgRNA2_sgRNA1*; do
     --outFilterMismatchNoverLmax 0.9 \
     --outFilterScoreMinOverLread 0.1 \
     --readMapNumber -1
+  # Remove temporal directory if exists
+  rm -rf "${q}/temporal"
 
   if [[ $info == 1 ]]; then
     # Perform alignment considering all bp
@@ -86,6 +88,8 @@ for i in ${q}/intermediate/sgRNA2_sgRNA1*; do
       --outFilterMismatchNoverLmax 0.9 \
       --outFilterScoreMinOverLread 0.1 \
       --readMapNumber -1
+    # Remove temporal directory if exists
+    rm -rf "${q}/temporal"
 
       # Perform alignment considering all bp and 3 mismatches
       STAR --runThreadN $t \
@@ -105,6 +109,8 @@ for i in ${q}/intermediate/sgRNA2_sgRNA1*; do
         --outFilterMismatchNoverLmax 0.9 \
         --outFilterScoreMinOverLread 0.1 \
         --readMapNumber -1
+      # Remove temporal directory if exists
+      rm -rf "${q}/temporal"
 
       # Save useful files considering all bp
       samtools view -h -o "${q}/${nametwo}out.sam" \
@@ -210,6 +216,8 @@ if [[ $info == 1 ]]; then
       --outFilterMismatchNoverLmax 0.9 \
       --outFilterScoreMinOverLread 0.1 \
       --readMapNumber -1
+    # Remove temporal directory if exists
+    rm -rf "${q}/temporal"
 
     # Save statistics
     mv "${q}/${nametwo}_sgrna_Log.final.out" \

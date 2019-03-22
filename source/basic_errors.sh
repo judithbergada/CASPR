@@ -94,17 +94,6 @@ if [[ $(echo "${q: -1}") != "/" ]]; then
   q="$q/"
 fi
 
-# Create all folders that will be needed inside output directory
-if [[ $start == "" || $start == "qc" ]]; then
-  rm -rf "${q}/intermediate" && \
-  mkdir "${q}/intermediate" && chmod +xwr "${q}/intermediate"
-  rm -rf "${q}/outputs" && \
-  mkdir "${q}/outputs" && chmod +xwr "${q}/outputs"
-else
-  mkdir -p "${q}/intermediate" && chmod +xwr "${q}/intermediate"
-  mkdir -p "${q}/outputs" && chmod +xwr "${q}/outputs"
-fi
-
 ###########################################################
 ## Check if the inputs are given in the expected formats ##
 ###########################################################
@@ -132,7 +121,6 @@ cat $l | tr "[:blank:]" "\t" > ${q}/libnotused.txt
 mv ${q}/libnotused.txt $l
 # Count the number of columns of the library
 ncolslib=$(head -n1 $l | awk '{print NF}')
-printf "num_cols:\t${ncolslib}\n" > "${q}/intermediate/useful_information.txt"
 
 # Check if the experimental design file is given as input and if it exists
 if [ -z $e ]; then
@@ -276,6 +264,39 @@ if [[ $start == "map" && ($pause != "" && $pause != "map") ]]; then
 fi
 
 printf "All imputs are good\n"
+
+# Create all folders that will be needed inside output directory
+if [[ $start == "" || $start == "qc" ]]; then
+  rm -rf "${q}/intermediate" && \
+  mkdir "${q}/intermediate" && chmod +xwr "${q}/intermediate"
+  rm -rf "${q}/outputs" && \
+  mkdir "${q}/outputs" && chmod +xwr "${q}/outputs"
+else
+  mkdir -p "${q}/intermediate" && chmod +xwr "${q}/intermediate"
+  mkdir -p "${q}/outputs" && chmod +xwr "${q}/outputs"
+fi
+
+# Save number of columns in the library to use in the future
+printf "num_cols:\t${ncolslib}\n" > "${q}/intermediate/useful_information.txt"
+
+# Save input parameters that will be used in the output folder
+echo "Input parameters used by CASPR" > ${q}/outputs/inputs.txt
+echo "" >> ${q}/outputs/inputs.txt
+echo "-q or --output-dir    = $q" >> ${q}/outputs/inputs.txt
+echo "-f or --fastq-forward = $f" >> ${q}/outputs/inputs.txt
+echo "-r or --fastq-reverse = $r" >> ${q}/outputs/inputs.txt
+echo "-l or --library       = $l" >> ${q}/outputs/inputs.txt
+echo "-e or --exper-design  = $e" >> ${q}/outputs/inputs.txt
+echo "-c or --controls      = $c" >> ${q}/outputs/inputs.txt
+echo "-a or --adapter-f     = $a" >> ${q}/outputs/inputs.txt
+echo "-A or --adapter-r     = $A" >> ${q}/outputs/inputs.txt
+echo "-m or --mismatches    = $m" >> ${q}/outputs/inputs.txt
+echo "-b or --bases-aligned = $b" >> ${q}/outputs/inputs.txt
+echo "-y or --fdr-threshold = $y" >> ${q}/outputs/inputs.txt
+echo "-o or --orientation   = $o" >> ${q}/outputs/inputs.txt
+echo "-s or --start         = $start" >> ${q}/outputs/inputs.txt
+echo "-p or --pause         = $pause" >> ${q}/outputs/inputs.txt
+echo "-t or --threads       = $t" >> ${q}/outputs/inputs.txt
 
 ##########
 ## DONE ##
