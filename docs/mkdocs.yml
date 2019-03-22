@@ -12,6 +12,7 @@ copyright: 'Copyright &copy; 2018 Judith Bergadà Pijuan'
 nav:
   - Home: index.md
   - Installation: installation.md
+  - Usage: usage.md
   - Tutorial: tutorial.md
 
 theme:

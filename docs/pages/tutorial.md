@@ -8,7 +8,7 @@ demos.
 ## Get started: Activate Conda Environment
 
 If it is your first time with CASPR, please follow the
-[Installation-Guide](https://judithbergada.github.io/CASPR/installation/).
+[Installation Guide](installation.md).
 
 After finishing with the installation, you should activate the Conda
 Environment. Please, make sure you do it every time you work with CASPR:
@@ -24,7 +24,7 @@ conda activate caspr
 
     Users of IBU cluster (Interfaculty Bioinformatics Unit, University of Bern)
     will also download CASPR following the
-    [Installation-Guide](https://judithbergada.github.io/CASPR/installation/).
+    [Installation Guide](installation.md).
 
     However, you do not need to poceed with the installation of a Conda
     Environment. Instead, you can load the required software packages,

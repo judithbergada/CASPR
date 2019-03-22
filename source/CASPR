@@ -79,7 +79,7 @@ Optional arguments:
     -t, --threads:
                 Number of threads that will be used.
                 It must be an integer.
-                Default: 8.
+                Default: 1.
     -i, --info-alignment:
                 If used, perform several alignments to see additional
                 information of mapped and unmapped reads.
@@ -119,21 +119,19 @@ Required arguments:
                 1st column: Eeach row contains a sample.
                 Samples must correspond to the forward fastq files names.
                 2nd column: Replicates.
-                It must be an index (integer) showing which samples
-                are the same in different periods of time (same index)
-                and which samples are replicates (different index).
+                Each replicate is represented by an integer.
                 3rd column: Condition of each sample. Required:
-                \"control\" or \"treated\" followed by a number.
-                Example:    ctr1.fastq  1  control1
-                            ctr2.fastq  2  control1
-                            d1.fastq    1  treated1
-                            d2.fastq    2  treated1
-                            ctr1.fastq  1  control2
-                            ctr3.fastq  3  control2
-                            d1.fastq    1  treated2
-                            d3.fastq    3  treated2
-                --> Analysis 1: ctr1 & ctr2 vs d1 & d2
-                --> Analysis 2: ctr1 & ctr3 vs d1 & d3
+                \"control\" or \"treated\" followed by a test number.
+                Example:    ctr1.fastq      1  control1
+                            ctr2.fastq      2  control1
+                            day30_1.fastq   1  treated1
+                            day30_2.fastq   2  treated1
+                            ctr3.fastq      3  control2
+                            ctr4.fastq      4  control2
+                            day30_3.fastq   3  treated2
+                            day30_4.fastq   4  treated2
+                --> Test 1: ctr1 & ctr2 vs day30_1 & day30_2
+                --> Test 2: ctr3 & ctr4 vs day30_3 & day30_4
 
 Important:
     The number of input files in -f and -r must be the same (for pgRNAs).
