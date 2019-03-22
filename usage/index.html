@@ -401,7 +401,8 @@ only needed to handle pgRNA libraries. If not provided, sgRNAs will be
 considered. The accepted formats are fastq and fastq.gz. All files
 must be separated by commas and written in quotes, and the order of
 the samples must be the same as used in <code>-f</code>. Example:
- <code>-r "ctrl1_2.fastq, d1_reverse.fq.gz"</code></p>
+<div class="codehilite"><pre><span></span>-r &quot;ctrl1_2.fastq, d1_reverse.fq.gz&quot;
+</pre></div></p>
 </li>
 <li>
 <p><code>-l</code> or <code>--library</code>: text file with 3 or 4 columns, without header.
@@ -416,16 +417,17 @@ different samples in the analysis, named according to their forward fastq files.
 Column2 shows the replicates, and each replicate is represented as an integer.
 Column3 contains the condition of each sample, "control" or "treated", followed
 by the number of test.
-            <code>Example:    ctr1.fastq      1  control1
-                            ctr2.fastq      2  control1
-                            day30_1.fastq   1  treated1
-                            day30_2.fastq   2  treated1
-                            ctr3.fastq      3  control2
-                            ctr4.fastq      4  control2
-                            day30_3.fastq   3  treated2
-                            day30_4.fastq   4  treated2
-                --&gt; Test 1: ctr1 &amp; ctr2 vs day30_1 &amp; day30_2
-                --&gt; Test 2: ctr3 &amp; ctr4 vs day30_3 &amp; day30_4</code></p>
+            <div class="codehilite"><pre><span></span>    Example:    ctr1.fastq      1  control1
+                ctr2.fastq      2  control1
+                day30_1.fastq   1  treated1
+                day30_2.fastq   2  treated1
+                ctr3.fastq      3  control2
+                ctr4.fastq      4  control2
+                day30_3.fastq   3  treated2
+                day30_4.fastq   4  treated2
+    --&gt; Test 1: ctr1 &amp; ctr2 vs day30_1 &amp; day30_2
+    --&gt; Test 2: ctr3 &amp; ctr4 vs day30_3 &amp; day30_4
+</pre></div></p>
 </li>
 </ul>
 <h2 id="outputs">Outputs</h2>
