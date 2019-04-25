@@ -6,6 +6,11 @@ repo_name: 'judithbergada/CASPR'
 repo_url: 'https://github.com/judithbergada/CASPR'
 edit_uri: 'tree/master/docs/pages/'
 
+# Google Analytics
+google_analytics:
+  - UA-139052696-1
+  - auto
+
 # Copyright
 copyright: 'Copyright &copy; 2018 Judith Bergadà Pijuan'
 
