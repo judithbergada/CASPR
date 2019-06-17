@@ -88,10 +88,11 @@ if (controlsfile != "") {
 all_info = list()
 counter = 1
 for (k in unlist(strsplit(controls, split=","))) {
-  sample_idx = design[design$V1 == k, 2]
+  sample_idx = design[paste("file.", design$V1, sep = "") == k, 2]
   treatm_name = design[
     design$V2 == sample_idx & grepl(
       paste("treated", idx_sample, sep = ""), design$V3),1]
+  treatm_name = paste("file.", treatm_name, sep = "")
   ctr = dat[,colnames(dat) == k]
   exp = dat[,colnames(dat) == treatm_name]
   to_analyse = data.frame(

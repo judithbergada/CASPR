@@ -168,7 +168,7 @@ for i in ${q}/intermediate/reads*; do
   commandpaste="${commandpaste} <(sort -V $i | cut -f2)"
   name=$(echo $i | sed 's/.*intermediate\/reads_//g' | sed 's/.tsv//g')
   nametwo=$(echo ${q}/intermediate/sgRNA2_sgRNA1_${name}* | \
-          sed 's/.*intermediate\/sgRNA2_sgRNA1_//g')
+          sed 's/.*intermediate\/sgRNA2_sgRNA1_/file./g')
   header="${header}\t${nametwo}"
 done
 
