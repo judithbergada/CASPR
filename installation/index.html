@@ -438,9 +438,9 @@ conda create -n caspr --yes <span class="nv">python</span><span class="o">=</spa
 <span class="c1"># Install required software</span>
 conda install -n caspr --yes <span class="nv">r</span><span class="o">=</span><span class="m">3</span>.5.0
 conda install -n caspr -c bioconda --yes cutadapt
-conda install -n caspr -c bioconda --yes star
-conda install -n caspr -c bioconda --yes samtools
-conda install -n caspr -c biobuilds --yes fastx-toolkit
+conda install -n caspr -c bioconda --yes <span class="nv">star</span><span class="o">=</span><span class="m">2</span>.6.0c
+conda install -n caspr -c bioconda --yes <span class="nv">samtools</span><span class="o">=</span><span class="m">1</span>.4
+conda install -n caspr -c biobuilds --yes fastx-toolkit<span class="o">=</span><span class="m">0</span>.0.14
 conda install -n caspr -c bioconda --yes mageck
 conda install -n caspr -c bioconda --yes vispr
 conda install -n caspr -c bioconda --yes fastqc
@@ -464,7 +464,7 @@ brew install gnu-sed grep
 </div>
 <p>Now, you can start using CASPR on Linux or macOS!</p>
 <div class="admonition info">
-<p class="admonition-title">Important</p>
+<p class="admonition-title">Important information</p>
 <p>To use the tool, please do not forget to activate the Conda Environment!</p>
 <div class="codehilite"><pre><span></span><span class="c1"># Activate for Linux</span>
 <span class="nb">source</span> activate caspr
