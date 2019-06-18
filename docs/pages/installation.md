@@ -55,9 +55,9 @@ conda create -n caspr --yes python=3.5
 # Install required software
 conda install -n caspr --yes r=3.5.0
 conda install -n caspr -c bioconda --yes cutadapt
-conda install -n caspr -c bioconda --yes star
-conda install -n caspr -c bioconda --yes samtools
-conda install -n caspr -c biobuilds --yes fastx-toolkit
+conda install -n caspr -c bioconda --yes star=2.6.0c
+conda install -n caspr -c bioconda --yes samtools=1.4
+conda install -n caspr -c biobuilds --yes fastx-toolkit=0.0.14
 conda install -n caspr -c bioconda --yes mageck
 conda install -n caspr -c bioconda --yes vispr
 conda install -n caspr -c bioconda --yes fastqc
@@ -84,7 +84,7 @@ conda install -n caspr -c bioconda --yes fastqc
 
 Now, you can start using CASPR on Linux or macOS!
 
-!!! info "Important"
+!!! info "Important information"
 
     To use the tool, please do not forget to activate the Conda Environment!
 
