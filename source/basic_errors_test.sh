@@ -11,24 +11,28 @@ printf "\nChecking that the format of inputs is correct\n"
 
 # Check if all of the required modules are installed and
 # show information on how to install the missing modules.
-errorm=$(mageck test -h > /dev/null 2>&1)
-if [[ $(echo $?) == 127 ]]; then
+if ! [ -x "$(command -v gs)" ]; then
+  printf "Missing: "
+  echo "Ghostscript not found"
+  echo "Information on the installation:"
+  echo "https://www.ghostscript.com/doc/9.20/Make.htm"
+  exit 1
+fi
+if ! [ -x "$(command -v mageck)" ]; then
   printf "Missing: "
   echo "MAGeCK not found"
   echo "Information on the installation:"
   echo "https://bitbucket.org/liulab/mageck-vispr"
   exit 1
 fi
-errorm=$(vispr -h > /dev/null 2>&1)
-if [[ $(echo $?) == 127 ]]; then
+if ! [ -x "$(command -v vispr)" ]; then
   printf "Missing: "
   echo "VISPR not found"
   echo "Information on the installation:"
   echo "https://bitbucket.org/liulab/mageck-vispr"
   exit 1
 fi
-errorm=$(R -h > /dev/null 2>&1)
-if [[ $(echo $?) == 127 ]]; then
+if ! [ -x "$(command -v R)" ]; then
   printf "Missing: "
   echo "R not found"
   echo "Information on the installation:"

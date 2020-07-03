@@ -13,64 +13,63 @@ printf "\nChecking that the format of inputs is correct\n"
 
 # Check if all of the required modules are installed and
 # show information on how to install the missing modules.
-errorm=$(fastqc -h > /dev/null 2>&1)
-if [[ $(echo $?) == 127 ]]; then
+if ! [ -x "$(command -v fastqc)" ]; then
   printf "Missing: "
   echo "fastqc not found"
   echo "Information on the installation:"
   echo "http://www.bioinformatics.babraham.ac.uk/projects/download.html"
   exit 1
 fi
-errorm=$(cutadapt -h > /dev/null 2>&1)
-if [[ $(echo $?) == 127 ]]; then
+if ! [ -x "$(command -v cutadapt)" ]; then
   printf "Missing: "
   echo "cutadapt not found"
   echo "Information on the installation:"
   echo "https://cutadapt.readthedocs.io/en/stable/installation.html"
   exit 1
 fi
-errorm=$(fastx_reverse_complement -h > /dev/null 2>&1)
-if [[ $(echo $?) == 127 ]]; then
+if ! [ -x "$(command -v reformat.sh)" ]; then
   printf "Missing: "
-  echo "fastx_toolkit not found"
+  echo "bbmap not found"
   echo "Information on the installation:"
-  echo "http://hannonlab.cshl.edu/fastx_toolkit/download.html"
+  echo "https://jgi.doe.gov/data-and-tools/bbtools/bb-tools-user-guide/installation-guide/"
   exit 1
 fi
-errorm=$(STAR -h > /dev/null 2>&1)
-if [[ $(echo $?) == 127 ]]; then
+if ! [ -x "$(command -v STAR)" ]; then
   printf "Missing: "
   echo "STAR not found"
   echo "Information on the installation:"
   echo "https://github.com/alexdobin/STAR/blob/master/doc/STARmanual.pdf"
   exit 1
 fi
-errorm=$(samtools --help > /dev/null 2>&1)
-if [[ $(echo $?) == 127 ]]; then
+if ! [ -x "$(command -v samtools)" ]; then
   printf "Missing: "
   echo "samtools not found"
   echo "Information on the installation:"
   echo "http://www.htslib.org/download/"
   exit 1
 fi
-errorm=$(mageck test -h > /dev/null 2>&1)
-if [[ $(echo $?) == 127 ]]; then
+if ! [ -x "$(command -v gs)" ]; then
+  printf "Missing: "
+  echo "Ghostscript not found"
+  echo "Information on the installation:"
+  echo "https://www.ghostscript.com/doc/9.20/Make.htm"
+  exit 1
+fi
+if ! [ -x "$(command -v mageck)" ]; then
   printf "Missing: "
   echo "MAGeCK not found"
   echo "Information on the installation:"
   echo "https://bitbucket.org/liulab/mageck-vispr"
   exit 1
 fi
-errorm=$(vispr -h > /dev/null 2>&1)
-if [[ $(echo $?) == 127 ]]; then
+if ! [ -x "$(command -v vispr)" ]; then
   printf "Missing: "
   echo "VISPR not found"
   echo "Information on the installation:"
   echo "https://bitbucket.org/liulab/mageck-vispr"
   exit 1
 fi
-errorm=$(R -h > /dev/null 2>&1)
-if [[ $(echo $?) == 127 ]]; then
+if ! [ -x "$(command -v R)" ]; then
   printf "Missing: "
   echo "R not found"
   echo "Information on the installation:"

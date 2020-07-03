@@ -476,9 +476,9 @@ for fastqfile in $f; do
       phred=64
     fi
     # Reverse-complement in order to have all reads in the same orientation
-    cat "${q}/intermediate/sgRNA2_intermediate_${nametwo}.fastq" | \
-    fastx_reverse_complement -Q${phred} \
-    > "${q}/intermediate/sgRNA2_${nametwo}.fastq"
+    reformat.sh in="${q}/intermediate/sgRNA2_intermediate_${nametwo}.fastq" \
+    out="${q}/intermediate/sgRNA2_${nametwo}.fastq" \
+    rcomp qin=${phred} 2>/dev/null
   fi
 
   # Paste fastq files
