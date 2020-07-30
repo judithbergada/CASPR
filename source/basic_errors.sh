@@ -262,7 +262,7 @@ if [[ $start == "map" && ($pause != "" && $pause != "map") ]]; then
   exit 1
 fi
 
-printf "All imputs are good\n"
+printf "All inputs are good\n"
 
 # Create all folders that will be needed inside output directory
 if [[ $start == "" || $start == "qc" ]]; then

@@ -235,7 +235,7 @@ fi
 # Create a fake genome with the guide RNAs
 if [[ $start == "" ]]; then
   bash $currentdir/fake_genome.sh $l $t $q 2> "${q}/intermediate/err.txt"
-  if [[ $(cat "${q}/intermediate/err.txt") != "" ]]; then # Exit if error
+  if [[ $(echo $?) != 0 ]]; then # Exit if error.
     echo "Error: problems with the library file. Check it again."
     echo "See ${q}/intermediate/err.txt for more information"
     exit 1
@@ -245,10 +245,15 @@ if [[ $pause == "indexing" ]]; then
   exit 1
 fi
 
-# Perform QC of the fastq files. No new errors are expected in this step
+# Perform QC of the fastq files
 if [[ $start == "" || $start == "qc" ]]; then
   bash $currentdir/quality_control.sh \
         "$f" "$r" $t $q 2> "${q}/intermediate/err.txt"
+  if [[ $(echo $?) != 0 ]]; then # Exit if error.
+    echo "Error: problems with the quality control of reads."
+    echo "See ${q}/intermediate/err.txt for more information"
+    exit 1
+  fi
 fi
 if [[ $pause == "qc" ]]; then
   exit 1
@@ -258,7 +263,7 @@ fi
 if [[ $start == "" || $start == "qc" || $start == "trim" ]]; then
   bash $currentdir/trimming_reads.sh \
             "$f" "$r" $l $o $a $A $q $t 2> "${q}/intermediate/err.txt"
-  if [[ $(cat "${q}/intermediate/err.txt") != "" ]]; then # Exit if error
+  if [[ $(echo $?) != 0 ]]; then # Exit if error.
     echo "Error: problems with the input parameters. Check them again."
     echo "See ${q}/intermediate/err.txt for more information"
     exit 1
@@ -284,7 +289,7 @@ fi
 if [[ $start != "test" ]]; then
   bash $currentdir/alignment_counts.sh \
         $m $b $t $q "$r" $l $i 2> "${q}/intermediate/err.txt"
-  if [[ $(cat "${q}/intermediate/err.txt") != "" ]]; then # Exit if error
+  if [[ $(echo $?) != 0 ]]; then # Exit if error.
     echo "Error: problems with the input parameters. Check them again."
     echo "See ${q}/intermediate/err.txt for more information."
     exit 1
@@ -301,6 +306,11 @@ if [[ $start != "test" ]]; then
   if [[ $i == 1 ]]; then
     bash $currentdir/alignment_info.sh \
       "$q" "$f" "$b" "$l" "$currentdir" 2> "${q}/intermediate/err.txt"
+    if [[ $(echo $?) != 0 ]]; then # Exit if error.
+      echo "Error: problems trying to analyse unmapped reads."
+      echo "See ${q}/intermediate/err.txt for more information."
+      exit 1
+    fi
   else
     mv ${q}/intermediate/Alignment_statistics.pdf ${q}/outputs
   fi

@@ -62,6 +62,7 @@ conda install -n caspr -c bioconda --yes mageck
 conda install -n caspr -c bioconda --yes vispr
 conda install -n caspr -c bioconda --yes fastqc
 conda install -n caspr -c conda-forge --yes ghostscript
+conda install -n caspr -c conda-forge --yes openjdk
 ```
 
 

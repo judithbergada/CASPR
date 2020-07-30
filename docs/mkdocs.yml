@@ -25,7 +25,8 @@ theme:
   font:
     text: Roboto
     code: Roboto Mono
-  logo: images/logo.svg
+  icon:
+    logo: images/logo.svg
   palette:
     primary: green
     accent: indigo
@@ -38,5 +39,5 @@ markdown_extensions:
 # Customization
 extra:
   social:
-    - type: github-alt
+    - type: fontawesome/brands/github
       link: https://github.com/judithbergada/CASPR

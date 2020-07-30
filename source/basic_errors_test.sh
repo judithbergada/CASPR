@@ -125,7 +125,7 @@ if [[ $pause != "" ]]; then
   exit 1
 fi
 
-printf "All imputs are good\n"
+printf "All inputs are good\n"
 
 # Save input parameters that will be used in the output folder
 echo "" >> ${q}/outputs/inputs.txt
